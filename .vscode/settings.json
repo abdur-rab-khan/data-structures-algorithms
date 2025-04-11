@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "ostream": "cpp",
+        "cmath": "cpp"
+    },
+    "terminal.integrated.fontLigatures.enabled": true,
+    "editor.mouseWheelZoom": true
+}
