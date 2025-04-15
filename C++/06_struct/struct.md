@@ -62,5 +62,7 @@ int main(){
 }
 ```
 
-## 📃 `Struct` in Array and vector
-
+* ### `Struct` in Array and vector
+```
+Hello
+```

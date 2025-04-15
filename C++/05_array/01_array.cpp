@@ -25,7 +25,6 @@ int main()
     cout << *car << endl;
 
     // Looping through an array.
-
     int car_size = sizeof(car); // Getting 160 instead of 5 because it returns byte.
     int car_length = sizeof(car) / sizeof(car[0]);
 

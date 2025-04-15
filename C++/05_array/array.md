@@ -12,8 +12,7 @@
 ## 📔 Array Declaration
 `type name_variable[size] = {element}`
 
-So there the variable carry two things.
-
+So there two things that carry variable.
 * Data.
 * Size information.
 
