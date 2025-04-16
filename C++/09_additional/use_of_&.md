@@ -1,5 +1,5 @@
-# Use of **"&"** Symbole in Cpp.
-> There are many use cased of & in C++. Using **`&`** can do many things like getting `Memory Address in Pointer`, `Reference Declaration`, `Pass by reference` , `Looping with Reference`, `Return Reference`.
+# Use of **"&"** Symbol in C++.
+> There are many use cases of & in C++. Using **`&`** we can do many things like getting `Memory Address in Pointer`, `Reference Declaration` etc.
 
 
 ## 0️⃣ Bitwise and Operator

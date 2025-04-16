@@ -34,9 +34,23 @@ int main()
 
     for (const Student &s : students)
     {
+        // if (s.name == "Alice")
+        // {
+        //     s.name = "Abdur Rab Khan";
+        //     s.age = 21;
+        // } --> It work when we does not put const. Bcz it refering to original variable, not COPY.
+
         s.showInfo();
     }
 
     // Working with Array
+    Student stu2[3] = {{"Alice", 32}, {"Abdur Rab Khan", 21}, {"John", 23}};
+
+    cout << endl
+         << endl;
+    for (const Student &stu : stu2)
+    {
+        stu.showInfo();
+    }
     return 0;
 }
