@@ -21,5 +21,9 @@ int main() {
     update(&x);
 
     cout << x << endl;
+
+    // Null Ptr
+    int* nullPtr = nullptr;
+    int* ptrNull = NULL;
     return 0;
 }
