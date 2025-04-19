@@ -204,7 +204,7 @@ cout << *ptr <<endl; // 12
             * Memory Deallocation only applicable when memory is created dynamically.
             * When memory is created dynamically it does not deallocate automatically we have to free it manually.
             * **There are may way to allocate memory dynamically.**
-                * **Reference in **`/additional/memory_management.cpp`****
+                * **Reference [Memory Management](../additional/memory_manegment.md)
                 * Using `new`
                 * Using `malloc`, `calloc`, `realloc`
                 * Using Smart Pointer
@@ -450,5 +450,79 @@ cout << *ptr <<endl; // 12
             
 
     7. #### `Smart Pointers`
+        > A **Smart Pointer** is a wrapper class over a pointer with an operator like **`*`** or **`->`**. The Object of the **smart pointer** are look like normal pointer. But ***Unlike Normal Pointer***, It can automatically allocated and deallocate the memory location.
+        
+        > To build Smart Pointer we some C++ functionality like [Destructor](https://www.geeksforgeeks.org/destructors-c/) and [Overloaded Operator](https://www.geeksforgeeks.org/operator-overloading-c/). **Destructor** is automatically call when object is going to out of scope. We call there to free the memory.
+
+        > Smart pointers enable automatic memory management on heap memory to help avoid memory leaks. Think of them as pointers with automatic memory cleanup.
+
+        ```
+        #include <iostream>
+        using namespace std;
+        
+        class SmartPointer {
+           public:
+            int* ptr = nullptr;
+            explicit SmartPointer(int* p = nullptr) { ptr = p; }
+        
+            // Destructor
+            ~SmartPointer() {
+                cout << "Deallocating the memory" << endl;
+                delete (ptr);
+            }
+        
+            int& operator*() { return *ptr; }
+        };
+        
+        class Try {
+           public:
+            string name = "Abdur Rab Khan";
+        
+            string operator*() { return name + "Wow"; }
+        };
+        
+        int main() {
+            SmartPointer ptr(new int());
+            *ptr = 45;
+        
+            cout << ptr.operator*() << endl;
+            return 0;
+        }
+        ```
+
+        - **Problem with normal pointer**
+            - Memory Leak
+            - Dangling Pointers
+            - Wild Pointers
+            - Data Inconsistency
+
+        - **Types of Smart Pointers**
+            - auto_ptr
+            - unique_ptr
+            - shared_ptr
+            - weak_ptr
+        
+        1. #### `unique_ptr` **- Exclusive Ownership**
+        > When we initialize **unique_ptr**, memory is allocated on the heap for an instance of data type. In **unique_ptr** we have only one owner of the object and it will automatically deallocated when it goes to **out of scope**.
+
+            - Only one **smart pointer** can own the object at time.
+            - Automatically deletes the object when it goes out of scope.
+            - Not copyable, only movable.
+
+                ![](https://media.geeksforgeeks.org/wp-content/uploads/20191202223147/uniquePtr.png)
+            ```
+
+            ```
+        2. #### `shared_ptr`
+        > Hello
+        
+            ```
+
+            ```
+        3. #### `weak_ptr`
+            ```
+
+            ```
+
 
 
