@@ -13,6 +13,9 @@
         - [Double Pointer](#double-pointer)
         - [Pointer to functions](#pointer-to-functions)
         - [Smart Pointer](#smart-pointers)
+            - [Unique Pointer](#unique_ptr---exclusive-ownership)
+            - [Shared Pointer](#shared_ptr)
+            - [Weak Pointer](#weak_ptr)
 ---
 
 # 🪞 Reference
@@ -514,15 +517,185 @@ cout << *ptr <<endl; // 12
 
             ```
         2. #### `shared_ptr`
-        > Hello
+        > By using **`shared_ptr`** we can pointer more than one object at a time. and it will maintain a Reference Counter using **`use_count`** method
+        
+        > The reference counter shared among all the copies of the **`shared_ptr`** instance pointing to the same object, ensuring proper memory management and deletion.
+
+        * **Example**
+                    ![](https://media.geeksforgeeks.org/wp-content/uploads/20191202231341/shared_ptr.png)
         
             ```
+            class File {
+                public:
+                    void open() { cout << "File is opened" << endl; }
+                };
 
+            int main() {
+                // unique_ptr
+                // unique_ptr<Car> carPtr = make_unique<Car>();
+                unique_ptr<Car> carPtr(new Car);
+
+                cout << "Memory Address is:- " << carPtr.get() << endl;
+
+                carPtr->drive();
+                // unique_ptr<Car> copyCarPtr = carPtr; ❌ Error: can't copy
+                unique_ptr<Car> copyCarPtr = move(carPtr);  // ✅ Ownership             transferred
+                carPtr->drive();
+                copyCarPtr->drive();
+
+                // With Basic Data Type
+                unique_ptr<int> num = make_unique<int>(54);
+
+                cout << *(num.get()) << endl;
+                cout << *num << endl;
+
+                // shared_pointer
+                // shared_ptr<File> f1 = make_shared<File>();
+                shared_ptr<File> f1(new File);
+                f1->open();
+
+                shared_ptr<File> f2 = f1;
+                f2->open();
+
+                cout << "Address of f2:- " << f2.get() << endl;
+                cout << "Reference Count:- " << f2.use_count() << endl;
+
+                return 0;
+            }
             ```
+            * Implement Swapping
+            ```
+            int main() {
+                shared_ptr<int> num1 = make_shared<int>(42);
+                shared_ptr<int> num2 = make_shared<int>(52);
+
+                shared_ptr<int> num3 = num1;
+
+                if (*num1 == *num3) {  // True
+                    cout << "Both num1 and num2 shared same memory address." << endl;
+                }
+
+                cout << "Before swapping" << endl;
+                cout << "Value of num2 is:- " << *num2 << endl;
+                cout << "Value of num3 is:- " << *num3 << endl;
+
+                num2.swap(num3);
+
+                cout << "After swapping" << endl;
+                cout << "Value of num2 is:- " << *num2 << endl;
+                cout << "Value of num3 is:- " << *num3 << endl;
+
+                return 0;
+            }
+            ```
+
+            * **Some Important Methods**
+            
+            | Method | Description |
+            |--------|-------------|
+            | **`reset`** |Reset **shared_ptr** to empty |
+            | **`use_count`** | Returns the current reference count |
+            | **`unique`** | Return 1, If there is only one owning the **`ptr`** |
+            | **`get`** | Return a raw pointer to manage the object |
+            | **`swap(given_ptr)`** | swap the ownership of given ptr instance |
         3. #### `weak_ptr`
-            ```
+            > **`weak_ptr`** is just like shared ptr, It has capability to point to the resource owned by another shared_ptr but without owning it.In other words, they are able to create a non-owning reference to the object managed by shared_ptr. You can use when you want to give. Whenever you want to access the weak_ptr value you have to always use **`ptr.lock()`**.
 
-            ```
+            > It only works with **`shared_ptr`**.
+
+            * **Example**
+                ![Weak Pointer](https://media.geeksforgeeks.org/wp-content/uploads/20191202233339/weakPtr.png)
+
+                ```
+                int main(){
+                    shared_ptr<int> number1 = make_shared<int>(55);
+                    shared_ptr<int> number2 = number1;
+
+                    cout << "Reference count:- " << number1.use_count() << endl;
+                    cout << "Both number1 and number2 address:- " << number1 << "   " <<          number2 << endl;
+
+                    weak_ptr<int> number3 = number1;
+
+                    cout << "Reference count:- " << number1.use_count()
+                         << endl;  // 2 instead of 3 because it does not own it.
+
+                    if (auto temp = number3.lock()) {
+                        cout << "Value of number 3 is:- " << *temp << endl;
+                    }
+
+                    return 0;
+                }
+                ```
+
+                ```
+                class Car;
+
+                class Owner {
+                   public:
+                   string owner_name = "Abdur Rab Khan";
+                   shared_ptr<Car> car = make_shared<Car>();
+
+                    ~Owner() { cout << "Car is destroyed" << endl; }
+                };
+
+                class Car {
+                   public:
+                    // shared_ptr<Owner> owner = make_shared<Owner>();
+                    weak_ptr<Owner> owner;  // --> By using this we only share              resource instead of owning it.
+
+                    string get_owner_name(){
+                        if(auto temp = owner.lock()){
+                            return temp->owner_name;
+                        }
+                    }
+
+                    ~Car() { cout << "Owner is destroyed" << endl; }
+                };
+
+                int main(){
+                    std::shared_ptr<Owner> p = std::make_shared<Owner>();
+                    std::shared_ptr<Car> c = std::make_shared<Car>();
+
+                    p->car = c;
+                    c->owner = p;
+
+                    cout << "Owner name is:- " << p->get_owner_name() << endl;
+
+                    return 0;
+                }
+                ```
+                * **Behind the scenes**
+                    * In the **above** example, if we does not use **`weak_ptr`**.
+                        * **Circular Reference** Problem Occur:
+                            * When we create **`p`**, the **`shared_ptr`** creates a **`control block`** with:
+                                * A **`reference count`**.
+                                * A Pointer to actual Object **`Owner`**.
+                            * Same for **`c`** also.
+                        
+                        * **Now:**
+                            * **`p`** point to **`Person`**, and it owns **`c's`** --> so reference count becomes 2(1 from **`main`**, 1 from `c->owner`).
+                            * `c` point back to `p` using another `shared_ptr` -> now `p's` reference count becomes 2(1 `main`, 1 from `c->owner`).
+                        
+                        ### **🧠 What’s the issue?**
+                        When main ends:
+                        * `p` and `c` go out of scope.
+                        * But their reference counts are still 1, because they point to each other.
+                        * So the memory is never deallocated — and you get a memory leak.
+                        
+                    * If we use **`weak_ptr`**.
+                        * A `weak_ptr` does not increase the reference count.
+                        * It uses the same control block as the shared_ptr, but it has its own weak                       count.
+
+                        * So now:
+                            * p’s reference count is 1 (from main)
+                            * c’s reference count is 1 (from p->car)
+                           * And the weak reference (c->owner) doesn't affect this count.
+
+                        * When main ends:
+                            * p and c go out of scope.
+                            * Their reference counts drop to 0.
+                            * So both Person and Car objects are properly * destroyed. 
+                            * Even though c->owner (a weak_ptr) still exists, it  doesn’t keep the object                      alive.
 
 
 
