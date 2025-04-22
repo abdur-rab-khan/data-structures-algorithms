@@ -14,7 +14,7 @@
 
 
 ## 📔 Simple `Struct` Example
-```
+```cpp
 struct name_struct {
     string name;
     int age;
@@ -41,7 +41,7 @@ void main(){
 ```
 
 ## 🥇 `Struct` with constructor
-```
+```cpp
 struct Student{
     string name;
     int age;
@@ -69,7 +69,7 @@ int main(){
 ```
 
 ## 📃 `Struct` in Array and vector
-```
+```cpp
 // Online C++ compiler to run C++ program online
 #include <iostream>
 using namespace std;
@@ -167,7 +167,7 @@ struct Student
 ```
 
 ## 🏛️ `OOPS` in `Struct`
-```
+```cpp
 #include <iostream>
 using namespace std;
 

@@ -6,18 +6,18 @@
     * `enum class`
 
 ## 🖊️ **`enum`** Declaration
-```
+```cpp
 enum Gender{
     MALE,
     FEMALE
 }
 ```
 * `Gender` is the name of the enum type.
-* `MALE`, `FEMALE` are named constrants.
+* `MALE`, `FEMALE` are named constants.
 * By default, `MALE` has value 0, `FEMALE` has value 1.
 
 * But we can also define value on them.
-```
+```cpp
 enum Gender{
     MALE = 5,
     FEMALE = 6
@@ -25,7 +25,7 @@ enum Gender{
 ```
 
 ## 🏛️ **`enum class`** Declaration
-```
+```cpp
 enum class HTTPStatus{
     Ok = 200,
     NotFound = 404,
@@ -35,7 +35,7 @@ enum class HTTPStatus{
 
 ## ➕ Implementation
 * ### `enum`
-```
+```cpp
 enum HTTPStatus{
     Ok = 200,
     NotFound = 404,
@@ -57,7 +57,7 @@ int main(){
 }
 ```
 * ### `enum class`
-```
+```cpp
 enum class HTTPStatus{
     Ok = 200,
     NotFound = 404,

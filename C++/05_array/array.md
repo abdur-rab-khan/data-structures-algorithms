@@ -1,9 +1,10 @@
 # 📃 Array
 
-> It is a type of data structure which is used to store collection of same data type elements.
+> **`Array`** is a type of data structure which is used to store collection of similar type of data structure. And it store data in a contiguous memory location.
+
+> We know that a pointer is used to store memory addresses, and an array is a special type of data structure where the array name points to the memory location of its first element.
 
 * There are two types of array.
-
     * Static Typed (Default).
     * Dynamic Typed (Vectors).
 
@@ -40,6 +41,12 @@ for(int i = 0; i < length; i++){
     cout << array[i] <<endl;
 }
 
+// Lopping using pointer.
+int num[5] = {1, 2, 3, 4, 5};
+for (int i = 0; i < 5; i++) {
+    cout << "The " << i << "th " << "Element is:- " << *(&(nu[i])) << endl;
+}
+
 // While Loop.
 while(length--){
     cout << array[length] <<endl;
@@ -50,7 +57,6 @@ for(int num : number){
     cout << num << endl;
 }
 ```
-
 
 ## ⭐ Importent Methods for Array.
 
