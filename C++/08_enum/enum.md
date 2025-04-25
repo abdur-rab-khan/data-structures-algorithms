@@ -1,5 +1,5 @@
 # 📑 Enumeration (Enum)
-> `Enum` is a special type that represent the group of constants (unchangable value).
+> `Enum` is a special type that represent the group of constants (unchangeable value).
 
 * There are many two types of `enum`.
     * Default `enum`
@@ -97,4 +97,6 @@ int main(){
 
 ## ⚒️ Use Cases
 * `Enum` is most commonly use in large application, for type safety and naming convention.
-*
+* It is also used in `switch` statement to make code more readable.
+* `Enum` is also used in `API` to define the status code, error code, etc.
+* It is also used in `game development` to define the state of the game, player, etc.

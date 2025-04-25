@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "01_namespace.cpp"
+// #include "01_namespace.cpp"
 using namespace std;
 
 namespace first_namespace {

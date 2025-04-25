@@ -10,6 +10,10 @@ void looping(int (&arr)[3]) {
     }
 }
 
+void doSomethingOnArray(int (*arr)[5]) {
+    cout << arr << endl;
+}
+
 // Fixed Size (Array) || Dynamic Size (Vector).
 int main() {
     string car[] = {"Volvo", "BMW", "Tesla", "Maruti", "Toyota"};
@@ -57,5 +61,13 @@ int main() {
     for (int i = 0; i < 5; i++) {
         cout << "The " << i << "th " << "Element is:- " << *(&(num[i])) << endl;
     }
+
+    int* ptr = num;
+    int (*ptr2)[5] = &num;
+
+    cout << ptr[2] << endl;      // 3
+    cout << (*ptr2)[2] << endl;  // 3
+    cout << *((*ptr2) + 1) << endl;
+    doSomethingOnArray(&num);
     return 0;
 }

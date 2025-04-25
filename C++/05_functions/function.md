@@ -2,16 +2,14 @@
 > Function in C++, Function is the building block of C++ programs that contains set of statements which are execute when function is called. It can take data as an argument, and perform some task around the data and return some result.
 
 ### Table of Contents
-- [📖 Function in C++](#-function-in-c)
-  - [Table of Contents](#table-of-contents)
-  - [🔠 Function Declaration](#🔠-function-declaration)
-  - [🤙🏻 Function Call](#🤙🏻-function-call)
-  - [🔠 Default Arguments](#🔠-default-arguments)
-  - [🔠 Function Overloading](#🔠-function-overloading)
-  - [🔄 Inline Function](#🔄-inline-function)
-  - [Lambda Function](#lambda-function)
+- [🔠 Function Declaration](#🔠-function-declaration)
+- [🤙🏻 Function Call](#🤙🏻-function-call)
+- [🔠 Default Arguments](#🔠-default-arguments)
+- [🔠 Function Overloading](#🔠-function-overloading)
+- [🔄 Inline Function](#🔄-inline-function)
+- [Lambda Function](#lambda-function)
     - [Lambda function with capture](#lambda-function-with-capture)
-    - [Return multiple values](#return-multiple-values)
+- [🤹🏻 Return multiple values](#🤹🏻-return-multiple-values)
 
 ## 🔠 Function Declaration
 > A function definition specify the name of the function,what type of value it returns
@@ -143,7 +141,7 @@ int main(){
 
 ### Lambda function with capture
 * There are two types of capture in lambda function:
-    1. **Capture by value**: Captures a copy of the variable from the outer scope at the time of lambda creation.
+    1. **Capture by value** `[=]`: Captures a copy of the variable from the outer scope at the time of lambda creation.
         * **Example**
         ```cpp
         #include <iostream>
@@ -157,7 +155,7 @@ int main(){
             return 0;
         }
         ```
-    2. **Capture by reference**: Captures a reference of the variable from the outer scope at the time of lambda creation. Any changes made to the variable inside the lambda function will affect the original variable.
+    2. **Capture by reference** `[&x]`: Captures a reference of the variable from the outer scope at the time of lambda creation. Any changes made to the variable inside the lambda function will affect the original variable.
         * **Example**
         ```cpp
         #include <iostream>
@@ -180,7 +178,7 @@ int main(){
         }
         ```
 
-### Return multiple values
+## 🤹🏻 Return multiple values
 > To return multiple values from a normal function, we can use **std::tuple**, **std::pair**, **std::array**, **std::vector**, or **struct**.
 
 > To return multiple values from a lambda function, we can use **std::tuple**, **std::pair**, **std::array**, **std::vector**, or **struct**.

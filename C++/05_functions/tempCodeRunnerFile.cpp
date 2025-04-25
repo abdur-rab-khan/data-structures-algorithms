@@ -1,1 +1,0 @@
-numSqrt(num)
