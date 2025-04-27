@@ -259,7 +259,7 @@ int main()
     
     ### 1. Compile Time Polymorphism
     > In Compiler time polymorphism compiler can determine how the function or operator will work depending on the context. This type of polymorphism is achieved by function overloading or operator overloading. It is also know as **early binding**.
-    
+ 
     1. **Function Overloading**
         > Function Overloading is a feature in `OOPS`. Such function can work differently for different parameter. Function can be overload by changing number of `argument` or type of `argument`.
         ```cpp
@@ -321,7 +321,205 @@ int main()
             }
         ```
     ### 2. Run Time Polymorphism
-    > Run Time Polymorphism
+    > Run Time Polymorphism is known as **late binding** and **dynamic polymorphism**. The function in run time polymorphism is resolved at runtime where the compiler determine which function is call to bind at completion. Run time polymorphism is implement using function overriding with virtual function.
+
+    ### Virtual Function
+    > A **Virtual Function** is a type of function that we declared in a base using **`virtual`** and expect it to be ***overridden*** in the derived class. It tell compiler to perform `late binding` means compiler will decide in runtime to call right function.
+    * **Example**
+    ```cpp
+    #include<iostream>
+    using namespace std;
+
+    class A{
+        protected:
+        int a;
+        int b;
+
+        public:
+        A(int a, int b){
+            this->a = a;
+            this->b = b;
+        }
+
+        virtual void show(){
+            cout << "Base Class \n";
+            cout << "A " << a << " B " << b << endl;
+        }
+    }
+
+    class B: public A{
+            public:
+        B(int x, int y): A(x,y) {}
+
+        void show() override {
+            cout << "Derived Class \n";
+            cout << "A " << a << " B " << b << endl;
+        }
+    }
+
+    int main(){
+        A* ptr = new B(5,5);
+
+        ptr->show(); 
+        // ✅ Print Derived Class Show Method 
+        // ⚠️ If we does not use virtual then compiler automatically call Base Class Show Method.
+        return 0;
+    }
+    ```
+    * If you use **Pointer** or **Reference** to the base class to call the function, C++ will choose the function of the actual object at runtime. **NOT** based on the type of the pointer/reference. **`If you use virtual function`**
+    
+    * **Application**
+        1. Imagine you are writing a big system, and you have a set of classes that share the same interface (base class), but each one behaves differently.
+        2. If you want correct behavior at runtime depending on the real object (not the pointer/reference type), you need virtual functions.
+        3. **Example** Like you have Payment Class and having two way to pay via debit card or credit card and having multiple payment providers.
+        ```cpp
+        #include <iostream>
+        #include <cstdlib>  // for rand()
+        #include <ctime>    // for time()
+        using namespace std;
+        
+        // Base class
+        class Payment {
+        public:
+            virtual void pay(float amount) = 0;    // Pure virtual function
+            virtual void refund(float amount) = 0; // Pure virtual function
+            virtual ~Payment() {}                  // Virtual destructor (good habit)
+        };
+        
+        // Derived classes
+        class CreditCardPayment : public Payment {
+        public:
+            void pay(float amount) override {
+                cout << "[CreditCard] Paid $" << amount << endl;
+            }
+            
+            void refund(float amount) override {
+                cout << "[CreditCard] Refunded $" << amount << endl;
+            }
+        };
+        
+        class PayPalPayment : public Payment {
+        public:
+            void pay(float amount) override {
+                cout << "[PayPal] Paid $" << amount << endl;
+            }
+            
+            void refund(float amount) override {
+                cout << "[PayPal] Refunded $" << amount << endl;
+            }
+        };
+        
+        class UPIPayment : public Payment {
+        public:
+            void pay(float amount) override {
+                cout << "[UPI] Paid $" << amount << endl;
+            }
+            
+            void refund(float amount) override {
+                cout << "[UPI] Refunded $" << amount << endl;
+            }
+        };
+        
+        // Process any payment
+        void processPayment(Payment* payment, float amount) {
+            payment->pay(amount);
+            payment->refund(amount * 0.25); // Refund 25% as example
+        }
+        
+        int main() {
+            srand(time(0)); // Seed random
+        
+            Payment* payments[10];
+        
+            // Randomly create 10 payments
+            for (int i = 0; i < 10; ++i) {
+                int randomType = rand() % 3;  // 0, 1, or 2
+        
+                if (randomType == 0)
+                    payments[i] = new CreditCardPayment();
+                else if (randomType == 1)
+                    payments[i] = new PayPalPayment();
+                else
+                    payments[i] = new UPIPayment();
+            }
+        
+            // Process all payments
+            for (int i = 0; i < 10; ++i) {
+                cout << "Transaction " << (i+1) << ": ";
+                processPayment(payments[i], (i+1)*100); // Amount increases
+            }
+
+            // Free memory
+            for (int i = 0; i < 10; ++i) {
+                delete payments[i];
+            }
+        
+            return 0;
+        }
+        ```
+
+    * How works behind the scenes
+        * When you declare at least one virtual function.
+            1. The compiler create `vtable` (Virtual Table).
+            2. The vtable is an array of function pointers.
+            3. Each class with virtual function has its own `vtable`.
+            4. Every object of such a class has a hidden pointer inside it (called vptr) pointing to its class’s vtable.
+        * When you cal a virtual function.
+          * `Base* bptr = new Derived();`
+          ```mermaid
+          flowchart TD
+          A[Base* ptr] --> | point to | B[Derived object]
+          B --> | contains | C[vptr]
+          C --> | points to | D[Derived's vtable]
+          D --> | has pointer to | E["Derived::show()"]
+
+          F["ptr->show() call"] --> G[uses vtpr]
+          G --> H[looks up Derived's vtable]
+          H --> I[class Derived::show]
+          ```
+
+
+    #### Function Overriding
+    > Function Overriding happen when a derived class define one or more function of the base class. The base class function will be overridden. The base class function must be declared as virtual function for runtime polymorphism to happen.
+
+    ```cpp
+    #include<iostream>
+    using namespace std;
+
+    class Base{
+        public:
+        virtual void display(){
+            cout << "Base Class function" << endl;
+        }
+    }
+
+    class derived: public Base{
+        public:
+        void display() override {
+            cout << "Derived Class function << endl;
+        }
+    }
+
+    int main(){
+        Base* basePtr;
+
+        // Creating a pointer of type Base
+        Base* basePtr;
+        
+        // Creating an object of Derived class
+        Derived derivedObj;
+    
+        // Pointing base class pointer to 
+        // derived class object
+        basePtr = &derivedObj;
+        
+        // Calling the display function 
+        // using base class pointer
+        basePtr->display();
+
+        return 0;
+    }
+    ```
 
 ## Inheritance
 
