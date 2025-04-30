@@ -2,14 +2,19 @@
 > Function in C++, Function is the building block of C++ programs that contains set of statements which are execute when function is called. It can take data as an argument, and perform some task around the data and return some result.
 
 ### Table of Contents
-- [🔠 Function Declaration](#🔠-function-declaration)
-- [🤙🏻 Function Call](#🤙🏻-function-call)
-- [🔠 Default Arguments](#🔠-default-arguments)
-- [🔠 Function Overloading](#🔠-function-overloading)
-- [🔄 Inline Function](#🔄-inline-function)
-- [Lambda Function](#lambda-function)
+- [📖 Function in C++](#-function-in-c)
+    - [Table of Contents](#table-of-contents)
+  - [🔠 Function Declaration](#-function-declaration)
+  - [🤙🏻 Function Call](#-function-call)
+  - [🔠 Default Arguments](#-default-arguments)
+  - [🔠 Function Overloading](#-function-overloading)
+  - [🔄 Inline Function](#-inline-function)
+    - [Flowchart of Inline Function](#flowchart-of-inline-function)
+    - [Flowchart of Normal Function](#flowchart-of-normal-function)
+    - [Example](#example)
+  - [Lambda Function](#lambda-function)
     - [Lambda function with capture](#lambda-function-with-capture)
-- [🤹🏻 Return multiple values](#🤹🏻-return-multiple-values)
+  - [🤹🏻 Return multiple values](#-return-multiple-values)
 
 ## 🔠 Function Declaration
 > A function definition specify the name of the function,what type of value it returns
@@ -92,6 +97,7 @@ flowchart TD
     C --> E[End]
     D --> E[End]
 ```
+
 
 ![Example](https://media.geeksforgeeks.org/wp-content/uploads/20221229112934/Inline-Function-in-Cpp.png)
 

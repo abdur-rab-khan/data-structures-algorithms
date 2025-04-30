@@ -17,6 +17,8 @@ class A {
         cout << "A " << this->a << endl;
         cout << "B " << this->b << endl;
     }
+
+    virtual void print() {}
 };
 
 class B : public A {
@@ -29,17 +31,35 @@ class B : public A {
         cout << "A " << a << endl;
         cout << "B " << b << endl;
     }
+
+    void print() override { cout << "Printing from base class" << endl; }
 };
 
 int main() {
     // A* ptr = new B(5, 5);
 
     // ptr->display();
-    A* a1;
+    A* ptr = nullptr;
     B b1(5, 5);
+    ptr = &b1;
 
-    a1 = &b1;
+    ptr->display();
 
-    a1->display();
+    // Address of baseptr
+    A* objectPtr = ptr;
+
+    // Address of vptr
+    void** vptr = *(void***)ptr;
+
+    // Function pointer type (which expects A* as the parameter)
+    typedef void (*FuncType)(A*);
+
+    // Get the vtable function pointer (points to B::display)
+    FuncType func1 = (FuncType)vptr[0];  // vptr[0] is the address of B::display()
+    FuncType func2 = (FuncType)vptr[1];
+    // Call the function via function pointer, passing `ptr` as the argument
+    func1(ptr);  // Same as calling ptr->display()
+    func2(ptr);
+
     return 0;
 }

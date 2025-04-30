@@ -25,5 +25,8 @@ int main() {
     // Null Ptr
     int* nullPtr = nullptr;
     int* ptrNull = NULL;
+
+    int num1 = 55;
+    int* ptr = &num1;
     return 0;
 }

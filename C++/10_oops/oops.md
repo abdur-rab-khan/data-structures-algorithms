@@ -1,8 +1,9 @@
 # 👨🏻‍💻 Object Oriented Programming (OOPS) in C++
+>
 > In Object Oriented Programming we use real world entities such as inheritance, encapsulation, polymorphism to implement the program. The main of `oops` is to bind together the data and function that operate on them so that no other part of the code can access this data except that function.
 
-
 ## Characteristic of OOPS
+
 - [👨🏻‍💻 Object Oriented Programming (OOPS) in C++](#-object-oriented-programming-oops-in-c)
   - [Characteristic of OOPS](#characteristic-of-oops)
   - [Class](#class)
@@ -10,11 +11,25 @@
   - [Encapsulation](#encapsulation)
   - [Abstraction](#abstraction)
   - [Polymorphism](#polymorphism)
+    - [1. Compile Time Polymorphism](#1-compile-time-polymorphism)
+    - [2. Run Time Polymorphism](#2-run-time-polymorphism)
+    - [Virtual Function](#virtual-function)
+      - [Function Overriding](#function-overriding)
   - [Inheritance](#inheritance)
-  
+    - [1. Single Inheritance](#1-single-inheritance)
+  - [Constructor](#constructor)
+    - [1. Default Constructor](#1-default-constructor)
+    - [2. Parameter Constructor](#2-parameter-constructor)
+    - [3. Copy Constructor](#3-copy-constructor)
+    - [4. Private Constructor](#4-private-constructor)
+    - [5. Move Constructor](#5-move-constructor)
+  - [`this`](#this)
+  - [Local and Nested Classes](#local-and-nested-classes)
+
 <img src="https://media.geeksforgeeks.org/wp-content/uploads/OOPs-Concepts.jpg" alt="characteristic of oops" height="400">
 
 ## Class
+
 > Classes are the building block of Object Oriented Programming language they are used to build the blueprint representing group of object. It is a `used-defined` data type which share common properties (`data`) and behavior (`member function`). And we are able to change there [access modifier](#encapsulation).
 
 ```cpp
@@ -53,6 +68,7 @@ int main() {
 ```
 
 ## Object
+
 > Objects are instances of a class that allow us to access and utilize the characteristics and behaviors defined in the class. While a class is just a blueprint or concept, an object is the actual entity created from that blueprint. In C++, we cannot use the properties (data members) or behaviors (member functions) defined in a class unless we create an object of that class.
 
   When class is defined there is no memory allocated but when it is (initialized) than memory is allocated.
@@ -79,55 +95,68 @@ int main() {
     return 0;
 }
 ```
+
 ## Encapsulation
+>
 > Encapsulation is a concept in object-oriented programming that refers to wrapping data and related functions into a single unit, usually a class. In C++, we achieve encapsulation using access modifiers such as `private`, `public`, and `protected`. These modifiers help protect the internal state of an object by preventing unauthorized access or modification from outside the class.
 
 <img src="https://media.geeksforgeeks.org/wp-content/uploads/20221207132325/ecapsulation_in_cpp.png" height="400">
 
-
-* ### Access Modifier
+- ### Access Modifier
+  >
     > In C++, access modifiers allow a class to control the visibility of its members. This helps restrict direct access from outside the class, a concept known as data hiding.
-    * Types of **access modifier.**
-        1. [`public`](#public)
-        2. [`private`](#private)
-        3. [`protected`](#protected)
+  - Types of **access modifier.**
+        1. [`public`](#1-public)
+        2. [`private`](#2-private)
+        3. [`protected`](#3-protected)
 
-    1. #### `public`
-        > In C++, `public` access modifier allows class members to  be accessed from outside the class.
+    #### 1. `public`
 
-        ```cpp
-        #include<iostream>
-        using namespace std;
+    > In C++, `public` access modifier allows class members to  be accessed from outside the class.
 
-        class A{
-            int num1 = 10;
-            int num2 = 10;
+  - **Examples**
 
-            public:
-            int getSum(){
-                return num1 + num2;
-            }
+    ```cpp
+    #include<iostream>
+    using namespace std;
+
+    class A{
+        int num1 = 10;
+        int num2 = 10;
+    
+        public:
+        int getSum(){
+            return num1 + num2;
         }
+    }
 
-        int main(){
-            A a1;
+    int main(){
+        A a1;
+    
+        cout << "Sum of num1 and num2 " << s1.getSum() << endl; // 20
+    
+        cout << a1.num1 << endl; // ⚠️ We can't access it because it is private
+        cout << a1.num2 << endl;
+        return 0;
+    }
+    ```
 
-            cout << "Sum of num1 and num2 " << s1.getSum() << endl; // 20
+    #### 2. `private`
 
-            cout << a1.num1 << endl; // ⚠️ We can't access it because it is private
-            cout << a1.num2 << endl;
-            return 0;
-        }
-        ```
+    > In C++, `private` access modifier restricts class members to be accessed from outside the class. It also restricts from subclass also. The makes protected a good choice when we want to hide some critical(related to security or credential) information.
 
-    2. #### `private`
-        > In C++, `private` access modifier restricts class members to be accessed from outside the class. It also restricts from subclass also. The makes protected a good choice when we want to hide some critical(related to security or credential) information.
+  - **Example**
 
-        ```cpp
-        // See Public Example
-        ```
-    3. #### `protected`
-       > In C++, `protected` access modifiers are different from `private` and `public`. It restricts access class members from outside the class but allows access from subclass. This makes protected a good choice when we want to allow derived classes to access certain members, while still keeping them hidden from the outside world. Unlike private members, which are completely inaccessible outside the class, protected members are available to any class that inherits from the base class. 
+    ```cpp
+    // See Public Example
+    ```
+
+    #### 3. `protected`
+
+       > In C++, `protected` access modifiers are different from `private` and `public`. It restricts access class members from outside the class but allows access from subclass. This makes protected a good choice when we want to allow derived classes to access certain members, while still keeping them hidden from the outside world. Unlike private members, which are completely inaccessible outside the class, protected members are available to any class that inherits from the base class.
+
+    - **Example**
+
        ```cpp
         #include <iostream>
         using namespace std;
@@ -177,11 +206,13 @@ int main() {
             return 0;
         }
        ```
+
 ## Abstraction
->Abstraction in C++ refers to hiding complex mechanisms and exposing only the essential features to the outside world. we can implement using `access modifier`.
+
+> Abstraction in C++ refers to hiding complex mechanisms and exposing only the essential features to the outside world. we can implement using `access modifier`.
 For example, when a person drives a car and presses the accelerator, they do not need to understand the internal mechanisms that increase the speed.  
 
-* Types of abstraction
+- Types of abstraction
     1. **Data Abstraction**: Show only required information about the data.
     2. **Control Abstraction**: Show only required information about the implementation.
 
@@ -190,63 +221,67 @@ flowchart TD
 A[Problem] -- Processing --> B[Model]
 ```
 
-```cpp
-#include<iostream>
-using namespace std;
+- **Example**
 
-class Vehicle
-{
-  private:
-          void piston()
-        {
-            cout<<"4 piston\n";
-        }
-
-        void manWhoMade()
-        {
-            cout<<"Markus Librette\n";
-        }
-    public:
-        void company()
-        {
-            cout<<"GFG\n";
-        }
-        void model()
-        {
-            cout<<"SIMPLE\n";
-        }
-        void color()
-        {
-            cout<<"Red/GREEN/Silver\n";
-        }
-        void cost()
-        {
-            cout<<"Rs. 60000 to 900000\n";
-        }
-        void oil()
-        {
-            cout<<"PETROL\n";
-        }
-};
-int main()
-{
+    ```cpp
+    #include<iostream>
+    using namespace std;
     
-    Vehicle obj;
-    obj.company();
-    obj.model();
-    obj.color();
-    obj.cost();
-    obj.oil();
-}
-```
+    class Vehicle
+    {
+    private:
+            void piston()
+            {
+                cout<<"4 piston\n";
+            }
+    
+            void manWhoMade()
+            {
+                cout<<"Markus Librette\n";
+            }
+        public:
+            void company()
+            {
+                cout<<"GFG\n";
+            }
+            void model()
+            {
+                cout<<"SIMPLE\n";
+            }
+            void color()
+            {
+                cout<<"Red/GREEN/Silver\n";
+            }
+            void cost()
+            {
+                cout<<"Rs. 60000 to 900000\n";
+            }
+            void oil()
+            {
+                cout<<"PETROL\n";
+            }
+        };
+    
+    int main()
+    {
+        
+        Vehicle obj;
+        obj.company();
+        obj.model();
+        obj.color();
+        obj.cost();
+        obj.oil();
+    }
+    ```
 
 ## Polymorphism
+>
 > The term **polymorphism** means having many forms. In C++ polymorphism is concept that can be applied on `function` and `operator`. A single function can work differently in different situations. similarly `operator` can work differently when used in different context.
 
-* Types of **Polymorphism**
+- Types of **Polymorphism**
     1. [Compile time **Polymorphism**](#1-compile-time-polymorphism)
     2. [Run time **Polymorphism**](#2-run-time-polymorphism)
-    
+
     ```mermaid
     flowchart TD
     
@@ -256,12 +291,14 @@ int main()
     B --> F[Function Overriding]
     C --> G[Virtual Function]
     ```
-    
-    ### 1. Compile Time Polymorphism
+
+  ### 1. Compile Time Polymorphism
+  >
     > In Compiler time polymorphism compiler can determine how the function or operator will work depending on the context. This type of polymorphism is achieved by function overloading or operator overloading. It is also know as **early binding**.
- 
+
     1. **Function Overloading**
         > Function Overloading is a feature in `OOPS`. Such function can work differently for different parameter. Function can be overload by changing number of `argument` or type of `argument`.
+
         ```cpp
         #include<iostream>
         using namespace std;
@@ -290,6 +327,7 @@ int main()
             }
         }
         ```
+
     2. **Operator Overloading**
         > Operator Overloading in C++ is special meaning for particular data type, We can change the working mechanism of Operator based upon context.
 
@@ -320,12 +358,16 @@ int main()
                 return 0;
             }
         ```
-    ### 2. Run Time Polymorphism
+
+  ### 2. Run Time Polymorphism
+  >
     > Run Time Polymorphism is known as **late binding** and **dynamic polymorphism**. The function in run time polymorphism is resolved at runtime where the compiler determine which function is call to bind at completion. Run time polymorphism is implement using function overriding with virtual function.
 
-    ### Virtual Function
+  ### Virtual Function
+
     > A **Virtual Function** is a type of function that we declared in a base using **`virtual`** and expect it to be ***overridden*** in the derived class. It tell compiler to perform `late binding` means compiler will decide in runtime to call right function.
-    * **Example**
+  - **Example**
+
     ```cpp
     #include<iostream>
     using namespace std;
@@ -366,12 +408,16 @@ int main()
         return 0;
     }
     ```
-    * If you use **Pointer** or **Reference** to the base class to call the function, C++ will choose the function of the actual object at runtime. **NOT** based on the type of the pointer/reference. **`If you use virtual function`**
-    
-    * **Application**
+
+  - If you use **Pointer** or **Reference** to the base class to call the function, C++ will choose the function of the actual object at runtime. **NOT** based on the type of the pointer/reference. **`If you use virtual function`**
+
+  - **Application**
         1. Imagine you are writing a big system, and you have a set of classes that share the same interface (base class), but each one behaves differently.
         2. If you want correct behavior at runtime depending on the real object (not the pointer/reference type), you need virtual functions.
         3. **Example** Like you have Payment Class and having two way to pay via debit card or credit card and having multiple payment providers.
+
+    - **Example**
+
         ```cpp
         #include <iostream>
         #include <cstdlib>  // for rand()
@@ -458,14 +504,15 @@ int main()
         }
         ```
 
-    * How works behind the scenes
-        * When you declare at least one virtual function.
+  - How works behind the scenes
+    - When you declare at least one virtual function.
             1. The compiler create `vtable` (Virtual Table).
             2. The vtable is an array of function pointers.
             3. Each class with virtual function has its own `vtable`.
             4. Every object of such a class has a hidden pointer inside it (called vptr) pointing to its class’s vtable.
-        * When you cal a virtual function.
-          * `Base* bptr = new Derived();`
+    - When you cal a virtual function.
+      - `Base* bptr = new Derived();`
+
           ```mermaid
           flowchart TD
           A[Base* ptr] --> | point to | B[Derived object]
@@ -478,8 +525,8 @@ int main()
           H --> I[class Derived::show]
           ```
 
-
-    #### Function Overriding
+  #### Function Overriding
+  >
     > Function Overriding happen when a derived class define one or more function of the base class. The base class function will be overridden. The base class function must be declared as virtual function for runtime polymorphism to happen.
 
     ```cpp
@@ -501,33 +548,270 @@ int main()
     }
 
     int main(){
-        Base* basePtr;
-
         // Creating a pointer of type Base
         Base* basePtr;
-        
+ 
         // Creating an object of Derived class
         Derived derivedObj;
     
-        // Pointing base class pointer to 
-        // derived class object
+        // Pointing base class pointer to derived class object
         basePtr = &derivedObj;
         
-        // Calling the display function 
-        // using base class pointer
+        // Calling the display function using base class pointer. bcz we use virtual function that's why derived class display fun will call.
         basePtr->display();
-
         return 0;
     }
     ```
 
+  - **Example**
+
+    ```mermaid
+    graph TD
+        A["Object (basePtr)"] --> B[vptr]
+        B --> C[vtable]
+        C --> D["[0]: address of display()"]
+        C --> E["[1]: address of another virtual function"]
+        C --> F[etc.]
+    ```
+
 ## Inheritance
+>
+> A Class that have capabilities to derive the characteristic and properties from another class is called **inheritance**. Inheritance is one of the important concept in OOPS.
 
-```mermaid
-flowchart TD
-A[Parent Class]
+- Types of Inheritance
+    1. Single Inheritance
+    2. Multilevel Inheritance
+    3. Multiple Inheritance
+    4. Hierarchal Inheritance
+    5. Hybrid Inheritance
 
-A --> C1[Child 1]
-A --> C2[Child 2]
-A --> C3[Child 3]
-```
+- **Sub Class**: The class that inherits properties from another class.
+- **Super Class or Base Class**: The class whose properties are inherited by a sub class.
+
+- **Example of inheritance**
+
+    ```cpp
+    #include <iostream>
+    using namespace std;
+    
+    // Base class that is to be inherited
+    class Parent {
+    public:
+        int id_p;
+        Parent(int x = 22) : id_p(x) {}
+        void printID_p() { cout << "Base ID: " << id_p << endl; }
+    };
+    
+    // Derived publicly inheriting from Base
+    // Class
+    class Child : public Parent {
+    public:
+        int id_c;
+        Child(int x = 22) : id_c(x) {}
+        void printID_c() { cout << "Child ID: " << id_c << endl; }
+    };
+    
+    int main() {
+        Child obj1;
+    
+        // An object of class child has all data members
+        // and member functions of class parent
+        // so we try accessing the parents method and data from
+        // the child class object.
+        obj1.id_p = 7;
+        obj1.printID_p();
+    
+        // finally accessing the child class methods and data
+        // too
+        obj1.id_c = 91;
+        obj1.printID_c();
+        return 0;
+    }
+    
+    ```
+
+  ### 1. Single Inheritance
+
+    > In Single Inheritance, a class is inherit one class. i.e on class is inherited by one derived class only.
+
+    ```mermaid
+    flowchart TD
+    
+    A["Class Parent (base class)"] --> B["Child Class (derived class)"]
+    
+    ```
+
+  - **Example**
+
+    ```cpp
+    #include <iostream>
+    using namespace std;
+    
+    class Vehicle {
+    public:
+        Vehicle() {
+            cout << "This is a Vehicle"<< endl;
+        }
+    };
+    
+    // Sub class derived from a single base classes
+    class Car : public Vehicle {
+    public:
+        Car() {
+            cout << "This Vehicle is Car"<< endl;
+        }
+    };
+    
+    int main() {
+        
+        // Creating object of sub class will
+        // invoke the constructor of base classes
+        Car obj;
+        return 0;
+    }
+    ```
+
+    ### 2. Multilevel Inheritance
+
+    > In multilevel Inheritance, A Derived class is created from another derived class and that derived class can be derived from base class.
+
+    ```mermaid
+    flowchart TD
+        A["Class GrandParent (base class)"] --> B["Class Parent (derived class)"] --> C["Class Son (derived class)"]
+    ```
+
+    ```cpp
+    #include <iostream>
+    using namespace std;
+    
+    class Vehicle {
+    public:
+        Vehicle() {
+            cout << "This is a Vehicle"<< endl;
+        }
+    };
+    
+    class fourWheeler : public Vehicle {
+    public:
+        fourWheeler() {
+            cout << "4 Wheeler Vehicles"<< endl;
+        }
+    };
+    
+    class Car : public fourWheeler {
+    public:
+        Car() {
+            cout << "This 4 Wheeler Vehical is a Car";
+        }
+    };
+    
+    int main() {
+        
+        // Creating object of sub class will
+        // invoke the constructor of base classes.
+        Car obj;
+        return 0;
+    }
+    ```
+
+    ### 3. Multiple Inheritance
+
+    > In multiple Inheritance, derived class are inherited by from a single base class.
+
+    ```mermaid
+    flowchart TD   
+    A["Class Parent (base class)"]
+    A --> B["Class Child1 (derived class)"]
+    A --> C["Class Child2 (derived class)"]
+    A --> D["Class Child3 (derived class)"]
+    ```
+
+  - **Example**
+
+    ```cpp
+    #include <iostream>
+    using namespace std;
+    
+    class LandVehicle {
+    public:
+        LandVehicle() {
+            cout << "This is a LandVehicle"<< endl;
+        }
+    };
+    
+    class WaterVehicle {
+    public:
+        WaterVehicle() {
+            cout << "This is a WaterVehicle"<< endl;
+        }
+    };
+    
+    // sub class derived from two base classes
+    class AmphibiousVehicle : public WaterVehicle, public LandVehicle {
+    public:
+        AmphibiousVehicle() {
+            cout << "This is an AmphibiousVehicle"<< endl;
+        }
+    };
+    
+    int main() {
+        
+        // Creating object of sub class will
+        // invoke the constructor of base classes.
+        AmphibiousVehicle obj;
+        return 0;
+    }
+    ```
+
+## Constructor
+
+> **Constructor** is a special method that is invoked automatically at the time of object of the class is created. It is commonly used to initialize the data members of the class. **Constructor** in C++ has the same name as the class or structure.
+
+- There are three **types** of constructor:
+  1. [Default Constructor](#1-default-constructor)
+  2. [Parameter Constructor](#2-parameter-constructor)
+  3. [Copy Constructor](#3-copy-constructor)
+  4. [Parameter Constructor](#4-private-constructor)
+  5. [Move Constructor](#5-move-constructor)
+
+- **Example**
+
+  ```cpp
+  #include<iostream>
+  using namespace std;
+
+  class A{
+    int a;
+
+    A(int a){
+        this->a = a;
+        cout << "Constructor is called " << endl;
+    }
+  }
+
+  int main(){
+    A a1(55);
+
+    return 0;
+  }
+  ```
+
+  - **Output**
+
+    ```shell
+    Constructor is called
+    ```
+
+### 1. Default Constructor
+
+### 2. Parameter Constructor
+
+### 3. Copy Constructor
+
+### 4. Private Constructor
+
+### 5. Move Constructor
+
+## `this`
+
+## Local and Nested Classes
