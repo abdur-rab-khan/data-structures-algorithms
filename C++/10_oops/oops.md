@@ -804,9 +804,145 @@ A[Problem] -- Processing --> B[Model]
 
 ### 1. Default Constructor
 
+> A default constructor is a type of constructor that take **no arguments** or has default value to all **arguments**. It is also referred as **zero-arguments constructor**.
+If we do not explicitly define constructor, compiler **automatically define** a  constructor during compilation. However when programmer explicitly define constructor, the compiler does not generate it.
+
+- In cases where a class is derived from a base class that has a default constructor, or a class contains a member object of another class with a default constructor, the compiler automatically generates a constructor for the derived or containing class. In this generated constructor, the compiler implicitly inserts calls to the base class constructor and member object constructors before executing the body of the derived or containing class's constructor.
+
+- **Default constructor and inheritance**
+
+    ```cpp
+    #include <iostream>
+    using namespace std;
+    
+    class Base {
+    public:
+        Base() { cout << "Base Class Constructor is called " << endl; }
+        int size;
+    };
+    
+    class Derived : public Base {
+    public:
+        Derived() {
+            cout << "Derived Class Constructor is called " << endl;
+            Base::size = 55;
+        }
+    };
+    
+    class A : public Base {
+        //  Compiler define a default constructor of Base.
+        // and inserts stub to call A constructor
+        // Compiler won't be initialize any data on Base Class
+    };
+    
+    class B : public Base {
+    public:
+        B() {  // User defined default constructor of B
+            // Compiler insert stub to call Base's constructor
+            cout << "B constructor " << endl;
+            // Compiler won't be initialize any data of Base
+        }
+    };
+    
+    int main() {
+        Derived d1;
+        A a1;
+        B b1;
+    
+        cout << d1.size << endl;
+        return 0;
+    }
+    ```
+
 ### 2. Parameter Constructor
 
+> In Parameter constructor we define parameter on the constructors
+
+- **Example**
+
+  ```cpp
+  #include<iostream>
+  using namespace std;
+
+  class A{
+    public:
+    A(int x, int y = 0){
+        cout << "The sum of x and y is " << x + y << endl;
+    }
+  }
+
+  int main(){
+    A a1(5);
+    A a2(20,2);
+
+    return 0;
+  }
+  ```
+
 ### 3. Copy Constructor
+
+> A copy constructor is a type of **special constructor** in C++, that is called when new object is created using existing object of the same class. If no copy constructor is explicitly defined, the compiler automatically generates one.
+> This process is known as **copy initialization**.and the compiler-performed default version is often referred to as member-wise initialization, because it copies each data member of the source object into the new object, one by one.
+
+- **Example**
+  
+  ```cpp
+  #include <iostream>
+    using namespace std;
+    
+    class A {
+    public:
+        int num;
+    };
+    
+    int main() {
+        A a1;
+        a1.num = 55;
+        cout << "The value of a1's num is " << a1.num << endl;
+    
+        // Creating another object using a1
+        // Copy constructor calling
+        A a2(a1);
+        cout << "The value of a2's num is " << a1.num << endl;
+        return 0;
+    }
+  ```
+
+  - **Output**
+
+    ```shell
+    The value of a1 is 55
+    The value of a2 is 55
+    ```
+
+    - It is above example we haven't define any copy constructor here, how can we able to create new object using existing one.
+    - So by default C++ compiler create sample copy constructor when it is not explicitly defined by the programmer.
+    - It is called **implicit copy constructor**. and it will copy the base and member of an object in the same order as they were they present in the class.
+
+  - **Creating User define copy constructor**
+    - Copy constructor take an argument where take reference of an object of the same class.
+
+    - **Syntax to create copy constructor**
+
+      ```cpp
+      className (const ClassName &obj){
+        // Copy logic
+      }
+      ```
+
+      - Here, the **const** qualifies is optional, to prevent from modification we have to use it.
+  
+  - **Need of user defined copy constructor**
+
+    > If we don't define our own copy constructor. the C++ compiler **automatically** define copy constructor which generally works fine. but problem happen when working with **pointers**, **run time allocation** of a resource like a **file handling**, **network connection** etc. because default copy constructor does only shallow copy.
+
+    - **There are two types of copy**
+      1. **Shallow copy**
+      2. **Deep copy**
+
+   1. **Shallow copy**
+      - **Shallow copy** means if we pass pointer of an resource, then that pointer will copy not actual resource. That can lead [dangling pointer](../09_pointers/pointers.md/#3-dangling) if actual object is deleted.
+   2. **Deep copy**
 
 ### 4. Private Constructor
 
