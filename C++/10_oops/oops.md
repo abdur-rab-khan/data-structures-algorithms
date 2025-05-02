@@ -21,8 +21,9 @@
     - [1. Default Constructor](#1-default-constructor)
     - [2. Parameter Constructor](#2-parameter-constructor)
     - [3. Copy Constructor](#3-copy-constructor)
-    - [4. Private Constructor](#4-private-constructor)
-    - [5. Move Constructor](#5-move-constructor)
+      - [**Need of user defined copy constructor**](#need-of-user-defined-copy-constructor)
+  - [`destructors`](#destructors)
+    - [`private destructor`](#private-destructor)
   - [`this`](#this)
   - [Local and Nested Classes](#local-and-nested-classes)
 
@@ -932,21 +933,303 @@ If we do not explicitly define constructor, compiler **automatically define** a 
 
       - Here, the **const** qualifies is optional, to prevent from modification we have to use it.
   
-  - **Need of user defined copy constructor**
+  #### **Need of user defined copy constructor**
 
     > If we don't define our own copy constructor. the C++ compiler **automatically** define copy constructor which generally works fine. but problem happen when working with **pointers**, **run time allocation** of a resource like a **file handling**, **network connection** etc. because default copy constructor does only shallow copy.
 
-    - **There are two types of copy**
+  - **Example**
+
+    ```cpp
+    #include<iostream>
+
+    using namespace std;
+
+    class A{
+        int x;
+
+        // Constructor
+        A(){}
+
+        // Copy Constructor
+        A(const A &obj){
+            x = obj.x;
+
+            cout << "Calling copy constructor" << endl;
+        }
+    }
+
+    int main(){
+        A obj1;
+        a.x = 55;
+        cout << "The obj1's x is << obj1.x << endl; // 55
+
+        A obj2(obj1);
+        cout << "The obj2's x is" << obj2.x << endl; // 55
+        return 0;
+    }
+    ```
+
+    - In the above example, we create an object called `obj1` and another object called `obj2` with the help of `obj1`.
+    - when we pass object into the constructor `copy_constructor` will call and initialize value using passed object(`obj1`).
+    - What if?? We pass pointer into the constructor. And assign pointer into the data member instead of assign value. it but i can cause really **fricking problem**. So what happen if we delete that object than it can cause [dangling pointer](../09_pointers/pointers.md/#3-dangling).
+
+  - **There are two types of copy**
       1. **Shallow copy**
       2. **Deep copy**
 
    1. **Shallow copy**
       - **Shallow copy** means if we pass pointer of an resource, then that pointer will copy not actual resource. That can lead [dangling pointer](../09_pointers/pointers.md/#3-dangling) if actual object is deleted.
+
+        ![shallow-copy](https://media.geeksforgeeks.org/wp-content/uploads/20240702154235/shallow-copy-concept-in-cpp.webp)
+
+      - **Example**
+
+        ```cpp
+        #include <iostream>
+        using namespace std;
+
+
+        class B {
+        public:
+            int* num;
+        
+            //    Creating Constructor and assign the value of it.
+            B(int* val) { num = val; }
+        
+            // Creating copy constructor and assign the value from obj.
+            B(const B& obj) { num = obj.num; }
+
+            // Cleaning data members after using it.
+            ~B() { delete num; }
+        };
+        
+        int main() {
+            // Dynamic Allocation of an object.
+            int* num = new int(55);
+        
+            B* obj1 = new B(num);
+            cout << "Obj1's num is " << *(obj1->num) << endl;
+        
+            // Using copy constructor
+            B obj2(*obj1);
+        
+            cout << "obj'2 num is " << *(obj2.num) << endl;
+
+            cout << "Printing Address " << endl;
+            cout << "Address of obj'1 num is " << obj1->num << endl;
+            cout << "Address of obj'2 num is " << obj2.num << endl;
+        
+            delete obj1;
+        
+            cout << "obj'2 num is " << *(obj2.num) << endl;
+            return 0;
+        }
+        ```
+
+        - **Output**
+
+          ```shell
+          Obj1's num is 55
+          obj'2 num is 55
+          Printing Address 
+          Address of obj'1 num is 0x14f6d3ff840
+          Address of obj'2 num is 0x14f6d3ff840
+          obj'2 num is -382575824 # Invalid data!! because we delete the main object. that obj2 refer that memory the first object member not data.
+          ```
+
    2. **Deep copy**
+       - In user defined copy constructor, we have to make sure that **pointers** (or **reference**) of a copied object point to new copy of the **dynamic resource allocated** manually in copy constructor using new operators.
 
-### 4. Private Constructor
+            ![deep-copy](https://media.geeksforgeeks.org/wp-content/uploads/20240702154249/deep-copy-concept-in-cpp.webp)
 
-### 5. Move Constructor
+       - **Example**
+
+            ```cpp
+            #include <cstring>
+            #include <iostream>
+            
+            using namespace std;
+            
+            class String {
+                char* str;
+            
+            public:
+                // Constructor
+                String(const char* s = NULL);
+            
+                // Destructor to clean it.
+                ~String() { delete[] str; }
+            
+                // Copy Constructor
+                String(const String&);
+            
+                // Print method
+                void print() { cout << str << endl; }
+            
+                // Change value
+                void change(const char*);
+            };
+                    
+            String::String(const char* s) {
+                int size = strlen(s) + 1;
+            
+                str = new char[size];
+                strcpy(str, s);
+            }
+            
+            String::String(const String& old_str) {
+                int size = strlen(old_str.str);
+            
+                str = new char[size + 1];
+                strcpy(str, old_str.str);
+            }
+                    
+            void String::change(const char* s) {
+                delete[] str;
+            
+                int size = strlen(s) + 1;
+                str = new char[size];
+                strcpy(str, s);
+            }
+                
+            int main() {
+                String str1("Abdur Rab");
+            
+                String str2 = str1;
+            
+                str2.print();
+                str1.print();
+            
+                str2.change("Abdur Rab Khan");
+            
+                str1.print();
+                str2.print();
+            
+                return 0;
+            } 
+            ```
+
+            - **Output**
+
+                ```shell
+                Abdur Rab
+                Abdur Rab
+                Abdur Rab
+                Abdur Rab Khan
+                ```
+
+            - In the above `example`, if we remove `copy_constructor` the output of `str1` and `str2` will be same after changing. because default `copy_constructor` from compiler when passing pointer it directly set the pointer not resource that way.
+
+## `destructors`
+
+> **Destructors** is the instance of member function that automatically call when object is going to destroy. It is the last function that is going to called before object is destroyed.
+
+- **Syntax**
+
+```cpp
+~className(){
+    // Body of destructor
+}
+```
+
+- We can also define destructor out of the class just like other member functions.
+
+    ```cpp
+    #include<iostream>
+    
+    using namespace std;
+    
+    class A{
+        public:
+    
+        ~className(){}
+    }
+    
+    A::~className(){
+        // Body of destructor
+    }
+    ```
+
+- **Example**
+
+  - Just like [constructor](#constructor) call at the time of object created, same [destructor](#destructors) call when object is going to destroyed.
+
+    ```cpp
+    #include<iostream>
+    
+    using namespace std;
+    
+    class Test{
+        public:
+        
+        // Constructor is created
+        Test(){
+            cout << "Constructor is called" << endl;
+        }
+    
+        // Destructor is created
+        ~Test(){
+            cout << "Destructor is called" << endl;
+        }
+    };
+    
+    int main(){
+        Test t1;
+    
+        return 0;
+    }
+    ```
+
+  - **Output**
+
+    ```shell
+    Constructor is called
+    Destructor is called 
+    ```
+
+- **Need of user defined destructor**
+
+  - Just like when we do not define constructor. the compiler created default constructor automatically. Same mechanism is also for destructor. but problem happen in **dynamic memory allocation** We know that it does not delete unless we delete using `delete` keyword.
+  
+  - **Example**
+
+    ```cpp
+    #include<iostream>
+    
+    class A{
+        int* num;
+
+        public:
+        A(int value){
+            num = new int(value);
+        }
+
+        ~A(){
+            cout << "Destructor is called " << endl;
+            delete num;
+        }
+    }
+
+    using namespace std;
+
+    int main(){
+        A a1(55);
+
+        return 0;
+    }
+    ```
+
+    - **Output**
+
+        ```shell
+        a1's num is 55
+        Destructor is called
+        After deleting
+        a1's num is -1021378128
+        ```
+
+### `private destructor`
+
 
 ## `this`
 

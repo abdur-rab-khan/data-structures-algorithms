@@ -1,5 +1,2 @@
-    // // Creating copy constructor.
-    // A(const A& obj) {
-    //     cout << "Copy contractor is called " << endl;
-    //     num = obj.num;
-    // }
+    // // Create str1 from str2
+    // String str2 = str1;
