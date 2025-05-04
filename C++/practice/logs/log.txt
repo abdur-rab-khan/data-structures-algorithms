@@ -1,0 +1,3 @@
+Starting the application
+Another component is running
+Logging from anywhere
