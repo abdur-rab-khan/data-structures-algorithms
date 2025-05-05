@@ -3,10 +3,11 @@
 using namespace std;
 
 class Book {
-    char* title = nullptr;
     int page;
 
    public:
+    char* title = nullptr;
+
     Book(const char* title, int page) {
         this->title = new char[strlen(title) + 1];
         strcpy(this->title, title);
@@ -35,6 +36,18 @@ class Book {
     ~Book() { delete[] title; }
 };
 
+void changeTitle(const char* title, Book& obj) {
+    int size = strlen(title) + 1;
+    obj.title = new char[size];
+    strcpy(obj.title, title);
+}
+
+void changeTitle(const char* title, Book* obj) {
+    int size = strlen(title) + 1;
+    obj->title = new char[size];
+    strcpy(obj->title, title);
+}
+
 int main() {
     Book b1("C++ foundation", 53);
     Book b2(b1);
@@ -50,23 +63,30 @@ int main() {
     b1.showBookInfo();
     b2.showBookInfo();
 
+    changeTitle("C++ foundation", b1);
+
+    b1.showBookInfo();
+
+    changeTitle("Rust Foundation", &b1);
+
+    b1.showBookInfo();
     /*
-    Before using Copy Constructor OutPut is:
+Before using Copy Constructor OutPut is:
 
-    Before Changing
+Before Changing
 
-    Title is C++ foundation
-    Page Number is 53
-    Title is Rust Foundation
-    Page Number is 53
+Title is C++ foundation
+Page Number is 53
+Title is Rust Foundation
+Page Number is 53
 
-    After changing
+After changing
 
-    Title is Rust Foundation
-    Page Number is 53
-    Title is Rust Foundation
-    Page Number is 53
-    */
+Title is Rust Foundation
+Page Number is 53
+Title is Rust Foundation
+Page Number is 53
+*/
 
     /*
     After using Copy Constructor Output is:

@@ -1,0 +1,1 @@
+In C++, file handling refers to each operation that is related to a file, such as creating, reading, and writing data. It allows us is used to store data permanently in the secondary memory of the computer (like the hard drive or SSD). In this way, the data can be preserved and accessed even after the program stops running.
