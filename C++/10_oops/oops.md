@@ -17,6 +17,8 @@
       - [Function Overriding](#function-overriding)
   - [Inheritance](#inheritance)
     - [1. Single Inheritance](#1-single-inheritance)
+    - [2. Multilevel Inheritance](#2-multilevel-inheritance)
+    - [3. Multiple Inheritance](#3-multiple-inheritance)
   - [Constructor](#constructor)
     - [1. Default Constructor](#1-default-constructor)
     - [2. Parameter Constructor](#2-parameter-constructor)
@@ -24,8 +26,7 @@
       - [**Need of user defined copy constructor**](#need-of-user-defined-copy-constructor)
   - [`destructors`](#destructors)
     - [`private destructor`](#private-destructor)
-  - [`this`](#this)
-  - [Local and Nested Classes](#local-and-nested-classes)
+      - [What is the use of `private` destructor](#what-is-the-use-of-private-destructor)
 
 <img src="https://media.geeksforgeeks.org/wp-content/uploads/OOPs-Concepts.jpg" alt="characteristic of oops" height="400">
 
@@ -631,103 +632,103 @@ A[Problem] -- Processing --> B[Model]
     
     ```
 
-  ### 1. Single Inheritance
+### 1. Single Inheritance
 
-    > In Single Inheritance, a class is inherit one class. i.e on class is inherited by one derived class only.
+> In Single Inheritance, a class is inherit one class. i.e on class is inherited by one derived class only.
 
-    ```mermaid
-    flowchart TD
-    
-    A["Class Parent (base class)"] --> B["Child Class (derived class)"]
-    
-    ```
+```mermaid
+flowchart TD
 
-  - **Example**
+A["Class Parent (base class)"] --> B["Child Class (derived class)"]
 
-    ```cpp
-    #include <iostream>
-    using namespace std;
-    
-    class Vehicle {
-    public:
-        Vehicle() {
-            cout << "This is a Vehicle"<< endl;
-        }
-    };
-    
-    // Sub class derived from a single base classes
-    class Car : public Vehicle {
-    public:
-        Car() {
-            cout << "This Vehicle is Car"<< endl;
-        }
-    };
-    
-    int main() {
-        
-        // Creating object of sub class will
-        // invoke the constructor of base classes
-        Car obj;
-        return 0;
+```
+
+- **Example**
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Vehicle {
+public:
+    Vehicle() {
+        cout << "This is a Vehicle"<< endl;
     }
-    ```
+};
 
-    ### 2. Multilevel Inheritance
-
-    > In multilevel Inheritance, A Derived class is created from another derived class and that derived class can be derived from base class.
-
-    ```mermaid
-    flowchart TD
-        A["Class GrandParent (base class)"] --> B["Class Parent (derived class)"] --> C["Class Son (derived class)"]
-    ```
-
-    ```cpp
-    #include <iostream>
-    using namespace std;
-    
-    class Vehicle {
-    public:
-        Vehicle() {
-            cout << "This is a Vehicle"<< endl;
-        }
-    };
-    
-    class fourWheeler : public Vehicle {
-    public:
-        fourWheeler() {
-            cout << "4 Wheeler Vehicles"<< endl;
-        }
-    };
-    
-    class Car : public fourWheeler {
-    public:
-        Car() {
-            cout << "This 4 Wheeler Vehical is a Car";
-        }
-    };
-    
-    int main() {
-        
-        // Creating object of sub class will
-        // invoke the constructor of base classes.
-        Car obj;
-        return 0;
+// Sub class derived from a single base classes
+class Car : public Vehicle {
+public:
+    Car() {
+        cout << "This Vehicle is Car"<< endl;
     }
-    ```
+};
 
-    ### 3. Multiple Inheritance
+int main() {
+    
+    // Creating object of sub class will
+    // invoke the constructor of base classes
+    Car obj;
+    return 0;
+}
+```
 
-    > In multiple Inheritance, derived class are inherited by from a single base class.
+### 2. Multilevel Inheritance
 
-    ```mermaid
-    flowchart TD   
-    A["Class Parent (base class)"]
-    A --> B["Class Child1 (derived class)"]
-    A --> C["Class Child2 (derived class)"]
-    A --> D["Class Child3 (derived class)"]
-    ```
+> In multilevel Inheritance, A Derived class is created from another derived class and that derived class can be derived from base class.
 
-  - **Example**
+```mermaid
+flowchart TD
+    A["Class GrandParent (base class)"] --> B["Class Parent (derived class)"] --> C["Class Son (derived class)"]
+```
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class Vehicle {
+public:
+    Vehicle() {
+        cout << "This is a Vehicle"<< endl;
+    }
+};
+
+class fourWheeler : public Vehicle {
+public:
+    fourWheeler() {
+        cout << "4 Wheeler Vehicles"<< endl;
+    }
+};
+
+class Car : public fourWheeler {
+public:
+    Car() {
+        cout << "This 4 Wheeler Vehical is a Car";
+    }
+};
+
+int main() {
+    
+    // Creating object of sub class will
+    // invoke the constructor of base classes.
+    Car obj;
+    return 0;
+}
+```
+
+### 3. Multiple Inheritance
+
+> In multiple Inheritance, derived class are inherited by from a single base class.
+
+```mermaid
+flowchart TD   
+A["Class Parent (base class)"]
+A --> B["Class Child1 (derived class)"]
+A --> C["Class Child2 (derived class)"]
+A --> D["Class Child3 (derived class)"]
+```
+
+- **Example**
 
     ```cpp
     #include <iostream>
@@ -761,7 +762,7 @@ A[Problem] -- Processing --> B[Model]
         // invoke the constructor of base classes.
         AmphibiousVehicle obj;
         return 0;
-    }
+        }
     ```
 
 ## Constructor
@@ -1230,7 +1231,269 @@ If we do not explicitly define constructor, compiler **automatically define** a 
 
 ### `private destructor`
 
+> Private destructor with [access modifier](#access-modifier) is known as private destructor. When ever we can to prevent destruction of an object, we make destructor private.
+
+#### What is the use of `private` destructor
+
+> Whenever you want to control the destruction of an object of a class then we make destruction private. For dynamically created object. it may happen when you pass pointer of a object to a function and the function delete the object. If object refer after function call then it will become [dangling pointer](../09_pointers/pointers.md/#3-dangling).
+
+- **Example**
+
+  ```cpp
+  #include<iostream>
+  using namespace std;
+
+  class Test{
+    private:
+    ~Test(){
+
+    }
+  };
+
+  int main(){
+    Test t1;
+
+    return 0;
+  }
+  ```
+
+  - **Output**
+
+    ```shell
+    09_oops.cpp: In function 'int main()':
+    09_oops.cpp:57:10: error: 'Test::~Test()' is private within this context
+    57 |     Test t1;
+        |          ^~
+    09_oops.cpp:53:5: note: declared private here
+    53 |     ~Test() {}
+        |     ^
+    ```
+
+    - The compiler notice local variable 't' cannot be a destructor because destructor is private.
+
+- **Example 2**
+
+    ```cpp
+    #include<iostream>
+    using namespace std;
+
+    class Test{
+        private:
+        ~Test(){}
+    };
+
+    int main(){
+        Test* t1 = new Test();
+
+        return 0;
+    }
+    ```
+
+  - It perfectly works, because of dynamic allocation destructor is not class unless we [`delete`](../additional/02_memory_manegment.md/#2-️-delete) the object.
+
+- **Example 3 (Create object and then delete)**
+  
+  ```cpp
+    #include <iostream>
+    using namespace std;
+    
+    class Test {
+    private:
+        ~Test() {}
+    
+    public:
+        friend void friendDestructor(Test* ptr) { delete ptr; }
+    };
+    
+    int main() {
+        // Test t1; ⚠️ Error: Compiler try to find destructor, and there is no destructor.
+        Test* t1 = new Test();  // ✅ Here perfectly working, Because of dynamic allocation
+        // destructor is not call unless we delete the object.
+    
+        friendDestructor(t1);
+        return 0;
+    }
+
+    // OR
+
+    class parent {
+    private:
+        ~parent() { cout << "destructor called" << endl; }
+    
+    public:
+        parent() { cout << "constructor called" << endl; }
+        void destruct() { delete this; }
+    };
+    
+    int main() {
+        parent* p;
+        p = new parent;
+        // destructor called
+        p->destruct();
+    
+        return 0;
+    }
+    ```
+
+## `Static`
+
+> `static` member is a data member or function member that are declared using `static` keyword.
+
+- A `static` member has certain special characteristics:
+
+  1. `static` members are created once and use them for all entire class and shared by all the objects of that class. no matter how object is created.
+  2. It is initialize before object is created, even before the main starts outside the class itself.
+  3. It is visible can be controlled with create object instance.
+  4. It lifetime in the entire program.
+  
+  - **Example**
+
+    ```cpp
+    class className {
+        static datatype variable_name;
+
+        static return_type function_name(){}
+    };
+    ```
+
+    - `static` members are useful for maintaining members shared among all instance of the class.
+
+    - **Example**
+
+      ```cpp
+        #include <iostream> 
+        using namespace std; 
+        
+        class Box 
+        { 
+            private: 
+            static int length; 
+            static int breadth; 
+            static int height; 
+            
+            public:
+            
+            static void print() 
+            { 
+                cout << "The value of the length is: " << length << endl; 
+                cout << "The value of the breadth is: " << breadth << endl; 
+                cout << "The value of the height is: " << height << endl; 
+            }
+        }; 
+        
+        // initialize the static data members 
+        
+        int Box :: length = 10; 
+        int Box :: breadth = 20; 
+        int Box :: height = 30; 
+        
+        // Driver Code
+        
+        int main() 
+        {
+            
+            Box b; 
+            
+            cout << "Static member function is called through Object name: \n" << endl; 
+            b.print(); 
+            
+            cout << "\nStatic member function is called through Class name: \n" << endl; 
+            Box::print(); 
+            
+            return 0; 
+        }
+      ```
 
 ## `this`
 
-## Local and Nested Classes
+> `this` is a pointer that point to the current instance of the class. It is used to refer the object within this own function.
+
+- **💀 Note**: `this` keyword is readonly you can't change them.
+
+- **Example**
+
+  ```cpp
+  #include<iostream>
+  using namespace std;
+
+  // Class that use this pointer
+  class A{
+    public:
+    int a;
+
+    A(int a){
+        // Assigning "a" of this object to function argument "a"
+        this->a = a;
+    }
+
+    void display(){
+        cout << "The value of a is " << this->a << endl;
+    }
+  }
+
+  int main(){
+    A o(10);
+
+    o->display(); 
+    return 0;
+  }
+  ```
+
+  - **Understanding about `this` pointer**
+    - To understand `this`, we have to know about object is tool at function && data members.
+        1. Each object has it copy of data members.
+        2. All-access the same function definition as present in code segment.
+
+    - Meaning object has its own copy of members and all objects has share single copy of objects.
+    - Now common question is raise, If all the object has copy of each member function exist and is used by multiple object.
+      - The compiler supplies an implicit pointer along with the names of the functions as ‘this’. The ‘this’ pointer is passed as a hidden argument to all nonstatic member function calls.
+    - `this` keyword is not available in `static`, as we know it share same data member and function.
+
+    - **Example (chain function call)**
+
+      ```cpp
+      #include<iostream>
+      using namespace std;
+
+      class Test{
+        int x;
+        int y;
+
+        public:
+        Test(int x, int y){
+            this->x = x;
+            this->y = y;
+        }
+
+        Test& setX(int a){
+            x = a;
+            return *this;
+        }
+        Test& setY(int a){
+            y = a;
+            return *this;
+        }
+
+        void print(){
+            cout << "x = " << x << " y = " << y << endl;
+        }
+      };
+
+      int main(){
+        Test t1(55,155);
+
+        t1.print();
+
+        t1.setX(155).setY(55);
+
+        t1.print();
+        return 0;
+      }
+      ```
+
+      - **Output**
+
+        ```shell
+        x = 55 y = 155
+        x = 155 y = 55
+        ```

@@ -5,7 +5,7 @@
 
 class Texture;
 
-class TextureManager {
+class Texture {
    public:
     void addTexture(const std::string& name, std::shared_ptr<Texture> texture);
     void removeTexture(const std::string& name);
