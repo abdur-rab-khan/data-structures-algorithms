@@ -1,22 +1,26 @@
 # 📑 Enumeration (Enum)
+>
 > `Enum` is a special type that represent the group of constants (unchangeable value).
 
 * There are many two types of `enum`.
-    * Default `enum`
-    * `enum class`
+  * Default `enum`
+  * `enum class`
 
 ## 🖊️ **`enum`** Declaration
+
 ```cpp
 enum Gender{
     MALE,
     FEMALE
 }
 ```
+
 * `Gender` is the name of the enum type.
 * `MALE`, `FEMALE` are named constants.
 * By default, `MALE` has value 0, `FEMALE` has value 1.
 
 * But we can also define value on them.
+
 ```cpp
 enum Gender{
     MALE = 5,
@@ -25,6 +29,7 @@ enum Gender{
 ```
 
 ## 🏛️ **`enum class`** Declaration
+
 ```cpp
 enum class HTTPStatus{
     Ok = 200,
@@ -34,7 +39,9 @@ enum class HTTPStatus{
 ```
 
 ## ➕ Implementation
+
 * ### `enum`
+
 ```cpp
 enum HTTPStatus{
     Ok = 200,
@@ -56,7 +63,9 @@ int main(){
     return 0;
 }
 ```
+
 * ### `enum class`
+
 ```cpp
 enum class HTTPStatus{
     Ok = 200,
@@ -85,7 +94,8 @@ int main(){
 }
 ```
 
-## 🔑 Key Difference between `enum` and `enum class`.
+## 🔑 Key Difference between `enum` and `enum class`
+
 | Feature | `enum` | `enum class` |
 | --- | --- | --- |
 | Scope | Global scope - enum values are placed in the enclosing scope | Scoped within the enum - must be accessed using enum name |
@@ -94,8 +104,8 @@ int main(){
 | Access | Direct access to enum values (e.g. `RED`) | Must use scope resolution (e.g. `Colors::RED`) |
 | Size | Usually 4 bytes (size of int) | Can be optimized by specifying underlying type |
 
-
 ## ⚒️ Use Cases
+
 * `Enum` is most commonly use in large application, for type safety and naming convention.
 * It is also used in `switch` statement to make code more readable.
 * `Enum` is also used in `API` to define the status code, error code, etc.
