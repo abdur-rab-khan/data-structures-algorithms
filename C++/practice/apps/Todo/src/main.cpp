@@ -13,6 +13,7 @@ enum class Choice {
     Get = 2,
     Update = 3,
     Delete = 4,
+    Exit = 5,
 };
 
 std::string generateRandomID(size_t length = 12) {
@@ -40,11 +41,11 @@ class Todo {
     bool completed = false;
 
    public:
+    std::string getContent() const { return content; }
+
     void addTodo(std::string content) {
         id = generateRandomID();
         this->content = content;
-
-        std::cout << ">>>>>>>>>> TODO IS ADDED SUCCESSFULLY <<<<<<<<<<<<<" << std::endl;
     }
 
     void getTodoProps() const {
@@ -52,35 +53,54 @@ class Todo {
         std::cout << "Is Completed " << completed << std::endl << std::endl;
     }
 
-    string getTodoContents() const { return content; }
+    void updateTodo(std::string content = "", bool isCompleted = false) {
+        if (!content.empty()) {
+            this->content = content;
+        }
+
+        if (isCompleted != completed) {
+            this->completed = isCompleted;
+        }
+    }
 };
 
 class TodoManger {
    private:
     std::vector<Todo> todos;
 
+    // HELPER FUNCTIONS
     std::string getContentFromUser() {
         std::string content;
-        std::cout << "Enter you todo content to add it. " << std::endl;
+        std::cout << "Enter you todo content to add it. ";
         std::getline(std::cin >> std::ws, content);
 
         if (content.length() == 1) {
-            return NULL;
+            return "";
         }
 
         return content;
     }
 
+    void printAllTodoContent() {
+        std::cout << "------------------ ALL TODOS LIST --------------------" << std::endl;
+        for (int i = 0; i < todos.size(); i++) {
+            std::cout << "Sr no. " << i + 1 << " " << todos.at(i).getContent() << std::endl;
+        }
+        std::cout << "-----------------------------------------------" << std::endl;
+    };
+
    public:
     void addTodo() {
         std::string content = getContentFromUser();
 
-        if (content != NULL) {
+        if (!content.empty()) {
             Todo todo;
             todo.addTodo(content);
 
             todos.push_back(todo);
+            std::cout << ">>>>>>>>>>>> TODO IS ADDED SUCCESSFULLY <<<<<<<<<<<<<" << std::endl;
         } else {
+            std::cout << "Invalid Request" << std::endl;
         }
     }
 
@@ -96,33 +116,61 @@ class TodoManger {
     }
 
     void updateTodo() {
-        std::cout << "------------------ CHOOSE BETWEEN THEM ⬇️ -----------------" << std::endl;
         int choice;
+        std::cout << "------------------ CHOOSE BETWEEN THEM -----------------" << std::endl;
+        printAllTodoContent();
 
-        int counter = 1;
-        for (const Todo& todo : todos) {
-            std::cout << counter << ". " << todo.getTodoContents() << std::endl;
-        }
-
-        std::cout << "Enter you choice: ";
+        std::cout << "Enter the todo number that you want to change:-  ";
+        std::cin >> choice;
 
         if (choice > todos.size()) {
             std::cout << "⚠️ INVALID REQUEST OUT OF RANGE..." << std::endl;
         } else {
-            std::string content;
-            std::cout << "Enter you todo content to add it. " << std::endl;
-            std::getline(std::cin >> std::ws, content);
+            int chooseWhatToUpdate;
 
-            if (content.length() > 0) {
-                Todo todo;
-                todo.addTodo(content);
+            std::cout << "--------------------- CHOOSE WHAT YOU WANT TO UPDATE "
+                         "---------------------------"
+                      << std::endl;
+            std::cout << "1. Todo is completed\n2. Update the content of todo" << std::endl;
+            std::cin >> chooseWhatToUpdate;
 
-                todos.push_back(todo);
+            if (chooseWhatToUpdate > 2 || chooseWhatToUpdate <= 0)
+                return;
+
+            if (chooseWhatToUpdate == 1) {
+                todos.at(choice - 1).updateTodo("", true);
+            } else {
+                std::string content = getContentFromUser();
+
+                if (!content.empty()) {
+                    todos.at(choice - 1).updateTodo(content);
+                } else {
+                    std::cout << "⚠️ Invalid Request in correct content" << std::endl;
+                }
             }
+
+            std::cout << ">>>>>>>>>>>> TODO IS UPDATED SUCCESSFULLY <<<<<<<<<<<<<" << std::endl;
         }
     }
 
-    void removeTodo() {}
+    void removeTodo() {
+        std::cout << "------------------  SELECTED THAT YOU WANT TO DELETE -----------------"
+                  << std::endl;
+        int choice;
+        printAllTodoContent();
+
+        std::cout << "Enter the todo number that you want to delete:-  ";
+        std::cin >> choice;
+
+        if (choice > todos.size()) {
+            std::cout << "⚠️ INVALID REQUEST OUT OF RANGE..." << std::endl;
+            return;
+        } else {
+            todos.erase(todos.begin() + choice - 1);
+
+            std::cout << ">>>>>>>>>>>> TODO IS REMOVE SUCCESSFULLY <<<<<<<<<<<<<" << std::endl;
+        }
+    }
 };
 
 int main() {
@@ -131,9 +179,11 @@ int main() {
 
     while (true) {
         int choice;
-        std::cout << "1. To add new todo. \n 2. Update Todo. \n 3. Update existing todo. \n 4. "
-                     "Delete todo."
+        std::cout << "----------------- CHOOSE BETWEEN THEM ----------------------" << std::endl;
+        std::cout << "1. To add new todo.\n2. Get All Todos.\n3. Update existing todo.\n4. Delete "
+                     "todo.\n5. Exit"
                   << std::endl;
+
         std::cout << "Enter you choice: ";
         std::cin >> choice;
         Choice userChoice = static_cast<Choice>(choice);
@@ -150,7 +200,7 @@ int main() {
                 std::cout << "******************** GET ALL TODOS **********************"
                           << std::endl;
 
-                todoManger->getTodo();
+                todoManger->getAllTodo();
                 break;
             }
             case (Choice::Update): {
@@ -164,6 +214,10 @@ int main() {
                 std::cout << "******************** DELETE EXISTING TODO **********************"
                           << std::endl;
 
+                todoManger->removeTodo();
+                break;
+            }
+            case (Choice::Exit): {
                 break;
             }
             default: {
