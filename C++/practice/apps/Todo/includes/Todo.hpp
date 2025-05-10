@@ -1,14 +1,17 @@
-#include <map>
+#pragma once
+
 #include <string>
 
 class Todo {
    private:
-    map<int, std::string> todos;
+    std::string content;
+    bool isCompleted = false;
 
    public:
-    Todo() {}
-    void addTodo(std::string todo);
-    void updateTodo(int id, std::string updatedTodo);
-    void removeTodo(int id);
-    void getAllTodo();
+    Todo(const std::string& content);
+
+    // Member functions
+    std::string getContent() const;
+    void getTodoProps() const;
+    void updateTodo(const std::string& content = "", bool isCompleted = false);
 };
