@@ -3,8 +3,6 @@
 #include <memory>
 #include <string>
 
-class Texture;
-
 class Texture {
    public:
     void addTexture(const std::string& name, std::shared_ptr<Texture> texture);
@@ -12,5 +10,9 @@ class Texture {
     void updateTexture(const std::string& name, std::shared_ptr<Texture> texture);
 
    private:
-    std::map<std::string, std::shared_ptr<Texture>> texture;
-}
+    std::string id;
+    int size;
+    std::string assetName;
+    std::string description;
+    std::string path;
+};

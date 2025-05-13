@@ -671,7 +671,7 @@ cout << num <<endl; // 66
         | **`swap(given_ptr)`** | swap the ownership    of  given ptr instance |
 
     3. #### `weak_ptr`
- 
+
     > **`weak_ptr`** is just like shared ptr, It    has capability to point to the resource owned  by another shared_ptr but without owning it. In other words, they are able to create a    non-owning reference to the object managed by  shared_ptr. You can use when you want to     give. Whenever you want to access the   weak_ptr value you have to always use **`ptr. lock()`**.
 
     > It only works with **`shared_ptr`**.
