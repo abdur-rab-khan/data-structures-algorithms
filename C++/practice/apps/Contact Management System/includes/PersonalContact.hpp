@@ -15,6 +15,9 @@ class PersonalContact : public Contact {
     std::string nickName;
 
    public:
+    PersonalContact(std::string name, std::string nickName, std::string phoneNumber,
+                    std::string email);
+
     void displayContactDetails() override;
 
     void updateContact();

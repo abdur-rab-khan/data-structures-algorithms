@@ -1,6 +1,15 @@
+// CMS/includes/BusinessContact.hpp
 #pragma
 
 #include "Contact.hpp"
+
+enum class UpdationType {
+    Name = 1,
+    PhoneNumber,
+    Email,
+    Company,
+    Website,
+};
 
 class BusinessContact : public Contact {
    private:
@@ -8,6 +17,9 @@ class BusinessContact : public Contact {
     std::string website;
 
    public:
+    BusinessContact(std::string name, std::string phoneNumber, std::string email,
+                    std::string company, std::string website);
+
     void displayContactDetails() override;
 
     void updateContact() override;

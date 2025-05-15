@@ -60,7 +60,9 @@
         "chrono": "cpp",
         "format": "cpp",
         "span": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "bitset": "cpp",
+        "regex": "cpp"
     },
     "terminal.integrated.fontLigatures.enabled": true,
     "editor.mouseWheelZoom": true,

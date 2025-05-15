@@ -1,8 +1,12 @@
 // CMS/src/contact.cpp
 #include "../includes/Contact.hpp"
 
-#include "../utils.cpp"
+#include "utils.cpp"
 
 std::string Contact::getName() const {
     return name;
+}
+
+std::string Contact::getPhoneNumber() const {
+    return phoneNumber;
 }
