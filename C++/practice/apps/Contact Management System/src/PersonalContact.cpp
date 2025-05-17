@@ -26,26 +26,26 @@ void PersonalContact::updateContact() {
 
     int choice = getChoice();
 
-    switch (static_cast<UpdationType>(choice)) {
-        case UpdationType::Name: {
+    switch (static_cast<UpdationTypeForP>(choice)) {
+        case UpdationTypeForP::Name: {
             std::string updatedName = getStringFromUser("Enter the updated name: ", true);
 
             name = updatedName;
             break;
         }
-        case UpdationType::NickName: {
+        case UpdationTypeForP::NickName: {
             std::string updatedNickName = getStringFromUser("Enter the updated nick name: ", true);
 
             nickName = updatedNickName;
             break;
         }
-        case UpdationType::PhoneNumber: {
+        case UpdationTypeForP::PhoneNumber: {
             std::string updateNumber = getPhoneNumber("Enter the update phone number: ", true);
 
             phoneNumber = updateNumber;
             break;
         }
-        case UpdationType::Email: {
+        case UpdationTypeForP::Email: {
             std::string updatedEmail = getEmailFromUser("Enter the update email address: ", true);
 
             email = updatedEmail;

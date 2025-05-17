@@ -1,6 +1,7 @@
 // CMS/src/BusinessContact.cpp
 
-#include "../includes/BussinessContact.hpp"
+#include "../includes/BusinessContact.hpp"
+
 #include "utils.cpp"
 
 BusinessContact::BusinessContact(std::string name, std::string phoneNumber, std::string email,
@@ -30,33 +31,34 @@ void BusinessContact::updateContact() {
 
     int choice = getChoice();
 
-    switch (static_cast<UpdationType>(choice)) {
-        case UpdationType::Name: {
+    switch (static_cast<UpdationTypeForB>(choice)) {
+        case UpdationTypeForB::Name: {
             std::string updatedName = getStringFromUser("Enter the updated name: ", true);
 
             name = updatedName;
             break;
         }
-        case UpdationType::PhoneNumber: {
-            std::string updateNumber = getPhoneNumber("Enter the update phone number: ", true);
+        case UpdationTypeForB::PhoneNumber: {
+            std::string updateNumber =
+                getPhoneNumberFromUser("Enter the update phone number: ", true);
 
             phoneNumber = updateNumber;
             break;
         }
-        case UpdationType::Email: {
+        case UpdationTypeForB::Email: {
             std::string updatedEmail = getEmailFromUser("Enter the update email address: ", true);
 
             email = updatedEmail;
             break;
         }
-        case UpdationType::Company: {
+        case UpdationTypeForB::Company: {
             std::string updatedCompany =
                 getStringFromUser("Enter the updated company name: ", true);
 
             company = updatedCompany;
             break;
         }
-        case UpdationType::Website: {
+        case UpdationTypeForB::Website: {
             std::string updatedWebsite =
                 getWebsiteFromUser("Enter the updated website uri: ", true);
 

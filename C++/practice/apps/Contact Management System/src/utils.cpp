@@ -21,7 +21,7 @@ std::string getHeadingMessage(std::string msg) {
     return "**************** " + msg + " ****************";
 }
 
-int getChoice() {
+int getChoice(int max = 0) {
     int choice;
     std::cin >> choice;
 
@@ -30,6 +30,9 @@ int getChoice() {
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         throw std::invalid_argument("Invalid input. Please enter a number.");
     }
+
+    if (max != 0 && choice >= max)
+        throw std::invalid_argument("Invalid choice. you reached the limit.");
 
     return choice;
 }
@@ -49,7 +52,8 @@ std::string getStringFromUser(std::string msg, bool strict = false) {
     return content;
 }
 
-std::string getPhoneNumber(std::string msg = "Enter a phone number: ", bool strict = false) {
+std::string getPhoneNumberFromUser(std::string msg = "Enter a phone number: ",
+                                   bool strict = false) {
     std::string phoneNumber = "";
     std::regex number_regex(R"(^\d+$)");
 

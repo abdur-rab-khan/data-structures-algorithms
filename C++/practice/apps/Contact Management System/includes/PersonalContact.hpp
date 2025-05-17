@@ -3,7 +3,7 @@
 
 #include "Contact.hpp"
 
-enum class UpdationType {
+enum class UpdationTypeForP {
     Name = 1,
     NickName,
     PhoneNumber,

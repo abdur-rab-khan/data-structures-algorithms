@@ -1,5 +1,7 @@
 #pragma
 
+#include <limits>
+#include <tuple>
 #include <vector>
 
 #include "Contact.hpp"
@@ -17,20 +19,21 @@ enum class MenuOptions {
 
 class ContactManager {
    private:
-       std::vector<Contact> listContact;
+    std::vector<Contact> listContact;
+
+    std::vector<Contact> searchContactList();
+    std::tuple<bool, std::string> checkIsDuplicate(std::string phoneNumber, std::string name);
 
    public:
-    void showMenu() {}
+    void showMenu();
 
-    void addContact() {}
+    void addContact();
 
-    void updateContact() {}
+    void updateContact();
 
-    void searchContact() {}
+    void searchContact();
 
-    void deleteContact() {}
+    void deleteContact();
 
-    void viewAllContacts() {}
-
-    void viewAllContactsInDetail() {}
+    void viewAllContactsInDetail();
 };
