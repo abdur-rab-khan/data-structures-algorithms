@@ -1,7 +1,7 @@
 // CMS/src/personalContact.cpp
 #include "../includes/PersonalContact.hpp"
 
-#include "utils.cpp"
+#include "../includes/utils.hpp"
 
 PersonalContact::PersonalContact(std::string name, std::string nickName, std::string phoneNumber,
                                  std::string email) {
@@ -11,10 +11,10 @@ PersonalContact::PersonalContact(std::string name, std::string nickName, std::st
     this->email = email;
 }
 
-void PersonalContact::displayContactDetails() {
+void PersonalContact::displayContactDetails() const {
     std::cout << "Name: " << name << " ( " << nickName << " )" << std::endl;
     std::cout << "Phone Number: " << phoneNumber << std::endl;
-    std::cout << "Email: " << email << std::endl;
+    std::cout << "Email: " << email << std::endl << std::endl;
 }
 
 void PersonalContact::updateContact() {
@@ -40,7 +40,8 @@ void PersonalContact::updateContact() {
             break;
         }
         case UpdationTypeForP::PhoneNumber: {
-            std::string updateNumber = getPhoneNumber("Enter the update phone number: ", true);
+            std::string updateNumber =
+                getPhoneNumberFromUser("Enter the update phone number: ", true);
 
             phoneNumber = updateNumber;
             break;

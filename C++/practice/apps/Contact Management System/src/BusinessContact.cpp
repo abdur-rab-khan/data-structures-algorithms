@@ -2,7 +2,7 @@
 
 #include "../includes/BusinessContact.hpp"
 
-#include "utils.cpp"
+#include "../includes/utils.hpp"
 
 BusinessContact::BusinessContact(std::string name, std::string phoneNumber, std::string email,
                                  std::string company, std::string website) {
@@ -13,12 +13,12 @@ BusinessContact::BusinessContact(std::string name, std::string phoneNumber, std:
     this->website = website;
 }
 
-void BusinessContact::displayContactDetails() {
+void BusinessContact::displayContactDetails() const {
     std::cout << "Name: " << name << std::endl;
     std::cout << "Phone Number: " << phoneNumber << std::endl;
     std::cout << "Email: " << email << std::endl;
     std::cout << "Company Name: " << company << std::endl;
-    std::cout << "Website Name: " << website << std::endl;
+    std::cout << "Website Name: " << website << std::endl << std::endl;
 }
 
 void BusinessContact::updateContact() {

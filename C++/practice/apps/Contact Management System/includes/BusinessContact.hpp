@@ -1,5 +1,5 @@
 // CMS/includes/BusinessContact.hpp
-#pragma
+#pragma once
 
 #include "Contact.hpp"
 
@@ -20,7 +20,7 @@ class BusinessContact : public Contact {
     BusinessContact(std::string name, std::string phoneNumber, std::string email,
                     std::string company, std::string website);
 
-    void displayContactDetails() override;
+    void displayContactDetails() const override;
 
     void updateContact() override;
 };

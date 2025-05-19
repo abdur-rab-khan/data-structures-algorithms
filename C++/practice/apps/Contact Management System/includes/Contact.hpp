@@ -1,5 +1,5 @@
 // CMS/includes/contact.hpp
-#pragma
+#pragma once
 
 #include <iostream>
 #include <string>
@@ -11,13 +11,9 @@ class Contact {
     std::string email;
 
    public:
-    virtual void displayContactDetails();
-
-    std::string getName() const;
-
-    std::string getPhoneNumber() const;
-
+    virtual void displayContactDetails() const;
     virtual void updateContact();
 
-    virtual ~Contact();
+    std::string getName() const;
+    std::string getPhoneNumber() const;
 };

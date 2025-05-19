@@ -1,5 +1,5 @@
 // CMS/includes/personalContact.hpp
-#pragma
+#pragma once
 
 #include "Contact.hpp"
 
@@ -18,7 +18,7 @@ class PersonalContact : public Contact {
     PersonalContact(std::string name, std::string nickName, std::string phoneNumber,
                     std::string email);
 
-    void displayContactDetails() override;
+    void displayContactDetails() const override;
 
     void updateContact();
 };

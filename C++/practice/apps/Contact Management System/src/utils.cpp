@@ -1,11 +1,5 @@
 // CMS/src/utils.cpp
-
-#include <algorithm>
-#include <cctype>
-#include <iostream>
-#include <limits>
-#include <regex>
-#include <string>
+#include "../includes/utils.hpp"
 
 bool isValid(std::string content, std::regex match_regex) {
     return std::regex_match(content, match_regex);
@@ -21,7 +15,7 @@ std::string getHeadingMessage(std::string msg) {
     return "**************** " + msg + " ****************";
 }
 
-int getChoice(int max = 0) {
+int getChoice(int max) {
     int choice;
     std::cin >> choice;
 
@@ -31,16 +25,17 @@ int getChoice(int max = 0) {
         throw std::invalid_argument("Invalid input. Please enter a number.");
     }
 
-    if (max != 0 && choice >= max)
+    if (max != 0 && choice > max)
         throw std::invalid_argument("Invalid choice. you reached the limit.");
 
     return choice;
 }
 
-std::string getStringFromUser(std::string msg, bool strict = false) {
+std::string getStringFromUser(std::string msg, bool strict) {
     std::string content;
 
     std::cout << msg;
+    std::cin.ignore();
     std::getline(std::cin, content);
 
     content = trim(content);
@@ -52,8 +47,7 @@ std::string getStringFromUser(std::string msg, bool strict = false) {
     return content;
 }
 
-std::string getPhoneNumberFromUser(std::string msg = "Enter a phone number: ",
-                                   bool strict = false) {
+std::string getPhoneNumberFromUser(std::string msg, bool strict) {
     std::string phoneNumber = "";
     std::regex number_regex(R"(^\d+$)");
 
@@ -75,7 +69,7 @@ std::string getPhoneNumberFromUser(std::string msg = "Enter a phone number: ",
     return phoneNumber;
 }
 
-std::string getEmailFromUser(std::string msg = "Enter a email address: ", bool strict = false) {
+std::string getEmailFromUser(std::string msg, bool strict) {
     std::string email;
     std::regex email_regex(R"(^[\w+.-]+@[\w+.-]+\.\w+$)");
 
@@ -97,7 +91,7 @@ std::string getEmailFromUser(std::string msg = "Enter a email address: ", bool s
     return email;
 }
 
-std::string getWebsiteFromUser(std::string msg = "Enter a website uri: ", bool strict = false) {
+std::string getWebsiteFromUser(std::string msg, bool strict) {
     std::string websiteUri;
     std::regex website_regex(R"(^(https?:\/\/)?(www\.)?[\w.-]+\.\w+$)");
 
