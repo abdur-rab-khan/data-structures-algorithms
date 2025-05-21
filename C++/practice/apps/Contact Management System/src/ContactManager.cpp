@@ -3,7 +3,7 @@
 
 #include "../includes/utils.hpp"
 
-void ContactManager::showMenu() {
+void ContactManager::runApp() {
     std::cout << "Contact Management System" << std::endl;
 
     while (true) {
@@ -14,8 +14,8 @@ void ContactManager::showMenu() {
         std::cout << "4. Search Contact " << std::endl;
         std::cout << "5. View All Contacts " << std::endl;
         std::cout << "6. Exit" << std::endl;
-        int choice = getChoice();
 
+        int choice = getChoice();
         try {
             switch (static_cast<MenuOptions>(choice)) {
                 case MenuOptions::ADD_CONTACT:
@@ -64,9 +64,9 @@ void ContactManager::addContact() {
         std::cout << getHeadingMessage("ADD NEW PERSONAL CONTACT") << std::endl;
 
         name = getStringFromUser("Enter the name: ");
-        nickName = getStringFromUser("Enter the nick name: ");
-        phoneNumber = getStringFromUser("Enter the phone number: ");
-        email = getStringFromUser("Enter the email address: ");
+        nickName = getStringFromUser("Enter the nick name: ", false);
+        phoneNumber = getPhoneNumberFromUser("Enter the phone number: ");
+        email = getEmailFromUser("Enter the email address: ", false);
 
         // Checking contact is already exits.
         std::tuple<bool, std::string> isDuplicate = checkIsDuplicate(phoneNumber, name);
@@ -75,8 +75,8 @@ void ContactManager::addContact() {
             throw std::invalid_argument(std::get<1>(isDuplicate));
         }
 
-        PersonalContact personalContact(name, nickName, phoneNumber, email);
-        listContact.emplace_back(personalContact);
+        listContact.emplace_back(
+            std::make_shared<PersonalContact>(name, nickName, phoneNumber, email));
     } else if (choice == ContactType::BusinessContact) {
         std::string company;
         std::string website;
@@ -84,10 +84,10 @@ void ContactManager::addContact() {
         std::cout << getHeadingMessage("ADD NEW BUSINESS CONTACT") << std::endl;
 
         name = getStringFromUser("Enter the name: ");
-        phoneNumber = getStringFromUser("Enter the phone number: ");
-        email = getStringFromUser("Enter the email address: ");
-        company = getStringFromUser("Enter the email address: ");
-        website = getStringFromUser("Enter the website uri: ");
+        phoneNumber = getPhoneNumberFromUser("Enter the phone number: ");
+        email = getEmailFromUser("Enter the email address: ", false);
+        company = getStringFromUser("Enter the compay name: ", false);
+        website = getWebsiteFromUser("Enter the website uri: ", false);
 
         // Checking contact is already exits.
         std::tuple<bool, std::string> isDuplicate = checkIsDuplicate(phoneNumber, name);
@@ -96,8 +96,8 @@ void ContactManager::addContact() {
             throw std::invalid_argument(std::get<1>(isDuplicate));
         }
 
-        BusinessContact businessContact(name, phoneNumber, email, company, website);
-        listContact.emplace_back(businessContact);
+        listContact.emplace_back(
+            std::make_unique<BusinessContact>(name, phoneNumber, email, company, website));
     } else {
         throw std::invalid_argument("Invalid choice, Enter correct choice");
     }
@@ -138,7 +138,7 @@ std::vector<std::shared_ptr<Contact>> ContactManager::searchContactList() {
 
     std::regex pattern(searchKey, std::regex_constants::icase);
 
-    for (const std::shared_ptr<Contact>& c : listContact) {
+    for (const auto& c : listContact) {
         if (!std::regex_search(c->getName(), pattern) &&
             !std::regex_search(c->getPhoneNumber(), pattern))
             continue;
@@ -185,7 +185,7 @@ void ContactManager::viewAllContactsInDetail() {
         }
     }
 
-    for (const std::shared_ptr<Contact>& c : listContact) {
+    for (const auto& c : listContact) {
         c->displayContactDetails();
     }
 }
@@ -209,13 +209,13 @@ void ContactManager::deleteContact() {
     int choice = getChoice(searchResult.size());
 
     // Delete the details from the contact.
-    std::shared_ptr<Contact> choosenResult = searchResult.at(choice - 1);
+    Contact* choosenResult = searchResult.at(choice - 1).get();
 
     for (int i = 0; i < listContact.size(); i++) {
         if (choosenResult->getPhoneNumber() != listContact.at(i)->getPhoneNumber())
             continue;
 
-        listContact.erase(listContact.begin());
+        listContact.erase(listContact.begin() + i);
         std::cout << "Contact is delete successfully." << std::endl;
         break;
     }
@@ -226,7 +226,7 @@ std::tuple<bool, std::string> ContactManager::checkIsDuplicate(std::string phone
     if (listContact.size() == 0)
         return std::make_tuple(false, "No contact found.");
 
-    for (const std::shared_ptr<Contact> c : listContact) {
+    for (const auto& c : listContact) {
         std::string OName = c->getName();
         std::string OPhoneNumber = c->getPhoneNumber();
 

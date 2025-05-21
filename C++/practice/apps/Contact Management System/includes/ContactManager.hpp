@@ -28,7 +28,7 @@ class ContactManager {
     std::tuple<bool, std::string> checkIsDuplicate(std::string phoneNumber, std::string name);
 
    public:
-    void showMenu();
+    void runApp();
 
     void addContact();
 

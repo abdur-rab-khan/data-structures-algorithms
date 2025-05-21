@@ -2,10 +2,13 @@
 
 #include "../includes/ContactManager.hpp"
 
-using namespace std;
-
 int main() {
-    ContactManager contactManager;
-    contactManager.showMenu();
+    try {
+        ContactManager contactManager;
+        contactManager.runApp();
+    } catch (std::invalid_argument e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        return 1;
+    }
     return 0;
 }

@@ -1,8 +1,0 @@
-1. So stack is used in static memory allocation, and the heap is used in dynamic memory allocation. In the stack, the compiler automatically frees the memory after using it. And in the heap, programmers have to free the memory manually, otherwise it will cause a memory leak.
-2. In C++, the const keyword is used to prevent changes to the variable. Makes the variable immutable.
-3. == is the logical assignment operator that checks left and right operands are equal or not. And = is an assignment operator that is used to assign a value to a variable.
-4. The answer is 31.
-5. Header file is also known as a pre-processor, which is used to get the built-in or user-defined function,class namespace from another file.
-6. I don't know
-7. Okay, in shallow copy, we initialize a pointer into the variable that points to another variable instead of copying the resource. That can cause a dangling pointer if the original variable or object is removed. In deep copy, instead of copying the pointer, we copy the resource from the variable. This commonly happens in dynamic memory allocation or when working with pointers.
-8. In function overloading, we overload the function at run time. This happens using a virtual function that makes to overloads the base class virtual function in the derived class.

@@ -16,4 +16,6 @@ class Contact {
 
     std::string getName() const;
     std::string getPhoneNumber() const;
+
+    virtual ~Contact() = default;
 };

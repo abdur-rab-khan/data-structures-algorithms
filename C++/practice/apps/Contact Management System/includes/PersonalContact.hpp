@@ -19,6 +19,5 @@ class PersonalContact : public Contact {
                     std::string email);
 
     void displayContactDetails() const override;
-
-    void updateContact();
+    void updateContact() override;
 };

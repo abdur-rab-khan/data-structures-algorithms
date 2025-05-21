@@ -16,12 +16,12 @@ std::string getHeadingMessage(std::string msg);
 
 int getChoice(int max = 0);
 
-std::string getStringFromUser(std::string msg, bool strict = false);
+std::string getStringFromUser(std::string msg, bool strict = true);
 
-std::string getPhoneNumberFromUser(std::string msg = "Enter a phone number: ", bool strict = false);
+std::string getPhoneNumberFromUser(std::string msg = "Enter a phone number: ", bool strict = true);
 
-std::string getEmailFromUser(std::string msg = "Enter a email address: ", bool strict = false);
+std::string getEmailFromUser(std::string msg = "Enter a email address: ", bool strict = true);
 
-std::string getWebsiteFromUser(std::string msg = "Enter a website uri: ", bool strict = false);
+std::string getWebsiteFromUser(std::string msg = "Enter a website uri: ", bool strict = true);
 
 #endif

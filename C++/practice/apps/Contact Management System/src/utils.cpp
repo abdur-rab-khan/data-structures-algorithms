@@ -35,7 +35,8 @@ std::string getStringFromUser(std::string msg, bool strict) {
     std::string content;
 
     std::cout << msg;
-    std::cin.ignore();
+
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     std::getline(std::cin, content);
 
     content = trim(content);
@@ -55,18 +56,16 @@ std::string getPhoneNumberFromUser(std::string msg, bool strict) {
     std::getline(std::cin, phoneNumber);
 
     phoneNumber = trim(phoneNumber);
-
-    if (strict) {
-        if (phoneNumber.length() == 0 || !isValid(phoneNumber, number_regex)) {
-            std::cout << "Invalid email, Enter valid email address" << std::endl;
+    if (phoneNumber.length() > 0) {
+        if (isValid(phoneNumber, number_regex)) {
+            return phoneNumber;
         }
     } else {
-        if (phoneNumber.length() > 0 && !isValid(phoneNumber, number_regex)) {
-            std::cout << "Invalid phone, Enter valid phone number" << std::endl;
-        }
+        if (!strict)
+            return "";
     }
 
-    return phoneNumber;
+    throw std::invalid_argument("Invalid number, Enter valid phone number");
 }
 
 std::string getEmailFromUser(std::string msg, bool strict) {
@@ -77,18 +76,16 @@ std::string getEmailFromUser(std::string msg, bool strict) {
     std::getline(std::cin, email);
 
     email = trim(email);
-
-    if (strict) {
-        if (email.length() == 0 || !isValid(email, email_regex)) {
-            std::cout << "Invalid email, Enter valid email address" << std::endl;
+    if (email.length() > 0) {
+        if (isValid(email, email_regex)) {
+            return email;
         }
     } else {
-        if (email.length() > 0 && !isValid(email, email_regex)) {
-            std::cout << "Invalid email, Enter valid email address" << std::endl;
-        }
+        if (!strict)
+            return "";
     }
 
-    return email;
+    throw std::invalid_argument("Invalid email, Enter valid email address.");
 }
 
 std::string getWebsiteFromUser(std::string msg, bool strict) {
@@ -98,19 +95,14 @@ std::string getWebsiteFromUser(std::string msg, bool strict) {
     std::cout << msg;
     std::getline(std::cin, websiteUri);
 
-    if (websiteUri.length() || !(std::regex_match(websiteUri, website_regex))) {
-        throw std::invalid_argument("Invalid website, Enter correct website uri");
-    }
-
-    if (strict) {
-        if (websiteUri.length() == 0 || !isValid(websiteUri, website_regex)) {
-            std::cout << "Invalid uri, Enter valid website uri" << std::endl;
+    if (websiteUri.length() > 0) {
+        if (isValid(websiteUri, website_regex)) {
+            return websiteUri;
         }
     } else {
-        if (websiteUri.length() > 0 && !isValid(websiteUri, website_regex)) {
-            std::cout << "Invalid uri, Enter valid website uri" << std::endl;
-        }
+        if (!strict)
+            return "";
     }
 
-    return websiteUri;
+    throw std::invalid_argument("Invalid uri, Enter valid website uri.");
 }

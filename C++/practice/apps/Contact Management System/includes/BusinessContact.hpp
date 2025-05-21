@@ -21,6 +21,5 @@ class BusinessContact : public Contact {
                     std::string company, std::string website);
 
     void displayContactDetails() const override;
-
     void updateContact() override;
 };
