@@ -6,9 +6,30 @@
 
 - [GCD (Greatest Common Divisor)](#gcd-greatest-common-divisor)
   - [What actually is GCD (Greatest Common Divisor)](#what-actually-is-gcd-greatest-common-divisor)
+    - [Example](#example)
     - [Usages of GCD](#usages-of-gcd)
   - [Method of Find GCD](#method-of-find-gcd)
-    - [1. Euclid's Division Algorithm](#1-euclids-division-algorithm)
+    - [1. Euclid's  Algorithm](#1-euclids--algorithm)
+
+### Example
+
+- **GCD** of **gcd(9,12)**
+  
+  ```txt
+  Factor of 9 --> 1, 3, 9
+  Factor of 12 --> 1, 2, 3, 4, 6, 12
+
+  --> As we see the greater common factor is "3".
+  ```
+
+- **GCD** of **gcd(11, 13)**
+
+  ```txt
+  Factor of 11 --> 1, 11
+  Factor of 13 --> 1, 13
+
+  --> As we see the greater common factor is "1".
+  ```
 
 ### Usages of GCD
 
@@ -34,6 +55,6 @@ groups.
 
 ---
 
-### 1. Euclid's Division Algorithm
+### 1. Euclid's  Algorithm
 
-> Euclid's Division Algorithm, It is used to find the **Greatest Common Divisor (GCD)** of two integers. In this algorithm, We repeatedly divide and find remainders until remainder becomes zero.
+> Euclid's Algorithm, It is used to find the **Greatest Common Divisor (GCD)** of two integers. In this algorithm, We repeatedly subtract the larger number by smaller one. Until of the number becomes **zero**.

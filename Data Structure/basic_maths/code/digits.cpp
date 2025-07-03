@@ -152,6 +152,8 @@ string checkPrime(int n) {
 }
 
 // Check prime numbers -- Approach 2nd o(sqrt(n))
+// Explanation: Using factors - A factor is a number that totally divides the given number "n"
+// without getting any remainder.
 string checkPrimeSecond(int n) {
     int div, count = 0;
 

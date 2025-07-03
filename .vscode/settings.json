@@ -62,7 +62,8 @@
         "span": "cpp",
         "variant": "cpp",
         "bitset": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "complex": "cpp"
     },
     "terminal.integrated.fontLigatures.enabled": true,
     "editor.mouseWheelZoom": true,
