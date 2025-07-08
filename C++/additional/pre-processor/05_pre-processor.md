@@ -110,7 +110,8 @@
 
 #### Macros
 
-> Macros are used to define **constants** or **create function** that are substituted by the pre-processor before the code is compiled. The two preprocessor **#defined**, **#undef** are used to created and remove macros in C.
+> Macros are used to define **constants** or **create function** that are substituted by the pre-processor before the code is compiled. The two preprocessor **#defined**, **#undef** are used to created and remove macros in C. \
+> Another use case is to change certain string in the code will be changed before compilation.
 
 - where after preprocessing, the token will be expanded to its **value** in the program.
 
@@ -120,9 +121,19 @@
     #include <stdio.h>
 
     // Macro Definition
+    typedef vector<int>  vi // It used to change the certain type name with custom one.
+
     #define LIMIT 5
-    
+    #define PB push_back
+
     int main(){
+        vi nums; // Equivalent to vector<int> nums;
+
+        nums.PB(1); // Equivalent to nums.push_back(1) 
+        nums.PB(2);
+        nums.PB(3);
+        nums.PB(4);
+        
         for (int i = 0; i < LIMIT; i++) {
             printf("%d \n", i);
         }
