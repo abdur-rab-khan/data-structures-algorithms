@@ -13,18 +13,20 @@ using namespace std;
  |
  |
 
- A
- A B
- A B C
- A B C D
- A B C D E
+ E
+ DE
+ CDE
+ BCDE
+ ABCDE
 
  */
 
-void printPattern14(int n) {
+void printPattern16(int n) {
     for (int i = 0; i < n; i++) {
-        // Print latters
-        for (char j = 'A'; j <= 'A' + i; j++) {
+        // Print latter
+        char startChar = 'A' + ((n - i) - 1);
+
+        for (char j = startChar; j <= startChar + i; j++) {
             cout << j << " ";
         }
 
@@ -37,6 +39,6 @@ int main() {
     cout << "Enter number: ";
     cin >> n;
 
-    printPattern14(n);
+    printPattern16(n);
     return 0;
 }

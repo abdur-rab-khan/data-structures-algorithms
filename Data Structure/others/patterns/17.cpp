@@ -13,19 +13,22 @@ using namespace std;
  |
  |
 
- A
- A B
- A B C
- A B C D
- A B C D E
+
 
  */
 
-void printPattern14(int n) {
+void printPattern16(int n) {
+    // Upper Symetric
     for (int i = 0; i < n; i++) {
-        // Print latters
-        for (char j = 'A'; j <= 'A' + i; j++) {
-            cout << j << " ";
+        // Left Stars
+        for (int l = 0; l < n - i; l++) {
+            
+        }
+
+        // Space
+
+        // Right Stars
+        for (int r = 0; r < n - i; r++) {
         }
 
         cout << "\n";
@@ -37,6 +40,6 @@ int main() {
     cout << "Enter number: ";
     cin >> n;
 
-    printPattern14(n);
+    printPattern16(n);
     return 0;
 }

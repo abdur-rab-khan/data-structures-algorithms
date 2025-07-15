@@ -13,19 +13,37 @@ using namespace std;
  |
  |
 
-     *
-    ***
-   *****
-  *******
- *********
+  *
+  **
+  ***
+  ****
+  *****
+  ****
+  ***
+  **
+  *
 
- */
+  [1, 1]
+  [2, 2]
+  [3, 3]
+  [4, 4]
+  [5, 5]
+  [6, 4]
+  [7, 3]
+  [8, 2]
+  [9, 1]
+
+  */
 
 void printPattern10(int n) {
-    for (int i = 0; i < n; i++) {
-        for (int j = 1; j <= n - i; j++) {
-            cout << j << " ";
+    for (int i = 1; i <= (2 * n) - 1; i++) {
+        int stars = i > n ? (2 * n) - i : i;
+
+        // Print Stars
+        for (int j = 1; j <= stars; j++) {
+            cout << "*";
         }
+
         cout << "\n";
     }
 }

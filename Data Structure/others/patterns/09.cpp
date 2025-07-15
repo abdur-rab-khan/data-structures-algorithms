@@ -18,14 +18,47 @@ using namespace std;
    *****
   *******
  *********
+ *********
+  *******
+   *****
+    ***
+     *
 
  */
 
 void printPattern9(int n) {
+    // Print Upper start patterns
     for (int i = 0; i < n; i++) {
-        for (int j = 1; j <= n - i; j++) {
-            cout << j << " ";
+        // Left Space
+        for (int l = 0; l < n - i - 1; l++)
+            cout << " ";
+
+        // Star
+        for (int j = 0; j < (2 * i) + 1; j++) {
+            cout << "*";
         }
+
+        // Right Space
+        for (int r = 0; r < n - i - 1; r++)
+            cout << " ";
+
+        cout << "\n";
+    }
+
+    // Print Below start patterns
+    for (int i = 0; i < n; i++) {
+        // Left Space
+        for (int l = 0; l < i; l++)
+            cout << " ";
+
+        // Star
+        for (int j = 0; j < (2 * (n - i)) - 1; j++)
+            cout << "*";
+
+        // Right Space
+        for (int r = 0; r < i; r++)
+            cout << " ";
+
         cout << "\n";
     }
 }
