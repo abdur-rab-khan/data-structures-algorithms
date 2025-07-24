@@ -8,8 +8,8 @@ using namespace std;
         array", "closest two sum", "three sum", "four sum", "trapping rain water" and many other
         popular interview questions.
     ◉ So in two pointer technique as name suggest they use two pointers (indices) to traverse on the
-        data structure especially on "ARRAY", "STRING", "LINKED-LIST". The pointers often represent
-        (left indices, right indices) moving towards each other on in same direction are manipulate
+        data structure especially on "ARRAY", "STRING", "LINKED-LIST". The pointers often place in
+        left-right and moving towards each other or place on the same direction, they are manipulate
         based on certain conditions, often reduce the time complexity from o(n²) to o(n).
 
 
