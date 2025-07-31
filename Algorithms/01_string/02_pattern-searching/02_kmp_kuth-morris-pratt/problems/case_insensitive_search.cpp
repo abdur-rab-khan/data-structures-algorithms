@@ -1,6 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+    <====================> Case Insensitive Search <======================>
+    ◎ We can string "txt" and a pattern "pat", So the task is the search
+    occurrence of pat in txt match also if case is insensitive.
+
+
+    <====================> Example <======================>
+    txt = "aBcAb"
+    pat = "aB"
+
+    ◎ Output is: [0, 3] ==> at 0 we have "aB" and at 3 we have "Ab".
+*/
+
 // Brute Force Approach o(n * m)
 void bSearch(string& txt, string& pat) {
     int n = txt.length();
