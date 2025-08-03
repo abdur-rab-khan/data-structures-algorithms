@@ -72,7 +72,6 @@ void search(vector<int>& arr, vector<int>& sub) {
 
             if (j == m) {
                 cout << "Match found at: " << i - j << endl;
-
                 j = lps[j - 1];
             }
         } else {
