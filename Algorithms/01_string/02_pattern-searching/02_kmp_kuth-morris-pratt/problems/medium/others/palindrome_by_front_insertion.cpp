@@ -30,13 +30,16 @@ using namespace std;
 
     conStr = [a, b, c, $, c, b, a]
     lps = [0, 0, 0, 0, 0, 1]
+    result = str.length() = 3, lps.back() = 1, 3 - 1 = 2
 
     Example 2:
     str = [a, a, c, e, c, a, a, a, a]
     revStr = [a, a, a, a, c, e, c, a, a]
 
     conStr = [a, a, c, e, c, a, a, a, a, $, a, a, a, a, c, e, c, a, a]
-    lsp = [0, 1, 0, 0, 0, 1, 2, 2, 0, 1, 2, 2, 2, 3, 4, 5, 6, 7]
+    lsp = [0, 1, 0, 0, 0, 1, 2, 2, 0, 1, 2, 2, 2, 3, 4, 5, 6, 7] ==> 7 says, there are 7 elements
+            which are same with reverse.
+    result = str.length() = 9, lps.back() = 7, 9 - 7 = 2
 
     ◎ To fully understand we have to know what actually lps give, LPS give the longest prefix/suffix
     ◎ What if we create LPS from str + $ + revStr??, At lps.back() We will get how many pairs of
