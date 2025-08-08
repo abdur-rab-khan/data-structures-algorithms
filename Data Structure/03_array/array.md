@@ -14,6 +14,7 @@
     - [1. Array Traversal](#1-array-traversal)
     - [2. Insertion in Array](#2-insertion-in-array)
     - [3. Deletion in Array](#3-deletion-in-array)
+    - [4. Searching in Array](#4-searching-in-array)
 
 ## 1. Memory Representation of Array
 
@@ -112,6 +113,33 @@ void main(){
 
 ### 1. Array Traversal
 
+- Array traversal is a process of accessing and processing each elements of an array sequentially.
+- This is one of the most fundamental operation on programming.
+
 ### 2. Insertion in Array
 
+- Insertion in an array refers to the process of adding new elements at a specific position, while maintaining the order of existing elements.
+- Arrays are stored in contiguous memory locations, meaning elements are arranged in sequential block.
+  - There are the following steps when insertion happen.
+    1. **Identify the position:**
+    2. **Shifts Existing Elements to create space:**
+    3. **Insert the new elements:**
+    4. **Update the size (if applicable):**
+
 ### 3. Deletion in Array
+
+- Deleting in an array refers to the process of delete elements at a specific position, while maintaining the order of existing elements.
+- Since array have contiguous memory location, deletion of an element does not reduce the allocated memory size.
+  - There are the following steps when deleting happen.
+    1. **Identify the position**
+    2. **Shift Elements after deleting**
+    3. **Update the size (if applicable):**
+
+### 4. Searching in Array
+
+- Searching in an array is the process of finding specific element in given array of elements.
+- In Searching our goal is to determine whether the elements exits in the array and if, exits so return the specific position.
+- There is mainly two types of searching techniques in an arrays.
+
+    1. **Linear Search (Sequential Search)**
+    2. **Binary Search (Efficient Search for sorted array**
