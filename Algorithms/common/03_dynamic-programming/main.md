@@ -7,8 +7,9 @@
     - [Top Down (memoization)](#top-down-memoization)
     - [Bottom-Up (tabulation)](#bottom-up-tabulation)
   - [Examples of Dynamic Programming](#examples-of-dynamic-programming)
-    - [1. Fibonacci Number](#1-fibonacci-number)
+    - [1. Fibonacci Number (Top Down Approach)](#1-fibonacci-number-top-down-approach)
       - [How will Dynamic Programming (DP) Works?](#how-will-dynamic-programming-dp-works)
+    - [2. Fibonacci Number (Bottom Up Approach)](#2-fibonacci-number-bottom-up-approach)
 
 ## Overview
 
@@ -35,7 +36,7 @@
 
 ## Examples of Dynamic Programming
 
-### 1. Fibonacci Number
+### 1. Fibonacci Number (Top Down Approach)
 
 - Brute force recursive solution by using the recursive formula:
   - `fib(n) = fib(n-1) + fib(n-2)` with base cases `fib(0) = 0` and `fib(1) = 1`
@@ -103,3 +104,59 @@
 
 - Using Space Optimised Approach - O(n) Time and O(1) Space
 
+### 2. Fibonacci Number (Bottom Up Approach)
+
+- Unlike, Top Down approach, in Bottom Up appraoch we solve the smaller subproblems first and use their results to build up the solution to the original problem.
+- We typically use an iterative approach to fill up a table (usually an array) with the results of subproblems.
+
+    ```cpp
+    #include<bits/stdc++.h>
+    using namespace std;
+    
+    int fib(int x){
+        vector<int> dp(x + 1);
+    
+        dp[0] = 0;
+        dp[1] = 1;
+    
+        for(int i = 2; i <= x; i++){
+            dp.push_back(dp[i - 1] + dp[i - 2]);
+        }
+    
+        return dp[x];
+    }
+    
+    int main(){
+        int x = 5;
+    
+        cout << "Fibonacci of " << x << " is: " << fib(x) << endl;
+        return 0;
+    }
+    ```
+
+  - Here the ***time complexity*** is `o(n)` and ***space complexity*** is `o(n)`.
+  - There are event better approach are there.
+
+    ```c++
+    #include<bits/stdc++.h>
+    using namespace std;
+
+    int fib(int x){
+        int prevprev = 0, prev = 1, current;
+
+        for(int i = 2; i <= x; i++){
+            current = prevprev + prev;
+            prevprev = prev;
+            prev = current;
+        }
+
+        return current;
+    }
+
+    int main(){
+        int x = 5;
+
+        cout << "Fibonacci of " << x << " is: " << fib(x) << endl;
+        return 0;
+    }
+    ```

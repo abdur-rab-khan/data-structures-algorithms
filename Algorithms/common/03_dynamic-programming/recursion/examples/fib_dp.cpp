@@ -16,19 +16,17 @@ int fibDP(int n, vector<int>& memo) {
 }
 
 // Using BOTTOM UP (tabulation)
-int fibDPT(int n) {
-    vector<int> dp(n + 1);
+int fibDPT(int x) {
+    vector<int> dp(x + 1);
 
-    // Storing the independent values in dp
     dp[0] = 0;
     dp[1] = 1;
 
-    // Using the bottom-up approach
-    for (int i = 2; i <= n; i++) {
+    for (int i = 2; i <= x; i++) {
         dp[i] = dp[i - 1] + dp[i - 2];
     }
 
-    return dp[n];
+    return dp[x];
 }
 
 // Using Optimized approach
@@ -52,8 +50,9 @@ int main() {
     int n = 8;
     vector<int> memo(n + 1, -1);
 
-    cout << "Fibonacci series of " << n << " is: " << fibDP(n, memo) << endl;
-    cout << "Fibonacci series of " << n << " is: " << fibDPT(n) << endl;
+    // cout << "Fibonacci series of " << n << " is: " << fibDP(n, memo) << endl;
+    // cout << "Fibonacci series of " << n << " is: " << fibDPT(n) << endl;
+    cout << "Fibonacci series of " << n << " is: " << fibDPT(n);
 
     return 0;
 }

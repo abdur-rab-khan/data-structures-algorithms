@@ -25,7 +25,7 @@
 
 - Divide the original problem into smaller sub-problem.
 - Each sub-problem should represent a part of overall problem.
-- The goal is to divide the problem until no further division possible. 
+- The goal is to divide the problem until no further division possible.
 
 ### 2. Conquer
 
@@ -47,4 +47,3 @@
 $$
 T(n) = a \, T\!\left(\frac{n}{b}\right) + f(n)
 $$
-
