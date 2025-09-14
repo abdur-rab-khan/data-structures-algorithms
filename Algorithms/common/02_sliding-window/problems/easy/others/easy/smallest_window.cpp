@@ -60,14 +60,48 @@ int smallestSubString(string& s) {
 
 // Using Sliding Window technique
 int smallestSubStringSW(string& s) {
-    int n = s.size(), k = 0;
-    int freq[3] = {0};
+    int n = s.size(), k = 0, i = 0, cnt = 0, min_len = INT_MAX;
+    int freq[10] = {0};
+
+    while (k < n) {
+        freq[s[k] - '0']++;
+
+        // If characters are (0, 1, 2), then increase by +1. and increase cnt by 1, if characters
+        // are came first time. If cnt == 3 means we found all of these characters.
+        if (freq[s[k] - '0'] == 1)
+            cnt++;
+
+        if (cnt == 3) {
+            // Increase i by 1, if we got duplicate elements or value is greater than 1. reduce
+            // the window size.
+            while (freq[s[i] - '0'] > 1) {
+                freq[s[i] - '0']--;
+                i++;
+            }
+
+            min_len = min(min_len, k - i + 1);
+            freq[s[i] - '0']--;
+            i++;
+            cnt--;
+        }
+        k++;
+    }
+
+    return (min_len == INT_MIN) ? -1 : min_len;
 }
 
+/*
+    S = [0, 1, 2, 0, 0, 1, 2, 3], freq = [0, 0, 0];
+
+
+*/
+
 int main() {
-    string t = "01200123";
+    string t = "55636012";
+    // string t = "0123564534534";
 
     cout << "The max length of substring is: " << smallestSubString(t) << endl;
+    cout << "The max length of substring is: " << smallestSubStringSW(t) << endl;
 
     return 0;
 }
