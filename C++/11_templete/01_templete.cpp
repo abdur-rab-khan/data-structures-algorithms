@@ -26,7 +26,7 @@ N myMax(N a, N b) {
 int main() {
     cout << "Add two int " << add(5, 5) << endl;
     cout << "Add two float " << add(1.5, 1.5) << endl;
-    cout << "Add two strings " << add(string("Abdur Rab "), string("Khan")) << endl;
+    cout << "Add two strings " << add<string>("Abdur Rab ", "Khan") << endl;
 
     int arr[5] = {1, 2, 3, 4, 5};
     printAnArray(&arr);
