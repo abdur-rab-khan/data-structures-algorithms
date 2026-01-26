@@ -3,7 +3,10 @@
 |                                                                                                                                                 |
 | 🟡 In C++, Pointers are special data-type that stores the "memory address" of a variable, It usage "*" to store and "*" to deference it for     |
 |    retrieving  value from it, "&" is use to get the address for the variable.                                                                   |
-| 🟡 C++, Provides a ways to directly reference a variable instead of store them using a pointer, "type& variable_name = ref_variable;"           | 
+| 🟡 C++, Provides a ways to directly reference a variable instead of store them using a pointer, it's similar to accessing from "*ptr" but       | 
+|         without storing in a pointer.                                                                                                           |
+|    Example:                                                                                                                                     |                                                   
+|            "type& variable_name = ref_variable;"                                                                                                |                                                     
 | 🟡 To store address of a pointer and the address of that pointer so on, we would add "**..." as level of memory address increases.              |
 | 🟡 "nullptr" is represent a pointer variable that does not point to any variable address yet.                                                   | 
 |                                                                                                                                                 |

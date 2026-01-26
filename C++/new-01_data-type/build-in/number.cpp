@@ -10,8 +10,8 @@
 |                                                                                                                                                              |
 | 🪧 Signed and UnSigned Numbers                                                                                                                               |
 |                                                                                                                                                              |
-|    1️⃣. signed [int, float]: Number can be positive or negative                                                                                               |
-|    2️⃣. unsigned [int, float]: Number can only positive                                                                                                       |
+|    1️⃣. signed [int, float, long long]: Number can be positive or negative                                                                                    |
+|    2️⃣. unsigned [int, float, long long]: Number can only positive                                                                                            |
 |                                                                                                                                                              |
 |                                                                                                                                                              |
 +----------------------------------------------------------------------------+ END +---------------------------------------------------------------------------+
@@ -19,7 +19,7 @@
 
 #include<iostream>
 
-int main(int argc, char const *argv[])
+int main()
 {
     int a = -10;
     unsigned int b = 10;
