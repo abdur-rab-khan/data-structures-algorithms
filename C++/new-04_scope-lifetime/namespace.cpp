@@ -55,10 +55,21 @@ namespace MyNamespace {
         std::cout << "myVariable: " << myVariable << std::endl;
         myFunction();
     }
+
+    struct MyStruct {
+        void display() {
+            std::cout << "Inside MyStruct of MyNamespace" << std::endl;
+        }
+    };
 }
 
 int main(){
     MyNamespace::main(); // Calling the main function defined in MyNamespace
+   
+    // Accessing struct my MyNamespace using scope resolution operator
+    MyNamespace::MyStruct obj;
+
+    obj.display();
     
     return 0;
 }
