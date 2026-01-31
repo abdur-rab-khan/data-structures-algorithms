@@ -4,15 +4,15 @@
 | 🟡 Function in C++ is similar to functions in other programming languages. It contains a block of code that performs a specific task and can be  |
 |    called from other parts of the program.                                                                                                       |
 |                                                                                                                                                  |
-| 🟡 The main reason of using functions is to break down a large program into smaller, manageable, and reusable pieces of code, that makes code    | 
+| 🟡 The main reason of using functions is to break down a large program into smaller, manageable, and reusable pieces of code, that makes code    |
 |     more organized and easier to read, maintain, and debug. Instead of putting all logic into single block it's better to chuck the logic        |
 |     into smaller functions.                                                                                                                      |
 |                                                                                                                                                  |
 | 🟡 Suppose we have a program that handle video processing, Instead of writing all the code in a single block, we can break it down into smaller  |
-|     functions like loadVideo(), processFrame(), applyFilter(), saveVideo() etc. Each function will handle a specific task, making the code more  |
-|     organized and easier to manage.                                                                                                              |
+|     functions like "loadVideo()", "processFrame()", "applyFilter()", "saveVideo()" etc.                                                          |
+|     Each function will handle a specific task, making the code more organized and easier to manage.                                              |
 |                                                                                                                                                  |
-| 🟡 It's better to build generic functions instead of overloading same functions with different names. For example:                               |  
+| 🟡 It's better to build generic functions instead of overloading same functions with different names. For example:                               |
 |                                                                                                                                                  |
 |   void addIntegers(int a, int b);                                                                                                                |
 |   void addFloats(float a, float b);                                                                                                              |
@@ -28,10 +28,10 @@
 |                                                                                                                                                  |
 | 🟡 In C++, Passing an arguments to a function can be done in two ways:                                                                           |
 |                                                                                                                                                  |
-|   1️⃣. Pass by Value: In this method, a copy of the actual argument is passed to the function. Which means if the size of the data is large,      |
+|   1️⃣. Pass by Value: In this method, a copy of the actual argument is passed to the function. Which means if the size of the data is large,       |
 |                       passing by value can be inefficient as it involves copying the entire data.                                                |
 |                                                                                                                                                  |
-|   2️⃣. Pass by Reference: In this method, instead of passing a copy, We pass the reference (address) of the actual argument to the function.      | 
+|   2️⃣. Pass by Reference: In this method, instead of passing a copy, We pass the reference (address) of the actual argument to the function.       | 
 |                          This allows more efficient memory usage, especially for large data structures, as it avoids copying the entire data.    |
 |                                                                                                                                                  |
 | ⭐ Note: The concern with pass by reference is that the modification of the parameter inside the function will affect the original arguments.    |

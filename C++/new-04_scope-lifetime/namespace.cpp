@@ -4,7 +4,7 @@
 | 🟡 Namespace in C++ allows us to group related names (variables, functions, classes, etc.) together to avoid name conflicts and improve code  |
 |     organization, especially in large projects or when using multiple libraries.                                                              |
 |                                                                                                                                               |
-| 🟡 Names within a namespace has directly access to other names within the same namespace without needing to qualify them with the namespace   |
+| 🟡 Names within a namespace has directly access to other names within the same namespace without needing to qualify them with the namespace  |
 |     name.                                                                                                                                     |
 |                                                                                                                                               |
 | 🟡 Namespace has there own scope called 'Namespace Scope'. Names declared within a namespace are accessible throughout that namespace. They   |
@@ -12,13 +12,13 @@
 |                                                                                                                                               |
 | 🟡 There are many ways to access names within a namespace:                                                                                    | 
 |                                                                                                                                               |
-|    1️⃣. Using the 'using' directive to bring all names from a namespace into the current scope:                                                |
+|    1️⃣. Using the 'using' directive to bring all names from a namespace into the current scope:                                               |
 |         using namespace <namespace_name>;                                                                                                     |
 |                                                                                                                                               |
 |    2️⃣. Using the 'using' declaration to bring a specific name from a namespace into the current scope:                                        |
 |        using <namespace_name>::<name>;                                                                                                        |
 |                                                                                                                                               |
-|   3️⃣. Using the scope resolution operator (::) to access namespace name for single use:                                                       |
+|    3️⃣. Using the scope resolution operator (::) to access namespace name for single use:                                                      |
 |        <namespace_name>::<name>;                                                                                                              |
 |                                                                                                                                               |
 +-----------------------------------------------------------------------------------------------------------------------------------------------+
@@ -50,7 +50,7 @@ namespace MyNamespace {
         std::cout << "Hello from MyNamespace!" << std::endl;
     }
 
-    void main(){
+    void MAIN(){
         // Accessing names within the same namespace directly
         std::cout << "myVariable: " << myVariable << std::endl;
         myFunction();
@@ -64,12 +64,19 @@ namespace MyNamespace {
 }
 
 int main(){
-    MyNamespace::main(); // Calling the main function defined in MyNamespace
-   
-    // Accessing struct my MyNamespace using scope resolution operator
-    MyNamespace::MyStruct obj;
+    MyNamespace::MAIN(); // Directly calling main function of MyNamespace ( bring main function for only this line )
 
+    using MyNamespace::myFunction; // Bringing specific name from MyNamespace into current scope
+    myFunction(); // Now we can call myFunction directly
+
+    using namespace MyNamespace; // Bringing all names from MyNamespace into current scope
+    std::cout << "Accessing myVariable directly: " << myVariable << std::endl;
+
+    MyStruct obj; // Now we can use MyStruct directly
     obj.display();
-    
+
+
+    MAIN(); // Calling global MAIN function if exists
+
     return 0;
 }
