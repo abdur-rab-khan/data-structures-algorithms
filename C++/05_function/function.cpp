@@ -12,6 +12,12 @@
 |     functions like "loadVideo()", "processFrame()", "applyFilter()", "saveVideo()" etc.                                                          |
 |     Each function will handle a specific task, making the code more organized and easier to manage.                                              |
 |                                                                                                                                                  |
+| 🟡 In C++, We can pass functions as a arguments their are following ways to do that.                                                             |
+|                                                                                                                                                  |
+|        1. Using Function Pointers: "function_name(return_type (*name)(args_type, ...args_type))".                                                |
+|        2. Using "std::function": "function_name(std::function<return_type(args_type, ...args_type)> name)"
+|                                                                                                                                                  |
+|                                                                                                                                                  |
 | 🟡 It's better to build generic functions instead of overloading same functions with different names. For example:                               |
 |                                                                                                                                                  |
 |   void addIntegers(int a, int b);                                                                                                                |

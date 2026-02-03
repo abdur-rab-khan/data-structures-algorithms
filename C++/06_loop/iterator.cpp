@@ -1,10 +1,14 @@
 /*
 +------------------------------------------------------+ ITERATOR IN C++ +-------------------------------------------------------+
 |                                                                                                                                |
-| 🟡 An Iterator is an object that helps us to traverse elements of a containers like (array, vector, list) or custom data       |
+| 🟡An Iterator is an object that helps us to traverse elements of a containers like (array, vector, list) or custom data        |
 |    structure one by one.                                                                                                       |
 |                                                                                                                                |
-| 🟡 It works by using pointers and references by moving the pointers position commonly through operator overloading.            |
+| 🟡It works using pointers and references by "moving", "changing" the position of pointers commonly through operator            |
+|    overloading.                                                                                                                |
+|                                                                                                                                |
+| 🟡By using iterator we can easily iterator through "for(auto x : container)" without using custom for loop, C++ easily convert |
+|   "for-range" to for loop.                                                                                                     |
 |                                                                                                                                |
 +--------------------------------------------------------------------------------------------------------------------------------+
 |                                                            SYNTAX                                                              |
