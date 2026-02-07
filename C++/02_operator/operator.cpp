@@ -115,7 +115,6 @@ void bitwiseOperators(){
     // Bitwise AND --> It compares each bit of two numbers and returns a new number where each bit is set to 1 only if both corresponding bits are 1.
     unsigned int andResult = a & b; // Result: 0001 (1 in decimal)
 
-
     // Bitwise OR --> It compares each bit of two numbers and returns a new number where each bit is set to 1 if at least one of the corresponding bits is 1.
     unsigned int orResult = a | b; // Result: 0111 (7 in decimal) --> 0101 | 0011 => (0|0=0, 1|0=1, 0|1=1, 1|1=1)
 
