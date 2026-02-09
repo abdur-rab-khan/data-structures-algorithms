@@ -62,6 +62,14 @@
 |                                                                                                                                                   |
 | 🟡 "12" is the LCM of "4" and "6".                                                                                                                |
 |                                                                                                                                                   |
+| 📒 If "b" is divisor of "a", then "a" will be the multiple of "b".                                                                                | 
+|                                                                                                                                                   |
+|     🟦 Factor of 12 ("a") -> 1, 2, 3, 4, 6, 12                                                                                                    |
+|                                                                                                                                                   |
+|     🟦 Factor of 3 ("b") -> 1, 3, 6,                                                                                                              |
+|                                                                                                                                                   |
+|     🟦 Multiple of 3 ("b") -> 3, 6, 9, [12] // Proof "b" is divisor of "a", then "a" will be multiple of "b"                                      |
+|                                                                                                                                                   |
 +---------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 
@@ -90,7 +98,7 @@ namespace factor {
         }
 
         // Looping through all founded factors
-        cout << "Factors are: ";
+        cout << "Factors of " << n << " are: ";
         for(const int& f: factors){
             cout << f << " ";
         }
@@ -110,7 +118,7 @@ namespace factor {
         }
 
         // Looping through all founded factors
-        cout << "Factors are: ";
+        cout << "Factors of " << n << " are: ";
         for(const int& f: factors){
             cout << f << " ";
         }
@@ -123,12 +131,76 @@ namespace factor {
         bFindFactor(12);
     
         // Using efficient method
-        sFindFactor(12);
+        sFindFactor(3);
     }
 }
 
-int main() {
-    factor::main(); // Calling factor
+// Finding primes
+namespace prime {
+    bool isPrime(int n){
+        if(n <= 1) return false; // Number smaller than 1 will not a prime number.
 
+        for(int i = 2; i * i <= n; i++){
+            if(n % i == 0) return false; // If it's divisible by any number it can't be a prime
+        }
+
+        return true;
+    }
+
+    void main(){
+        cout << "Is 7 is prime number: " << isPrime(7) << endl;
+        cout << "Is 8 is prime number: " << isPrime(8) << endl;
+    }
+}
+
+// Finding GCD
+namespace gcd {
+    // o(a)
+    void bruteForce(int a, int b) {
+        int ans = 1;
+
+        for(int i = 1; i <= min(a, b); i++){
+            if(a % i == 0 && b % i == 0){
+                ans = i;
+            }
+        }
+
+        cout << "GCD of " << a << " and " << b << " is: " << ans << endl;
+    }
+
+    void main(){
+        bruteForce(6, 12);
+    }
+}
+
+// Finding LCM
+namespace lcm {
+    void bruteForce(int a, int b) {
+        int mx = max(a, b);
+
+        while(true){
+            if(mx % a == 0 && mx % b == 0){
+                break;
+            }
+            mx++;
+        }
+
+        cout << "LCM of " << a << " and " << b << " is: " << mx << endl;
+    }
+
+    void main() {
+        bruteForce(4, 6);
+    }
+}
+
+void mainFunc(){
+    factor::main(); // Calling factor
+    prime::main(); // Calling Prime
+    gcd::main(); // Calling GCD
+    lcm::main(); // Calling LCM
+}
+
+int main() {
+    mainFunc();
     return 0;
 }
