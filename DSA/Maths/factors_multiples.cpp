@@ -71,6 +71,13 @@
 |     🟦 Multiple of 3 ("b") -> 3, 6, 9, [12] // Proof "b" is divisor of "a", then "a" will be multiple of "b"                                      |
 |                                                                                                                                                   |
 +---------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                  EUCLIDEAN ALGORITHM                                                              |
++---------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                   |
+| 🟡 Euclidean algorithm helps us to find GCD by substracting from "a - b" or using "a % b", If "a" got fully subtracted or "b" got fully divided   |
+|  without any remainder means that's the point where we say it's GCD.                                                                              |
+|                                                                                                                                                   |
++---------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 
 #include <bits/stdc++.h>
@@ -168,8 +175,28 @@ namespace gcd {
         cout << "GCD of " << a << " and " << b << " is: " << ans << endl;
     }
 
+    void euclideanAlgorithm(int a, int b){
+        cout << "The GCD of " << a << " and " << b << " is: ";
+        
+        while(b != 0){
+            int rem = a % b;
+            a = b;
+            b = rem;
+        }
+        
+        cout << a << endl;
+    }
+
+    int euclideanAlgorithmRec(int a, int b){
+        if(b == 0) return a;
+        
+        return euclideanAlgorithmRec(b, a % b);
+    }
+
     void main(){
         bruteForce(6, 12);
+        euclideanAlgorithm(48, 18);
+        euclideanAlgorithm(4, 6);
     }
 }
 
@@ -188,8 +215,14 @@ namespace lcm {
         cout << "LCM of " << a << " and " << b << " is: " << mx << endl;
     }
 
+    void optimizedLCM(int a, int b){
+        int gcd = gcd::euclideanAlgorithmRec(a, b);
+        cout << "LCM of " << a << " and " << b << " is: " << ((a / gcd) * b) << endl;
+    }
+
     void main() {
         bruteForce(4, 6);
+        optimizedLCM(4, 6);
     }
 }
 
