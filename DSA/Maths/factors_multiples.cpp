@@ -144,6 +144,28 @@ namespace factor {
 
 // Finding primes
 namespace prime {
+    void prime_range(int n) {
+        vector<int> primes(n + 1, true);
+
+        primes[0] = primes[1] = false;
+
+        for(int i = 2; i <= n; i++){
+            if(primes[i] == true){
+                for (int j = i * i; j <= n; j += i){
+                    primes[j] = false; 
+                }
+            }
+        }
+
+        // Printing all primes
+        for(int i = 2; i < primes.size(); i++){
+            if(primes[i] == true){
+                cout << i << " ";
+            }
+        }
+        cout << endl;
+    }
+    
     bool isPrime(int n){
         if(n <= 1) return false; // Number smaller than 1 will not a prime number.
 
@@ -157,6 +179,8 @@ namespace prime {
     void main(){
         cout << "Is 7 is prime number: " << isPrime(7) << endl;
         cout << "Is 8 is prime number: " << isPrime(8) << endl;
+        cout << "Prime numbers between 2 to 10 are: ";
+        prime_range(10);
     }
 }
 

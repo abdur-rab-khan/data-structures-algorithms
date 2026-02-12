@@ -22,7 +22,7 @@
 |                                                                                                                                                   |
 | 🔶 HOW LOGARITHM WORKS:                                                                                                                           |
 |                                                                                                                                                   |
-|    1. "log₂(n) || log(n)" -> Log to the base 2, means it will divide the n by 2 until become 1.                                                   |
+|    1. "log₂(n) || log(n)" -> Log to the base 2, means it will divide the n by 2 at every step until become 1.                                     |
 |                                                                                                                                                   |
 |    2. "log₂(8)" -> 8 / 2 -> 4  || 4 / 2 -> 2 || 2 / 2 -> 1 || --> log₂(8) = 3 --> It's taking 3 step to solve a problem.                          |
 |                                                                                                                                                   |
