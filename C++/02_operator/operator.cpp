@@ -112,13 +112,13 @@ void bitwiseOperators(){
     unsigned int a = 5;  // Binary: 0101
     unsigned int b = 3;  // Binary: 0011
 
-    // Bitwise AND --> It compares each bit of two numbers and returns a new number where each bit is set to 1 only if both corresponding bits are 1.
+    // Bitwise AND --> It compares each bit of two numbers "perform AND operation on corresponding bit (0 & 0 = 0, 0 & 1 = 0, 1 & 1 = 1)"
     unsigned int andResult = a & b; // Result: 0001 (1 in decimal)
 
-    // Bitwise OR --> It compares each bit of two numbers and returns a new number where each bit is set to 1 if at least one of the corresponding bits is 1.
+    // Bitwise OR --> It compares each bit of two numbers "perform OR operation on corresponding bit (0 | 0 = 0, 0 | 1 = 1)"
     unsigned int orResult = a | b; // Result: 0111 (7 in decimal) --> 0101 | 0011 => (0|0=0, 1|0=1, 0|1=1, 1|1=1)
 
-    // Bitwise XOR --> It compares each bit of two numbers and returns a new number where each bit is set to 1 if the corresponding bits are different.
+    // Bitwise XOR --> It compares each bit of two numbers "perform XOR operation on corresponding bit if both are same 1 if bits are different otherwise 0".
     unsigned int xorResult = a ^ b; // Result: 0110 (6 in decimal) --> 0101 ^ 0011 => (0^0=0, 1^0=1, 0^1=1, 1^1=0)
 
     // Bitwise NOT --> It inverts all the bits of a number, changing 0s to 1s and 1s to 0s.

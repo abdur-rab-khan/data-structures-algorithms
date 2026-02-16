@@ -1,3 +1,4 @@
+
 /*
 +---------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                       FACTORS                                                                     |
@@ -80,184 +81,189 @@
 +---------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 
+
 #include <bits/stdc++.h>
 using namespace std;
 
 // Finding factors
 namespace factor {
-    // Brute force -- method
-    void bFindFactor(int n) {
-        vector<int> factors;
+// Brute force -- method
+void bFindFactor(int n) {
+  vector<int> factors;
 
-        factors.push_back(1); // 1 will be the factor of all number.
+  factors.push_back(1); // 1 will be the factor of all number.
 
-        for(int i = 2; i <= n; i++){
-            // If number is equal to n.
-            if(i == n) {
-                factors.push_back(n);
-                break;
-            }
-
-            // If it's completely divisible by n -- it's factor.
-            if(n % i == 0){
-                factors.push_back(i);
-            }
-        }
-
-        // Looping through all founded factors
-        cout << "Factors of " << n << " are: ";
-        for(const int& f: factors){
-            cout << f << " ";
-        }
-        cout << endl;
+  for (int i = 2; i <= n; i++) {
+    // If number is equal to n.
+    if (i == n) {
+      factors.push_back(n);
+      break;
     }
 
-    // Using square root method
-    void sFindFactor(int n) {
-        vector<int> factors;
-
-        for(int i = 1; i * i <= n; i++) {
-            // If n is competently divisible by i -- it's a factor and n / i will also be a factor. 
-            if(n % i == 0){
-                factors.push_back(i);
-                factors.push_back(n / i);
-            }
-        }
-
-        // Looping through all founded factors
-        cout << "Factors of " << n << " are: ";
-        for(const int& f: factors){
-            cout << f << " ";
-        }
-        cout << endl;
+    // If it's completely divisible by n -- it's factor.
+    if (n % i == 0) {
+      factors.push_back(i);
     }
+  }
 
-    // Calling all factors
-    void main() {
-        // Using brute force method
-        bFindFactor(12);
-    
-        // Using efficient method
-        sFindFactor(3);
-    }
+  // Looping through all founded factors
+  cout << "Factors of " << n << " are: ";
+  for (const int &f : factors) {
+    cout << f << " ";
+  }
+  cout << endl;
 }
+
+// Using square root method
+void sFindFactor(int n) {
+  vector<int> factors;
+
+  for (int i = 1; i * i <= n; i++) {
+    // If n is competently divisible by i -- it's a factor and n / i will also
+    // be a factor.
+    if (n % i == 0) {
+      factors.push_back(i);
+      factors.push_back(n / i);
+    }
+  }
+
+  // Looping through all founded factors
+  cout << "Factors of " << n << " are: ";
+  for (const int &f : factors) {
+    cout << f << " ";
+  }
+  cout << endl;
+}
+
+// Calling all factors
+void main() {
+  // Using brute force method
+  bFindFactor(12);
+
+  // Using efficient method
+  sFindFactor(3);
+}
+} // namespace factor
 
 // Finding primes
 namespace prime {
-    void prime_range(int n) {
-        vector<int> primes(n + 1, true);
+void prime_range(int n) {
+  vector<int> primes(n + 1, true);
 
-        primes[0] = primes[1] = false;
+  primes[0] = primes[1] = false;
 
-        for(int i = 2; i <= n; i++){
-            if(primes[i] == true){
-                for (int j = i * i; j <= n; j += i){
-                    primes[j] = false; 
-                }
-            }
-        }
-
-        // Printing all primes
-        for(int i = 2; i < primes.size(); i++){
-            if(primes[i] == true){
-                cout << i << " ";
-            }
-        }
-        cout << endl;
+  for (int i = 2; i <= n; i++) {
+    if (primes[i] == true) {
+      for (int j = i * i; j <= n; j += i) {
+        primes[j] = false;
+      }
     }
-    
-    bool isPrime(int n){
-        if(n <= 1) return false; // Number smaller than 1 will not a prime number.
+  }
 
-        for(int i = 2; i * i <= n; i++){
-            if(n % i == 0) return false; // If it's divisible by any number it can't be a prime
-        }
-
-        return true;
+  // Printing all primes
+  for (int i = 2; i < primes.size(); i++) {
+    if (primes[i] == true) {
+      cout << i << " ";
     }
-
-    void main(){
-        cout << "Is 7 is prime number: " << isPrime(7) << endl;
-        cout << "Is 8 is prime number: " << isPrime(8) << endl;
-        cout << "Prime numbers between 2 to 10 are: ";
-        prime_range(10);
-    }
+  }
+  cout << endl;
 }
+
+bool isPrime(int n) {
+  if (n <= 1)
+    return false; // Number smaller than 1 will not a prime number.
+
+  for (int i = 2; i * i <= n; i++) {
+    if (n % i == 0)
+      return false; // If it's divisible by any number it can't be a prime
+  }
+
+  return true;
+}
+
+void main() {
+  cout << "Is 7 is prime number: " << isPrime(7) << endl;
+  cout << "Is 8 is prime number: " << isPrime(8) << endl;
+  cout << "Prime numbers between 2 to 10 are: ";
+  prime_range(10);
+}
+} // namespace prime
 
 // Finding GCD
 namespace gcd {
-    // o(a)
-    void bruteForce(int a, int b) {
-        int ans = 1;
+// o(a)
+void bruteForce(int a, int b) {
+  int ans = 1;
 
-        for(int i = 1; i <= min(a, b); i++){
-            if(a % i == 0 && b % i == 0){
-                ans = i;
-            }
-        }
-
-        cout << "GCD of " << a << " and " << b << " is: " << ans << endl;
+  for (int i = 1; i <= min(a, b); i++) {
+    if (a % i == 0 && b % i == 0) {
+      ans = i;
     }
+  }
 
-    void euclideanAlgorithm(int a, int b){
-        cout << "The GCD of " << a << " and " << b << " is: ";
-        
-        while(b != 0){
-            int rem = a % b;
-            a = b;
-            b = rem;
-        }
-        
-        cout << a << endl;
-    }
-
-    int euclideanAlgorithmRec(int a, int b){
-        if(b == 0) return a;
-        
-        return euclideanAlgorithmRec(b, a % b);
-    }
-
-    void main(){
-        bruteForce(6, 12);
-        euclideanAlgorithm(48, 18);
-        euclideanAlgorithm(4, 6);
-    }
+  cout << "GCD of " << a << " and " << b << " is: " << ans << endl;
 }
+
+void euclideanAlgorithm(int a, int b) {
+  cout << "The GCD of " << a << " and " << b << " is: ";
+
+  while (b != 0) {
+    int rem = a % b;
+    a = b;
+    b = rem;
+  }
+
+  cout << a << endl;
+}
+
+int euclideanAlgorithmRec(int a, int b) {
+  if (b == 0)
+    return a;
+
+  return euclideanAlgorithmRec(b, a % b);
+}
+
+void main() {
+  bruteForce(6, 12);
+  euclideanAlgorithm(48, 18);
+  euclideanAlgorithm(4, 6);
+}
+} // namespace gcd
 
 // Finding LCM
 namespace lcm {
-    void bruteForce(int a, int b) {
-        int mx = max(a, b);
+void bruteForce(int a, int b) {
+  int mx = max(a, b);
 
-        while(true){
-            if(mx % a == 0 && mx % b == 0){
-                break;
-            }
-            mx++;
-        }
-
-        cout << "LCM of " << a << " and " << b << " is: " << mx << endl;
+  while (true) {
+    if (mx % a == 0 && mx % b == 0) {
+      break;
     }
+    mx++;
+  }
 
-    void optimizedLCM(int a, int b){
-        int gcd = gcd::euclideanAlgorithmRec(a, b);
-        cout << "LCM of " << a << " and " << b << " is: " << ((a / gcd) * b) << endl;
-    }
-
-    void main() {
-        bruteForce(4, 6);
-        optimizedLCM(4, 6);
-    }
+  cout << "LCM of " << a << " and " << b << " is: " << mx << endl;
 }
 
-void mainFunc(){
-    factor::main(); // Calling factor
-    prime::main(); // Calling Prime
-    gcd::main(); // Calling GCD
-    lcm::main(); // Calling LCM
+void optimizedLCM(int a, int b) {
+  int gcd = gcd::euclideanAlgorithmRec(a, b);
+  cout << "LCM of " << a << " and " << b << " is: " << ((a / gcd) * b) << endl;
+}
+
+void main() {
+  bruteForce(4, 6);
+  optimizedLCM(4, 6);
+}
+} // namespace lcm
+
+void mainFunc() {
+  factor::main(); // Calling factor
+  prime::main();  // Calling Prime
+  gcd::main();    // Calling GCD
+  lcm::main();    // Calling LCM
 }
 
 int main() {
-    mainFunc();
-    return 0;
+  mainFunc();
+  return 0;
 }
