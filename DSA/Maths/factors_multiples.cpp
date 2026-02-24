@@ -39,7 +39,7 @@
 |                                                            GCD or HCF (GREATEST COMMON DIVISOR)                                                   |
 +---------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                   |
-| 🟡 "k" is the GCD of "a" and "b", If in the factor of both "a"  and "b", "k" is common and latest. GCD is the largest number that divides        |
+| 🟡 "k" is the GCD of "a" and "b", If in the factor of both "a" and "b", "k" is common and latest. GCD is the largest number that divides          |
 |     both numbers.                                                                                                                                 |
 |                                                                                                                                                   |
 |     🟦 Factor of 12 ("a") -> 1, 2, 3, 4, [6], 12                                                                                                  |

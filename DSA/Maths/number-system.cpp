@@ -421,14 +421,12 @@ namespace problems {
         }
     }
 
-    
     // Main function
     void main() {
         basic::main();
         dsa_problems::main();
     }
 }
-
 
 int main() {
     problems::main();
