@@ -191,9 +191,7 @@ namespace problems {
                 if(arr[i] == arr[j])
                     j++;
                 else{
-                    i++;
-                    arr[i] = arr[j];
-                    j++;
+                    arr[++i] = arr[j++];
                 }
             }
 
@@ -205,8 +203,112 @@ namespace problems {
             cout << endl;
         }
         
+        // Moving zeros
+        void moveZeros(vector<int>& arr){
+            if(arr.empty() || arr.size() == 1)
+                return;
+
+            int i = 0, j = 0;
+
+            while(j < arr.size()){
+                if(arr[j] != 0)
+                    arr[i++] = arr[j++];
+                else
+                    j++;
+            }
+
+            // Fill zeros from i till n
+            while(i < arr.size()){
+                arr[i++] = 0;
+            }
+
+            // Printing every elements;
+            cout << "Non zero elements are: ";
+            for(int k = 0; k < i; k++){
+                cout << arr[k] << " ";
+            }
+            cout << endl;
+        }
+
+        // Merge sorted array
+        void mergeSort(vector<int> arr1, vector<int> arr2){
+            vector<int> mergedArr = {};
+
+            int i = 0, j = 0;
+            while(i < arr1.size() && j < arr2.size()) {
+                if(arr1[i] < arr2[j])
+                    mergedArr.push_back(arr1[i++]);
+                else
+                    mergedArr.push_back(arr2[j++]);
+            }
+
+            // Push remaining elements from both
+            while(i < arr1.size())
+                mergedArr.push_back(arr1[i++]);
+
+            while(j < arr2.size())
+                mergedArr.push_back(arr2[j++]);
+
+            // Printing elements of merged array
+            traverse(mergedArr);
+
+            // Merging without using extra space;
+            int size1 = arr1.size();
+            int size2 = arr2.size();
+
+            arr1.resize(size1 + size2);
+
+            int m = size1 - 1;              // last valid element in original arr1
+            int n = size2 - 1;              // last element in arr2
+            int k = size1 + size2 - 1;      // last index of resized arr1
+
+            while (m >= 0 && n >= 0) {
+                if (arr1[m] > arr2[n])
+                    arr1[k--] = arr1[m--];
+                else
+                    arr1[k--] = arr2[n--];
+            }
+
+            while (n >= 0) {
+                arr1[k--] = arr2[n--];
+            }
+
+            // Printing elements of merged array
+            cout << "IN-PLACE MERGING: " << endl;
+            traverse(arr1);
+        }
+
+        // Container with most water problem
+        // TODO: UNDERSTAND CORRECT
+        void waterContainerProblem(vector<int> arr) {
+            // Index represent width
+            // Array value represent height
+            // To find array we should have to follow this formula "width = j - i, height = min(arr[i], arr[j]), water = max(water, height * width)"
+            // Capcity increases if width increases
+            
+            int i = 0, j = arr.size() - 1;
+            int waterCapcity = INT_MIN;
+
+            while(i < j){
+                int height = min(arr[i], arr[j]);
+                int width = j - i;
+                int water = height * width;
+
+                if(arr[i] < arr[j])
+                    i++;
+                else
+                    j--;
+
+                waterCapcity = max(waterCapcity, water);
+            }
+
+            cout << "Max container capacity is: " << waterCapcity << endl;
+        }
+
         // Main function
         void main(){
+            cout << endl << "Basic Problems: " << endl;
+            
             // Two Sum Problem
             vector<int> arr = {2, 7, 11, 15};
             pair<int, int> twoSumRes = twoSum(arr, 9);
@@ -217,8 +319,21 @@ namespace problems {
             cout << "Is car racing is palindrome " << isPalindrome("car racing") << endl;
 
             // Removing duplicates in place
-            vector<int> arr3 = {5};
+            vector<int> arr3 = {1, 1, 1, 2, 3, 4, 5, 5, 5};
             removeDuplicates(arr3);
+
+            // Moving zero elements towards right
+            vector<int> arr4 = {0,1,0,3,12};
+            moveZeros(arr4);
+
+            // Merge sorted array
+            vector<int> sorted1 = {1, 3, 5, 7};
+            vector<int> sorted2 = {2, 4, 6};
+            mergeSort(sorted1, sorted2);
+
+            // Container with most water
+            vector<int> container = {1, 8, 6, 2, 5, 4, 8, 3, 7};
+            waterContainerProblem(container);
         }
     }
 
@@ -251,7 +366,6 @@ int main() {
     cout << "Intro: " << endl;
     intro::main();
 
-    cout << endl << "Problems: " << endl;
     problems::main();
 
     return 0;
