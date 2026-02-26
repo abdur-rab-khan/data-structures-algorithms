@@ -56,11 +56,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void traverse(vector<int>& vec) {
+void traverse(vector<int>& vec, string msg = "") {
     if(vec.size() == 0)
         return;
 
-    cout << "Elements of a vector are: ";
+    if(msg.empty())
+        cout << "Elements of a vector are: ";
+    else
+        cout << msg;
+
     for(const int& el: vec){
         cout << el << " ";
     }
@@ -118,7 +122,7 @@ namespace problems {
     // Basic Level
     namespace basic {
         // Two sum problem (SHORTED VERSION)
-        pair<int, int> twoSum(vector<int> arr, int k){
+        void computeTwoSum(vector<int> arr, int k){
             int i = 0, j = arr.size() - 1;
 
             while(i < j){
@@ -141,42 +145,46 @@ namespace problems {
                 j = 0;
             }
 
-            return pair(i, j);
+            cout << "Pair that sums equals to " << k << " is: " << i << " - " << j << endl;
         }
        
         // Checking whether it's palindrome or not.
-        bool isPalindrome(string str){
-            int i = 0, j = str.length() - 1;
+        void isPalindrome(string str){
+            int leftIndex = 0;
+            int rightIndex = str.length() - 1;
 
-            // Lambda function: use "auto" or given type or directly use "isalnum" 
-            function<bool(char)> checkValidChar = [](char ch) -> bool {
+            // Lambda function: use "auto" or given type or directly use "isalnum"  ==> Learned LAMBDA FUNCTION
+            function<bool(char)> isValidChar = [](char ch) -> bool {
                 char lowerCh = tolower(ch);
                 return (lowerCh >= 'a' && lowerCh <= 'z') ||
                 (lowerCh >= '0' && lowerCh <= '9');
             };
 
-            while(i < j){
-                bool validRightChar = checkValidChar(str[j]);
-                bool validLeftChar = checkValidChar(str[i]);
-                
-                if(!(validLeftChar && validRightChar)){
-                    if(!validLeftChar)
-                        i++;
-                    
-                    if(!validRightChar)
-                        j--;
-
+            // Find whether "str" is palindrome or not by look both side.
+            while(leftIndex < rightIndex){
+                bool isRightCharValid = isValidChar(str[rightIndex]);
+                bool isLeftCharValid = isValidChar(str[leftIndex]);
+               
+                if(!isRightCharValid){
+                    leftIndex++;
                     continue;
                 }
-                
-                // Checking from both side
-                if(tolower(str[i]) != tolower(str[j]))
-                    return false;
 
-                i++, j--;
+                if(!isLeftCharValid){
+                    rightIndex--;
+                    continue;
+                }
+               
+                if(tolower(str[leftIndex]) != tolower(str[rightIndex])) {
+                    cout << str << " is not a palindrome";
+                    return;
+                }
+
+                leftIndex++;
+                rightIndex--;
             }
 
-            return true;
+            cout << str << " is a palindrome";
         }
         
         // Remove duplicates
@@ -279,30 +287,95 @@ namespace problems {
         }
 
         // Container with most water problem
-        // TODO: UNDERSTAND CORRECT
-        void waterContainerProblem(vector<int> arr) {
-            // Index represent width
-            // Array value represent height
-            // To find array we should have to follow this formula "width = j - i, height = min(arr[i], arr[j]), water = max(water, height * width)"
-            // Capcity increases if width increases
+        void calculateMaxContainerArea(const vector<int>& heights) {
+            /*
+                * Two-pointer approach to calculate maximum container area
             
-            int i = 0, j = arr.size() - 1;
-            int waterCapcity = INT_MIN;
+                |                   
+                |
+                +-------------------+ 
+                |                   |
+             8  |                   |
+                |                   | 4
+                |                   |
+                +-------------------+
+                   j - i (distance)
+                        
+            */
 
-            while(i < j){
-                int height = min(arr[i], arr[j]);
-                int width = j - i;
-                int water = height * width;
+            int size = heights.size();
+            
+            int leftIndex = 0;
+            int rightIndex = size - 1;
+            
+            int maxWaterArea = 0;
 
-                if(arr[i] < arr[j])
-                    i++;
+            // Find max water area
+            while(leftIndex < rightIndex){
+                int leftHeight = heights[leftIndex];
+                int rightHeight = heights[rightIndex];
+
+                int minHeight = min(leftHeight, rightHeight);
+                int width = rightIndex - leftIndex;
+                int waterArea = minHeight * width;
+
+                if(leftHeight < rightHeight)
+                    leftIndex++;
                 else
-                    j--;
+                    rightIndex--;
 
-                waterCapcity = max(waterCapcity, water);
+                maxWaterArea = max(maxWaterArea, waterArea);
             }
 
-            cout << "Max container capacity is: " << waterCapcity << endl;
+            cout << "Max water area is: " << maxWaterArea< endl;
+        }
+
+        void computeSortedSquares(vector<int> numbers) {
+            // Edge case: empty array
+            if(numbers.empty())
+                return;
+
+            int negativeIndex = 0;
+            int positiveIndex = 1;
+            int size = numbers.size();
+            
+            vector<int> squaredValues;
+
+            // Step 1: Find first non-negative index 
+            while(positiveIndex < size && numbers[positiveIndex] < 0) {
+                negativeIndex++;
+                positiveIndex++;
+            }
+
+            // Step 2: Merge negative and positive parts
+            while(negativeIndex >= 0 && positiveIndex < size) {
+                int leftValue = numbers[negativeIndex];
+                int rightValue = numbers[positiveIndex];
+
+                if(abs(leftValue) < rightValue){
+                    squaredValues.push_back(leftValue * leftValue);
+                    negativeIndex--;
+                }
+                else{
+                    squaredValues.push_back(rightValue * rightValue);
+                    positiveIndex++;
+                }
+            }
+
+            // Step 3: Add remaining negative elements
+            while(negativeIndex >= 0){
+                int value = numbers[negativeIndex];
+                squaredValues.push_back(value * value);
+                negativeIndex--;
+            }
+
+            while(positiveIndex < size) {
+                int value = numbers[positiveIndex];
+                squaredValues.push_back(value * value);
+                positiveIndex++;
+            }
+
+            traverse(squaredValues, "Printing all sorted array: ");
         }
 
         // Main function
@@ -311,29 +384,32 @@ namespace problems {
             
             // Two Sum Problem
             vector<int> arr = {2, 7, 11, 15};
-            pair<int, int> twoSumRes = twoSum(arr, 9);
-            cout << "Index are: " << twoSumRes.first << " - " << twoSumRes.second << endl;
+            computeTwoSum(arr, 9);
 
             // IsPalindrome problem
-            cout << "Is madam is palindrome " << isPalindrome("madam") << endl;
-            cout << "Is car racing is palindrome " << isPalindrome("car racing") << endl;
+            isPalindrome("madam");
+            isPalindrome("car racing");
 
             // Removing duplicates in place
-            vector<int> arr3 = {1, 1, 1, 2, 3, 4, 5, 5, 5};
-            removeDuplicates(arr3);
+            vector<int> duplicateNumbers = {1, 1, 1, 2, 3, 4, 5, 5, 5};
+            removeDuplicates(duplicateNumbers);
 
             // Moving zero elements towards right
-            vector<int> arr4 = {0,1,0,3,12};
-            moveZeros(arr4);
+            vector<int> numbers = {0, 1, 0, 3, 12};
+            moveZeros(numbers);
 
             // Merge sorted array
-            vector<int> sorted1 = {1, 3, 5, 7};
-            vector<int> sorted2 = {2, 4, 6};
-            mergeSort(sorted1, sorted2);
+            vector<int> sortedNumberF = {1, 3, 5, 7};
+            vector<int> sortedNumberS = {2, 4, 6};
+            mergeSort(sortedNumberF, sortedNumberS);
 
             // Container with most water
-            vector<int> container = {1, 8, 6, 2, 5, 4, 8, 3, 7};
-            waterContainerProblem(container);
+            vector<int> heights = {1, 8, 6, 2, 5, 4, 8, 3, 7};
+            calculateMaxContainerArea(heights);
+
+            // Square of sorted array
+            vector<int> sortedNumbers = {-4, -1, 0, 3, 10};
+            computeSortedSquares(sortedNumbers);
         }
     }
 
