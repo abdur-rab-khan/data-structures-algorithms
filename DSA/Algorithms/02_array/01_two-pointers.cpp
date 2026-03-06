@@ -327,17 +327,18 @@ namespace problems {
                 maxWaterArea = max(maxWaterArea, waterArea);
             }
 
-            cout << "Max water area is: " << maxWaterArea< endl;
+            cout << "Max water area is: " << maxWaterArea << endl;
         }
 
         void computeSortedSquares(vector<int> numbers) {
             // Edge case: empty array
             if(numbers.empty())
                 return;
+            
+            int size = numbers.size();
 
             int negativeIndex = 0;
             int positiveIndex = 1;
-            int size = numbers.size();
             
             vector<int> squaredValues;
 
@@ -415,16 +416,324 @@ namespace problems {
 
     // Medium Level
     namespace medium {
+        vector<vector<int>> findThreeSum(vector<int>& numbers, int k) {
+            vector<vector<int>> result;
+            const int size = numbers.size();
+
+            sort(numbers.begin(), numbers.end());
+
+            for (int i = 0; i < size - 2; i++) {
+                // Skip duplicate fixed elements
+                if (i > 0 && numbers[i] == numbers[i - 1])
+                    continue;
+
+                int leftIndex = i + 1;
+                int rightIndex = size - 1;
+
+                while (leftIndex < rightIndex) {
+                    int sum = numbers[i] + numbers[leftIndex] + numbers[rightIndex];
+
+                    if (sum == k) {
+                        result.push_back({ numbers[i], numbers[leftIndex], numbers[rightIndex] });
+
+                        leftIndex++;
+                        rightIndex--;
+
+                        // Skip duplicates for left
+                        while (leftIndex < rightIndex && numbers[leftIndex] == numbers[leftIndex - 1])
+                            leftIndex++;
+
+                        // Skip duplicates for right
+                        while (leftIndex < rightIndex && numbers[rightIndex] == numbers[rightIndex + 1])
+                            rightIndex--;
+                    } else if (sum < k) {
+                        leftIndex++;
+                    } else {
+                        rightIndex--;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        vector<vector<int>> findFourSum(vector<int>& nums, int k) {
+            const int size = nums.size();
+
+            vector<vector<int>> possiblePairs = {};
+
+            if(size < 4)
+                return possiblePairs;
+
+            sort(nums.begin(), nums.end());
+
+            // 1. 
+            for(int i = 0; i < size - 3; i++){
+
+                // Skip duplicate for i
+                if(i > 0 && nums[i] == nums[i - 1])
+                    continue;
+
+                // 2.
+                for(int j = i + 1; j < size - 2; j++){
+                   
+                    // Skip duplicate for j
+                    if(j > i + 1 && nums[j] == nums[j - 1])
+                        continue;
+
+                    int leftIndex = j + 1;
+                    int rightIndex = size - 1;
+
+                    // 3. 
+                    while(leftIndex < rightIndex){
+                        int sum = nums[i] + nums[j] + nums[leftIndex] + nums[rightIndex];
+
+                        if(sum == k){
+                            possiblePairs.push_back({nums[i], nums[j], nums[leftIndex], nums[rightIndex]});
+
+                            leftIndex++;
+                            rightIndex--;
+
+                            while(leftIndex < rightIndex && nums[leftIndex] == nums[leftIndex - 1])
+                                leftIndex++;
+
+                            while(leftIndex < rightIndex && nums[rightIndex] == nums[rightIndex + 1])
+                                rightIndex--;
+
+                        }else if(sum > k){
+                            rightIndex--;
+                        }else{
+                            leftIndex++;
+                        }
+                    }
+                }
+            }
+
+            return possiblePairs;
+        }
+
+        int computeMinimumSubarraySum(vector<int> nums, int target){
+            int size = nums.size();
+
+            int totalSum = 0;
+            int leftIdx = 0;
+            int minSubarray = INT_MAX;
+
+            for(int rightIdx = 0; rightIdx < size; rightIdx++){
+                totalSum += nums[rightIdx];
+
+                while(leftIdx < rightIdx && totalSum >= target){
+                    if(totalSum == target)
+                        minSubarray = min(minSubarray, (rightIdx - leftIdx) + 1);
+
+                    totalSum -= nums[leftIdx];
+                    leftIdx++;
+                }
+            }
+
+            return (minSubarray == INT_MAX) ? 0 : minSubarray;
+        }
+
+        int evaluateTrappingRainWater(const vector<int>& heights){
+            /*
+            Example 1: 
+                        arr = [3, 0, 2, 0, 4]
+
+                        * Array elements represents the height of the vertical line.
+                        * Water will trap between vertical lines so we have to evaluate the thing.
+            */
+            if(heights.empty())
+                return 0;
         
+            size_t size = heights.size();
+                
+            int leftIdx = 1;
+            int rightIdx = size - 2;
+            
+            int leftMaxHeight = heights[0];
+            int rightMaxHeight = heights[size - 1];
+            
+            int totalTrappedWater = 0;
+            
+            while(leftIdx < rightIdx){
+                int leftHeight = heights[leftIdx];
+                int rightHeight = heights[rightIdx];
+                
+                if(leftHeight > rightHeight){
+                if(rightHeight >= rightMaxHeight){
+                    rightMaxHeight = rightHeight;
+                }else{
+                    totalTrappedWater += rightMaxHeight - rightHeight;
+                }
+                rightIdx--;
+                }else {
+                    if(leftHeight >= leftMaxHeight){
+                        leftMaxHeight = leftHeight;
+                    }else {
+                        totalTrappedWater += leftMaxHeight - leftHeight;
+                    }
+                }
+                leftIdx++;
+            }
+
+            return totalTrappedWater;
+        }
+
+        void solveDutchFlag(vector<int>& nums){
+            size_t size = nums.size();
+
+            int leftIdx = 0;
+            int rightIdx = size - 1;
+
+            // Moving 0 towards front
+            while(leftIdx < rightIdx){
+                while(nums[leftIdx] == 0)
+                    leftIdx++;
+
+                if(rightIdx == 0){
+                    swap(nums[leftIdx], nums[rightIdx]);
+                    leftIdx++;
+                }
+
+                rightIdx--;
+            }
+
+            // Reseting rightIdx
+            rightIdx = size - 1;
+
+            // Moving 1 towards front
+            while(leftIdx < rightIdx){
+                while(nums[leftIdx] == 1)
+                    leftIdx++;
+
+                if(rightIdx == 1){
+                    swap(nums[leftIdx], nums[rightIdx]);
+                    leftIdx++;
+                }
+
+                rightIdx--;
+            }
+        }
+
+        void solveDutchFlagThreePT(vector<int>& colors){
+            if(colors.empty())
+                return;
+                
+            
+        }  
+
+        int evaluatingFloydCycle(const vector<int>& nums){
+            int slow = nums[0]; // It's move 1 steps per iteration.
+            int fast = nums[0]; // It's move 2 steps per iteration.
+
+            // If any cycle exists eventually it will meet after some iteration.
+            do{
+                slow = nums[slow];
+                fast = nums[nums[fast]];
+            } while (slow != fast);
+
+            slow = nums[0];
+
+            while(slow != fast){
+                slow = nums[slow];
+                fast = nums[fast];
+            }
+
+             return slow;
+        }
+
+        int countSubarrayProducts(const vector<int>& nums, int k){
+            if(nums.empty())
+                return 0;
+
+            int slow = 0;
+            int fast = 0;
+
+            int totalProducts = 1;
+            int totalCounts = 0;
+
+            while(fast < nums.size()){
+                totalProducts *= nums[fast];
+
+                if(totalProducts < k)
+                    totalCounts++;
+
+                // If got greater than equal to k, decrease the "totalProducts" by dividing it.
+                while(totalProducts >= k){
+                    totalProducts /= nums[slow];
+                    slow++;
+
+                    if(totalProducts >= k){
+                        
+                    }
+                }
+
+                fast++;
+            }
+
+            return totalCounts;
+        }
+
         // Main function
         void main(){
-            // CALLING ALL THE METHOD
+            // find three sum
+            vector<int> threeSumNums = {-1, 0, 1, 2, -1, -4};
+            vector<vector<int>> possiblePairs = findThreeSum(threeSumNums, 0);
+
+            cout << "Possible pairs for three sum are: " << endl;
+            for(const vector<int>& pairs: possiblePairs){
+                for(const int& p: pairs){
+                    cout << p << " ";
+                }
+                cout << endl;
+            }
+
+            // find four sum
+            vector<int> fourSumNums = {-1, 0, 1, 2, -1, -4};
+            vector<vector<int>> possiblePairsFourSum = findFourSum(fourSumNums, 0);
+
+            cout << "Possible pairs for four sum are: " << endl;
+            for(const vector<int>& pairs: possiblePairsFourSum){
+                for(const int& p: pairs){
+                    cout << p << " ";
+                }
+                cout << endl;
+            }
+
+            // Sum of minimum subarray
+            vector<int> minSubArrayNums = {2, 3, 1, 2, 4, 3};
+            cout << "Minimum subarray length is: " << computeMinimumSubarraySum(minSubArrayNums, 7) << endl;
+
+            // Sum of minimum subarray
+            vector<int> minSubArrayNums2 = {1, 2, 3, 4, 5};
+            cout << "Minimum subarray length is: " << computeMinimumSubarraySum(minSubArrayNums2, 15) << endl;
+
+            // Evaluating total trapped water
+            vector<int> heightForRain = {3, 0, 2, 0, 4};
+            cout << "Total trapped water is: " << evaluateTrappingRainWater(heightForRain) << endl;
+
+            // Solving Dutch Flag
+            vector<int> arr = {2, 0, 2, 1, 1, 0};
+            solveDutchFlag(arr);
+
+            cout << "Re-Arranging in Dutch Flag Order: ";
+            for(const int& n:arr){
+                cout << n << " ";
+            }
+            cout << endl;
+
+            // Finding Duplicates (Floyd's cycle)
+            vector<int> floydArr = {1, 2, 3, 2, 4};
+            cout << "Duplicate num is: " << evaluatingFloydCycle(floydArr) << endl;
+
+            // Count Total Subarray products
+            vector<int> productArr = {10, 5, 2, 6};
+            cout << "Total counts is: " << countSubarrayProducts(productArr, 100) << endl;
         }
     }
 
     // Advance Level
     namespace advance {
-        
         // Main function
         void main(){
             // CALLING ALL THE METHOD
@@ -432,7 +741,7 @@ namespace problems {
     }
     
     void main(){
-        basic::main();
+        // basic::main();
         medium::main();
         advance::main();
     }
@@ -442,6 +751,7 @@ int main() {
     cout << "Intro: " << endl;
     intro::main();
 
+    cout << "Problems: " << endl;
     problems::main();
 
     return 0;

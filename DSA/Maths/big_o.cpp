@@ -3,7 +3,7 @@
 |                                                                     BIG O NOTATION                                                                |
 +---------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                   |
-| 🟡 BIG O notation tell about how algorithms "execution time" or "operation grow" when size "n" increases.                                         |
+| 🟡 BIG O notation tells about how algorithms "execution time" or "operation grow" when size "n" increases.                                        |
 |                                                                                                                                                   |
 | 🔶 BIG O Examples:                                                                                                                                | 
 |                                                                                                                                                   |

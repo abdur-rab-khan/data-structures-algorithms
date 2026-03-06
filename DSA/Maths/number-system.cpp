@@ -44,7 +44,7 @@
 |                                                                                                                                                                                    |
 | 💠 "SET BITS": Number of "1" in an binary number are "set bits".                                                                                                                   |
 |                                                                                                                                                                                    |
-| 💠 "POWER OF 2": Power of 2 always have only "1" in the binary.                                                                                                                    |
+| 💠 "POWER OF 2": Power of 2 will always have only "1" in the binary.                                                                                                               |
 |                                                                                                                                                                                    |
 | 💠 "Remove Last Set Bit": To remove last set bit we will use "n & (n - 1)"                                                                                                         |
 |                                                                                                                                                                                    |
@@ -148,10 +148,11 @@ namespace problems {
                 count++;
                 n = n & (n - 1);
             }
+            
             return count;
         }
 
-        // CHECKING IF THE NUMBER IF POWER OF 2 OF NOT
+        // CHECKING WHETHER IT'S POWER OF 2 OR NOT
         bool isPowerOfTwo(int n){
             return (n & (n - 1));
         }
@@ -347,7 +348,6 @@ namespace problems {
                     if(((unsigned int)n >> i) & 1u)
                         count++;
                 }
-
 
                 if(count % 3){
                     result |= (1u << i);
