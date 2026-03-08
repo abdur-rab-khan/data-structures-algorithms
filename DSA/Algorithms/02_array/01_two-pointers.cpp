@@ -56,7 +56,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void traverse(vector<int>& vec, string msg = "") {
+void traverse(const vector<int>& vec, string msg = "") {
     if(vec.size() == 0)
         return;
 
@@ -188,54 +188,67 @@ namespace problems {
         }
         
         // Remove duplicates
-        void removeDuplicates(vector<int> arr){
-            // If no elements are there
-            if(arr.size() == 0)
-                return;
-
-            int i = 0, j = 1;
-
-            while(j < arr.size()){
-                if(arr[i] == arr[j])
-                    j++;
-                else{
-                    arr[++i] = arr[j++];
+        vector<int> removeDuplicates(vector<int> numbers){
+            if(numbers.empty())
+                return {};
+        
+            size_t leftIndex = 0;
+            size_t rightIndex = 1;
+            
+            while(rightIndex < numbers.size()){
+                if(numbers[leftIndex] != numbers[rightIndex]){
+                    leftIndex++;
+                    numbers[leftIndex] = numbers[rightIndex];
                 }
+                
+                rightIndex++;
             }
-
-            // Printing every elements;
-            cout << "Unique elements are: ";
-            for(int k = 0; k < i + 1; k++){
-                cout << arr[k] << " ";
-            }
-            cout << endl;
+    
+            return vector<int>(numbers.begin(), numbers.begin() + leftIndex + 1);
         }
         
         // Moving zeros
-        void moveZeros(vector<int>& arr){
-            if(arr.empty() || arr.size() == 1)
-                return;
+        vector<int> moveZeros(vector<int>& numbers){
+        	if(numbers.empty())
+                return {};
 
-            int i = 0, j = 0;
+            // Technique 2;
+            if(0) {
+                size_t leftIndex = 0;
+                size_t rightIndex = 0;
 
-            while(j < arr.size()){
-                if(arr[j] != 0)
-                    arr[i++] = arr[j++];
-                else
-                    j++;
+                while(rightIndex < numbers.size()) {
+                    if(numbers[rightIndex] != 0) {
+                        numbers[leftIndex] = numbers[rightIndex];
+                        leftIndex++;
+                    }
+
+                    rightIndex++;
+                }
+
+                return vector<int>(numbers.begin(), numbers.begin() + leftIndex);
+            }
+            
+            size_t size = numbers.size();
+            
+            size_t leftIndex = 0;
+            size_t rightIndex = 1;
+            
+            while(rightIndex < size){
+                while(leftIndex < size && numbers[leftIndex] != 0)
+                    leftIndex++, rightIndex++;
+                    
+                while(rightIndex < size && numbers[rightIndex] == 0)
+                    rightIndex++;
+                    
+            if(rightIndex < size){
+                    numbers[leftIndex] = numbers[rightIndex];
+                    leftIndex++;
+                    rightIndex++;
+            }
             }
 
-            // Fill zeros from i till n
-            while(i < arr.size()){
-                arr[i++] = 0;
-            }
-
-            // Printing every elements;
-            cout << "Non zero elements are: ";
-            for(int k = 0; k < i; k++){
-                cout << arr[k] << " ";
-            }
-            cout << endl;
+            return vector<int>(numbers.begin(), numbers.begin() + leftIndex);
         }
 
         // Merge sorted array
@@ -393,11 +406,11 @@ namespace problems {
 
             // Removing duplicates in place
             vector<int> duplicateNumbers = {1, 1, 1, 2, 3, 4, 5, 5, 5};
-            removeDuplicates(duplicateNumbers);
+            traverse(removeDuplicates(duplicateNumbers), "Unique numbers are: ");
 
             // Moving zero elements towards right
             vector<int> numbers = {0, 1, 0, 3, 12};
-            moveZeros(numbers);
+           traverse(moveZeros(numbers), "Zero free numbers are: ");
 
             // Merge sorted array
             vector<int> sortedNumberF = {1, 3, 5, 7};
@@ -646,29 +659,24 @@ namespace problems {
             if(nums.empty())
                 return 0;
 
+            size_t size = nums.size();
+
             int slow = 0;
             int fast = 0;
 
             int totalProducts = 1;
             int totalCounts = 0;
 
-            while(fast < nums.size()){
-                totalProducts *= nums[fast];
+            while(fast < size){
+                totalProducts *= nums[fast++];
 
-                if(totalProducts < k)
-                    totalCounts++;
-
-                // If got greater than equal to k, decrease the "totalProducts" by dividing it.
                 while(totalProducts >= k){
                     totalProducts /= nums[slow];
                     slow++;
-
-                    if(totalProducts >= k){
-                        
-                    }
                 }
 
-                fast++;
+                if(totalProducts < k)
+                    totalCounts += fast - slow;
             }
 
             return totalCounts;
@@ -729,6 +737,9 @@ namespace problems {
             // Count Total Subarray products
             vector<int> productArr = {10, 5, 2, 6};
             cout << "Total counts is: " << countSubarrayProducts(productArr, 100) << endl;
+
+            vector<int> productArr2 = {1, 2, 3};
+            cout << "Total counts is: " << countSubarrayProducts(productArr2, 4) << endl;
         }
     }
 
