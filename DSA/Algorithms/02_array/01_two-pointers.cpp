@@ -212,7 +212,7 @@ namespace problems {
         	if(numbers.empty())
                 return {};
 
-            // Technique 2;
+            // Technique 1;
             if(0) {
                 size_t leftIndex = 0;
                 size_t rightIndex = 0;
@@ -228,7 +228,8 @@ namespace problems {
 
                 return vector<int>(numbers.begin(), numbers.begin() + leftIndex);
             }
-            
+
+            // Technique 2;
             size_t size = numbers.size();
             
             size_t leftIndex = 0;
@@ -252,51 +253,43 @@ namespace problems {
         }
 
         // Merge sorted array
-        void mergeSort(vector<int> arr1, vector<int> arr2){
-            vector<int> mergedArr = {};
-
-            int i = 0, j = 0;
-            while(i < arr1.size() && j < arr2.size()) {
-                if(arr1[i] < arr2[j])
-                    mergedArr.push_back(arr1[i++]);
-                else
-                    mergedArr.push_back(arr2[j++]);
-            }
-
-            // Push remaining elements from both
-            while(i < arr1.size())
-                mergedArr.push_back(arr1[i++]);
-
-            while(j < arr2.size())
-                mergedArr.push_back(arr2[j++]);
-
-            // Printing elements of merged array
-            traverse(mergedArr);
-
-            // Merging without using extra space;
-            int size1 = arr1.size();
-            int size2 = arr2.size();
-
-            arr1.resize(size1 + size2);
-
-            int m = size1 - 1;              // last valid element in original arr1
-            int n = size2 - 1;              // last element in arr2
-            int k = size1 + size2 - 1;      // last index of resized arr1
-
-            while (m >= 0 && n >= 0) {
-                if (arr1[m] > arr2[n])
-                    arr1[k--] = arr1[m--];
-                else
-                    arr1[k--] = arr2[n--];
-            }
-
-            while (n >= 0) {
-                arr1[k--] = arr2[n--];
-            }
-
-            // Printing elements of merged array
-            cout << "IN-PLACE MERGING: " << endl;
-            traverse(arr1);
+        vector<int> mergeSort(vector<int>& numsOne, vector<int>& numsTwo) {
+        	if(numsOne.empty() || numsTwo.empty())
+        		return numsOne.empty() ? numsTwo : numsOne;
+        
+            // We can use two pointer and new vector for acheiving this but, space complexity will be "O(n)".
+            size_t numsOneSize = numsOne.size();
+            size_t numsTwoSize = numsTwo.size();
+        
+        	size_t numsOneLastIndex = numsOneSize - 1;
+        	size_t numsTwoLastIndex = numsTwoSize - 1;
+        
+        	size_t lastIndex = (numsOneSize + numsTwoSize) - 1;
+        
+        	// Resizing the vector for merging both vector.
+        	numsOne.resize(numsOneSize + numsTwoSize);
+        
+        	while(numsOneLastIndex != 0 && numsTwoLastIndex != 0) {
+        		if(numsOne[numsOneLastIndex] > numsTwo[numsTwoLastIndex]) {
+        			numsOne[lastIndex] = numsOne[numsOneLastIndex];
+        			numsOneLastIndex--;
+        		} else {
+        			numsOne[lastIndex] = numsTwo[numsTwoLastIndex];
+        			numsTwoLastIndex--;
+        		}
+            
+        		lastIndex--;
+        	}
+        
+            // If numsOne is smaller, then adding all remaining numsTwo elements.	
+        	while(numsTwoLastIndex != 0){
+        	    numsOne[lastIndex] = numsTwo[numsTwoLastIndex];
+            
+        	    lastIndex--;
+        	    numsTwoLastIndex--;
+        	}
+        
+        	return numsOne;
         }
 
         // Container with most water problem
@@ -410,12 +403,12 @@ namespace problems {
 
             // Moving zero elements towards right
             vector<int> numbers = {0, 1, 0, 3, 12};
-           traverse(moveZeros(numbers), "Zero free numbers are: ");
+            traverse(moveZeros(numbers), "Zero free numbers are: ");
 
             // Merge sorted array
             vector<int> sortedNumberF = {1, 3, 5, 7};
             vector<int> sortedNumberS = {2, 4, 6};
-            mergeSort(sortedNumberF, sortedNumberS);
+            traverse(mergeSort(sortedNumberF, sortedNumberS), "After merging: ");
 
             // Container with most water
             vector<int> heights = {1, 8, 6, 2, 5, 4, 8, 3, 7};
@@ -424,50 +417,51 @@ namespace problems {
             // Square of sorted array
             vector<int> sortedNumbers = {-4, -1, 0, 3, 10};
             computeSortedSquares(sortedNumbers);
+
+            cout << endl << endl;
         }
     }
 
     // Medium Level
     namespace medium {
-        vector<vector<int>> findThreeSum(vector<int>& numbers, int k) {
-            vector<vector<int>> result;
-            const int size = numbers.size();
+        vector<vector<int>> evaluateThreeSum(vector<int> nums, int target){
+            vector<vector<int>> possiblePairs = {};
 
-            sort(numbers.begin(), numbers.end());
+            size_t size = nums.size();
 
-            for (int i = 0; i < size - 2; i++) {
-                // Skip duplicate fixed elements
-                if (i > 0 && numbers[i] == numbers[i - 1])
-                    continue;
+            // Sorting the nums array.
+            sort(nums.begin(), nums.end());
 
-                int leftIndex = i + 1;
+            for(int fixedIndex = 0; fixedIndex < size - 2; fixedIndex++){
+                int leftIndex = fixedIndex + 1;
                 int rightIndex = size - 1;
 
-                while (leftIndex < rightIndex) {
-                    int sum = numbers[i] + numbers[leftIndex] + numbers[rightIndex];
+                while(leftIndex < rightIndex){
+                    int totalSum = nums[fixedIndex] + nums[leftIndex] + nums[rightIndex];
 
-                    if (sum == k) {
-                        result.push_back({ numbers[i], numbers[leftIndex], numbers[rightIndex] });
+                    if(totalSum == target){
+                        possiblePairs.push_back({nums[fixedIndex], nums[leftIndex], nums[rightIndex]});
 
                         leftIndex++;
                         rightIndex--;
 
-                        // Skip duplicates for left
-                        while (leftIndex < rightIndex && numbers[leftIndex] == numbers[leftIndex - 1])
+                        // Skiping duplicates from left
+                        while(leftIndex < rightIndex && nums[leftIndex] == nums[leftIndex - 1])
                             leftIndex++;
 
-                        // Skip duplicates for right
-                        while (leftIndex < rightIndex && numbers[rightIndex] == numbers[rightIndex + 1])
+                        // Skiping duplicates from right
+                        while(rightIndex > leftIndex && nums[rightIndex] == nums[rightIndex - 1])
                             rightIndex--;
-                    } else if (sum < k) {
-                        leftIndex++;
-                    } else {
-                        rightIndex--;
                     }
+
+                    if(totalSum > target)
+                        rightIndex--;
+                    else
+                        leftIndex++;
                 }
             }
 
-            return result;
+            return possiblePairs;
         }
 
         vector<vector<int>> findFourSum(vector<int>& nums, int k) {
@@ -547,46 +541,51 @@ namespace problems {
             return (minSubarray == INT_MAX) ? 0 : minSubarray;
         }
 
-        int evaluateTrappingRainWater(const vector<int>& heights){
+        int evaluateMaximumTrappedWater(vector<int> heights){
             /*
-            Example 1: 
+                Example 1: 
                         arr = [3, 0, 2, 0, 4]
 
                         * Array elements represents the height of the vertical line.
                         * Water will trap between vertical lines so we have to evaluate the thing.
             */
-            if(heights.empty())
+
+            if(heights.size() < 2)
                 return 0;
-        
+
             size_t size = heights.size();
-                
-            int leftIdx = 1;
-            int rightIdx = size - 2;
-            
-            int leftMaxHeight = heights[0];
-            int rightMaxHeight = heights[size - 1];
-            
+
+            size_t leftIndex = 1;
+            size_t rightIndex = size - 2;
+
+            int maxLeftHeight = heights[0];
+            int maxRightHeight = heights[size - 1];
+
             int totalTrappedWater = 0;
-            
-            while(leftIdx < rightIdx){
-                int leftHeight = heights[leftIdx];
-                int rightHeight = heights[rightIdx];
-                
-                if(leftHeight > rightHeight){
-                if(rightHeight >= rightMaxHeight){
-                    rightMaxHeight = rightHeight;
-                }else{
-                    totalTrappedWater += rightMaxHeight - rightHeight;
-                }
-                rightIdx--;
-                }else {
-                    if(leftHeight >= leftMaxHeight){
-                        leftMaxHeight = leftHeight;
-                    }else {
-                        totalTrappedWater += leftMaxHeight - leftHeight;
+
+            while(leftIndex <= rightIndex){
+                int currentLeftHeight = heights[leftIndex];
+                int currentRightHeight = heights[rightIndex];
+
+                int minHeight = min(maxLeftHeight, maxRightHeight);
+
+                if(maxLeftHeight > maxRightHeight){
+                    if(maxRightHeight >= currentRightHeight){
+                        totalTrappedWater += (minHeight - currentRightHeight);
+                    }else{
+                        maxRightHeight = currentRightHeight;
                     }
+
+                    rightIndex--;
+                }else {
+                    if(maxLeftHeight >= currentLeftHeight){
+                        totalTrappedWater += (minHeight - currentLeftHeight);
+                    }else {
+                        maxLeftHeight = currentLeftHeight;
+                    }
+
+                    leftIndex++;
                 }
-                leftIdx++;
             }
 
             return totalTrappedWater;
@@ -686,7 +685,7 @@ namespace problems {
         void main(){
             // find three sum
             vector<int> threeSumNums = {-1, 0, 1, 2, -1, -4};
-            vector<vector<int>> possiblePairs = findThreeSum(threeSumNums, 0);
+            vector<vector<int>> possiblePairs = evaluateThreeSum(threeSumNums, 0);
 
             cout << "Possible pairs for three sum are: " << endl;
             for(const vector<int>& pairs: possiblePairs){
@@ -718,7 +717,7 @@ namespace problems {
 
             // Evaluating total trapped water
             vector<int> heightForRain = {3, 0, 2, 0, 4};
-            cout << "Total trapped water is: " << evaluateTrappingRainWater(heightForRain) << endl;
+            cout << "Total trapped water is: " << evaluateMaximumTrappedWater(heightForRain) << endl;
 
             // Solving Dutch Flag
             vector<int> arr = {2, 0, 2, 1, 1, 0};
