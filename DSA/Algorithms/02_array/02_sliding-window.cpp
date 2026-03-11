@@ -110,15 +110,130 @@
 
 using namespace std;
 
+bool isVowel(char ch){
+    vector<char> vowels = {'a', 'e', 'i', 'o', 'u'};
+
+    for(const char& c: vowels){
+        if(c == ch)
+            return true;
+    }
+
+    return false;
+}
+
 /*
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                            🪟 SLIDING WINDOW EASY PROBLEMS                                                                                          |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 namespace easy_problems {
+    int computeMaximumSumWithTarget(const vector<int>& numbers, int target){
+        if(numbers.size() == target)
+            return 0;
+
+        size_t leftWindow = 0;
+        size_t rightWindow = 0;
+
+        int maxSum = 0;
+        int totalSum = 0;
+
+        while(rightWindow < numbers.size()){
+           // Step 1. Calculating sum using rightWindow.
+            totalSum += numbers[rightWindow];
+
+            // Step 2. Size become equal to target - 1;
+            if((rightWindow - leftWindow) == target - 1){
+                maxSum = max(maxSum, totalSum);
+                totalSum -= numbers[leftWindow];
+                leftWindow++;
+            }
+
+            rightWindow++;
+        }
+
+        return maxSum;
+    }
+   
+    vector<float> computeAverageSumWithTarget(const vector<int>& numbers, int target){
+        if(numbers.size() == target)
+            return {};
+
+        vector<float> sumOfAverage = {};
+
+        size_t leftWindow = 0;
+        size_t rightWindow = 0;
+
+        int totalSum = 0;
+
+        while(rightWindow < numbers.size()){
+            // Step 1. Calculate right value into "totalSum"
+            totalSum += numbers[rightWindow];
+
+            // Step 2. If Total size got bigger than target
+            if((rightWindow - leftWindow) == target - 1){
+                sumOfAverage.push_back((float)totalSum / target);
+                totalSum -= numbers[leftWindow];
+                leftWindow++;
+            }
+
+            rightWindow++;
+        }
+
+        return sumOfAverage;
+    }
+    
+    int countMaximumVowelInSubstring(string str, int target) {
+        if(str.size() == target)
+            return 0;
+
+        int leftWindow = 0;
+        int rightWindow = 0;
+
+        int vowelCount = 0;
+        int maxVowelCount = 0;
+
+        while(rightWindow < str.size()){
+            // Step 1. If right string is vowel increase the "vowelCount" by 1. 
+            if(isVowel(str[rightWindow]))
+                vowelCount++;
+
+            // Step 2. If window size become greater than target.
+            if((rightWindow - leftWindow) == target - 1){
+                maxVowelCount = max(maxVowelCount, vowelCount);
+
+                // Only decrease if left str is vowel.
+                if(isVowel(str[leftWindow]))
+                    vowelCount--;
+
+                leftWindow++;
+            }
+
+            rightWindow++;
+        }
+
+        return maxVowelCount;
+    }
+
     // Main function
     void main(){
         cout << "Sliding Window Easy Problems: " << endl;
+
+        // FINDING MAXIMUM SUM WITH TARGET
+        vector<int> maximumSumNumbers = {2, 1, 5, 1, 3, 2};
+
+        cout << "Maximum sum with target " << 3
+             << " is: " << computeMaximumSumWithTarget(maximumSumNumbers, 3) << endl;
+
+        // AVERAGE OF A SUBARRAY SIZE K
+        vector<int> averageSumNumbers = {1, 3, 2, 6, -1, 4, 1, 8, 2};
+
+        printArrayElements<float>(computeAverageSumWithTarget(averageSumNumbers, 5), "Average Sums with target 5 are: ");
+
+        // MAX VOWEL COUNT OF A SUBSTRING
+        string str = "abciiidef";
+
+        cout << "Maximum vowel count of a substring size 3 is: "
+             << countMaximumVowelInSubstring(str, 3) << endl;
 
         cout << endl << endl;
     }
@@ -155,8 +270,8 @@ namespace hard_problems {
 int main() {
     // Calling main functions
     easy_problems::main();
-    medium_problems::main();
-    hard_problems::main();
+    // medium_problems::main();
+    // hard_problems::main();
 
     return 0;
 }
