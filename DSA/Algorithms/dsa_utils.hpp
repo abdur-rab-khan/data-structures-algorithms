@@ -12,8 +12,16 @@ void printArrayElements(const std::vector<T>& elements, const std::string& msg =
     std::string message = (msg.empty() ? "Array elements are: " : msg);
     std::cout << message;
 
-    for(const T& elem:elements)
-        std::cout << elem << " ";
+    std::cout << "[ ";
+
+    for (size_t i = 0; i < elements.size(); ++i) {
+        std::cout << elements[i];
+        
+        if (i != elements.size() - 1)
+            std::cout << ", ";
+    }
+
+    std::cout << " ]";
 
     std::cout << std::endl;
 }
