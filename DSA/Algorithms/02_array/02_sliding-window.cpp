@@ -61,7 +61,7 @@
 |                                                                                                                                                                                                                     |
 |       🟡 Here window size are't fixed, It will update based on the condition, Suppose "Find longest substring without repeating characters."                                                                        |
 |                                                                                                                                                                                                                     |
-|       🟡 Input = "abcabcbb", Output = 3, "Longest Supstring is 3". Here the window size if dynamic means it will update based on whether it's longest substring or not.                                             |
+|       🟡 Input = "abcabcbb", Output = 3, "Longest Substring is 3". Here the window size if dynamic means it will update based on whether it's longest substring or not.                                             |
 |                                                                                                                                                                                                                     |
 | 🔷 3. Sliding Window with Frequency Map:                                                                                                                                                                            |
 |                                                                                                                                                                                                                     |
@@ -214,6 +214,59 @@ namespace easy_problems {
         return maxVowelCount;
     }
 
+    bool checkContainsTwoDuplicates(const vector<int>& numbers, int target){
+        if(numbers.size() < target)
+            return false;
+
+        size_t leftWindow = 0;
+        size_t rightWindow = 0;
+
+        unordered_map<int, bool> window;
+
+        while(rightWindow < numbers.size()){
+            if(window.count(numbers[rightWindow]))
+                return true;
+            
+            window.insert({numbers[rightWindow], true});
+
+            if((rightWindow - leftWindow) >= target){
+                window.erase(numbers[leftWindow]);
+                leftWindow++;
+            }
+
+            rightWindow++;
+        }
+
+        return false;
+    }
+
+    int findUniqueLongestSubstring(string str){
+        size_t size = str.size();
+
+        size_t leftIndex = 0;
+        size_t rightIndex = 0;
+
+        unordered_map<char, int> lastSeen;
+
+        int longestSubstring = 0;
+
+        for (rightIndex = 0; rightIndex < size; rightIndex++){
+            if(lastSeen.count(str[rightIndex]) && lastSeen[str[rightIndex]] >= leftIndex){
+                int windowLength = rightIndex - leftIndex;
+                longestSubstring = max(longestSubstring, windowLength);
+
+                leftIndex = lastSeen[str[rightIndex]] + 1;
+            }
+
+            lastSeen[str[rightIndex]] = rightIndex;
+        }
+
+        int remainingWindowLength = rightIndex - leftIndex;
+        longestSubstring = max(longestSubstring, remainingWindowLength);
+
+        return longestSubstring;
+    }
+
     // Main function
     void main(){
         cout << "Sliding Window Easy Problems: " << endl;
@@ -236,6 +289,17 @@ namespace easy_problems {
              << countMaximumVowelInSubstring(str, 3) << endl;
 
         cout << endl << endl;
+
+        // CHECKING DUPLICATE WITH TARGET K
+        vector<int> duplicateNumbers = {1, 2, 1, 3, 6, 8};
+
+        cout << "Is numbers has duplicate number: "
+             << checkContainsTwoDuplicates(duplicateNumbers, 3) << endl;
+
+        // LONGEST UNIQUE SUBSTRING
+        string duplicateStr = "abcabcbbieouvx";
+
+        cout << "Longest Unique Substring is: " << findUniqueLongestSubstring(duplicateStr) << endl;
     }
 }
 
