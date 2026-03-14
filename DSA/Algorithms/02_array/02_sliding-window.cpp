@@ -309,9 +309,62 @@ namespace easy_problems {
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 namespace medium_problems {
+    int findLongestRepeatingSubstring(string str, int minLength){
+        /*
+        Problem: Given a string, find the length of the longest substring where you can replace at most 'minLength' characters to make all characters in the substring the same.
+
+        Example:
+        Input: str = "ABBCBKK", minLength = 1
+        Output: 4
+        Explanation: Replace one 'C' with 'B' to get "BBBB" or one 'B' with 'K' to get "KKKK".
+        */
+        
+        
+        int leftIndex = 0;
+        int rightIndex = 0;
+
+        int maxSubstringLength = 0;
+        int maxFrequency = 0;
+
+        vector<int> charFrequencyCount(26, 0);
+
+        while(rightIndex < str.size()){
+            charFrequencyCount[str[rightIndex] - 'A']++;
+            maxFrequency = max(maxFrequency, charFrequencyCount[str[rightIndex] - 'A']);
+
+            while((rightIndex - leftIndex + 1) - maxFrequency > minLength) {
+               charFrequencyCount[str[leftIndex] - 'A']--;
+               leftIndex++;
+           }  
+
+            maxSubstringLength = max(maxSubstringLength, rightIndex - leftIndex + 1);
+            rightIndex++;
+        }
+
+        return maxSubstringLength;
+    }
+   
+    int findMaximumNumberOfFruits(const vector<int>& fruits, int maximumAllowedType){
+        int leftIndex = 0;
+
+        int maxFruitsCount = 0;
+
+        for (int rightIndex = 0; rightIndex < fruits.size(); rightIndex++){
+            // LOGIC TO COUNT MAXIMUM NUMBER OF FRUITS
+        }
+
+        return maxFruitsCount;
+    }
+    
     // Main function
     void main(){
         cout << "Sliding Window Medium Problems: " << endl;
+
+        // FINDING LONGEST REPEATING SUBSTRINGS
+        string str = "ABBCBKK";
+        int minLength = 1;
+
+        cout << "Maximum possible substring is: " << findLongestRepeatingSubstring(str, minLength);
 
         cout << endl << endl;
     }
@@ -333,8 +386,8 @@ namespace hard_problems {
 
 int main() {
     // Calling main functions
-    easy_problems::main();
-    // medium_problems::main();
+    // easy_problems::main();
+    medium_problems::main();
     // hard_problems::main();
 
     return 0;
