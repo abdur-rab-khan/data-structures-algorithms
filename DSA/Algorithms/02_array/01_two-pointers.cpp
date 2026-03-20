@@ -118,9 +118,8 @@ namespace intro {
     }
 }
 
-namespace problems {
     // Basic Level
-    namespace basic {
+namespace basic {
         // Two sum problem (SHORTED VERSION)
         void computeTwoSum(vector<int> arr, int k){
             int i = 0, j = arr.size() - 1;
@@ -420,10 +419,10 @@ namespace problems {
 
             cout << endl << endl;
         }
-    }
+}
 
     // Medium Level
-    namespace medium {
+namespace medium {
         vector<vector<int>> evaluateThreeSum(vector<int> nums, int target){
             vector<vector<int>> possiblePairs = {};
 
@@ -740,29 +739,32 @@ namespace problems {
             vector<int> productArr2 = {1, 2, 3};
             cout << "Total counts is: " << countSubarrayProducts(productArr2, 4) << endl;
         }
-    }
+}
 
     // Advance Level
-    namespace advance {
-        // Main function
-        void main(){
-            // CALLING ALL THE METHOD
-        }
-    }
-    
+namespace hard {
+    // Main function
     void main(){
-        // basic::main();
-        medium::main();
-        advance::main();
+        // CALLING ALL THE METHOD
     }
 }
+    
 
 int main() {
     cout << "Intro: " << endl;
     intro::main();
 
-    cout << "Problems: " << endl;
-    problems::main();
+    cout << "Basic Problems: " << endl;
+    basic::main();
+    cout << endl << endl;
+
+    cout << "Medium Problems: " << endl;
+    medium::main();
+    cout << endl << endl;
+
+    cout << "Hard Problems: " << endl;
+    hard::main();
+    cout << endl << endl;
 
     return 0;
 }

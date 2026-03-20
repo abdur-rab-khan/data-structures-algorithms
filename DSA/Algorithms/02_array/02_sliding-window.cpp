@@ -349,8 +349,23 @@ namespace medium_problems {
 
         int maxFruitsCount = 0;
 
+        unordered_map<int, int> bucketsWithLastSeen;
+
         for (int rightIndex = 0; rightIndex < fruits.size(); rightIndex++){
-            // LOGIC TO COUNT MAXIMUM NUMBER OF FRUITS
+            bucketsWithLastSeen[fruits[rightIndex]]++;
+            
+            if(bucketsWithLastSeen.size() > maximumAllowedType){
+                maxFruitsCount = max(maxFruitsCount, rightIndex - leftIndex + 1);
+                
+                while(bucketsWithLastSeen.size() > maximumAllowedType){
+                    bucketsWithLastSeen[leftIndex]--;
+                    
+                    if(bucketsWithLastSeen[leftIndex] == 0)
+                        bucketsWithLastSeen.clear();
+
+                    leftIndex++;
+                }
+            }
         }
 
         return maxFruitsCount;
