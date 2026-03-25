@@ -346,7 +346,6 @@ namespace medium_problems {
    
     int findMaximumNumberOfFruits(const vector<int>& fruits, int maximumAllowedType){
         int leftIndex = 0;
-
         int maxFruitsCount = 0;
 
         unordered_map<int, int> bucketsWithLastSeen;
@@ -355,20 +354,81 @@ namespace medium_problems {
             bucketsWithLastSeen[fruits[rightIndex]]++;
             
             if(bucketsWithLastSeen.size() > maximumAllowedType){
-                maxFruitsCount = max(maxFruitsCount, rightIndex - leftIndex + 1);
-                
                 while(bucketsWithLastSeen.size() > maximumAllowedType){
-                    bucketsWithLastSeen[leftIndex]--;
+                    bucketsWithLastSeen[fruits[leftIndex]]--;
                     
-                    if(bucketsWithLastSeen[leftIndex] == 0)
-                        bucketsWithLastSeen.clear();
+                    if(bucketsWithLastSeen[fruits[leftIndex]] == 0)
+                        bucketsWithLastSeen.erase(fruits[leftIndex]);
 
                     leftIndex++;
                 }
             }
+
+            maxFruitsCount = max(maxFruitsCount, rightIndex - leftIndex + 1);
         }
 
         return maxFruitsCount;
+    }
+   
+    int findMinimumSizeSubarraySum(const vector<int>& numbers, int target){
+        int leftIndex = 0;
+
+        int totalSum = 0;
+        int minTargetSize = INT_MAX;
+
+        for (int rightIndex = 0; rightIndex < numbers.size(); rightIndex++){
+            totalSum += numbers[rightIndex];
+
+            while(totalSum >= target){
+                minTargetSize = min(minTargetSize, rightIndex - leftIndex + 1);
+                
+                totalSum -= numbers[leftIndex];
+                leftIndex++;
+            }
+        }
+
+        return minTargetSize == INT_MAX ? 0 : minTargetSize;
+    }
+
+    // TODO: 👉 Ask yourself:
+    //                        Can we detect duplicates earlier instead of waiting for full window?
+
+    // 💡 Tiny direction:
+    //                    Think about what to do immediately when a duplicate enters the window
+
+    int findMaximumSumOfDistinctArray(const vector<int>& numbers, int k){
+        int leftIndex = 0;
+
+        int maxSum = 0;
+        int totalSum = 0;
+
+        unordered_map<int, int> freq;
+
+        for (int rightIndex = 0; rightIndex < numbers.size(); rightIndex++){
+            totalSum += numbers[rightIndex];
+            freq[numbers[rightIndex]]++;
+
+            while((rightIndex - leftIndex + 1) > k){
+                totalSum -= numbers[leftIndex];
+                freq[numbers[leftIndex]]--;
+
+                if(freq[numbers[leftIndex]] == 0)
+                    freq.erase(numbers[leftIndex]);
+
+                leftIndex++;
+            }
+
+            if((rightIndex - leftIndex + 1) == k && freq.size() == k){
+                maxSum = max(maxSum, totalSum);
+            }
+        }
+
+        return maxSum;
+    }
+   
+    int findLongestOnesAfterKFlips(){
+        // LOGIC TO HANDLE IT.
+        return 0;
     }
     
     // Main function
@@ -380,8 +440,21 @@ namespace medium_problems {
         int minLength = 1;
 
         cout << "Maximum possible substring is: " << findLongestRepeatingSubstring(str, minLength);
-
         cout << endl << endl;
+
+        // FINDING MAXIMUM NUMBER OF FRUIT A BUCKET HAS
+        vector<int> fruits = {1, 2, 1, 2, 3};
+        cout << "Maximum fruit count is: " << findMaximumNumberOfFruits(fruits, 2) << endl;
+        ;
+
+        // FINDING SUM OF SUBARRAY BUT WITH MINIMUM SIZE
+        vector<int> numbers = {2, 3, 1, 2, 4, 3};
+        cout << "Minimum size of a subarray is: " << findMinimumSizeSubarraySum(numbers, 7) << endl;
+
+        // FINDING MAXIMUM SUM OF K DISTINCT ARRAY
+        vector<int> numbers2 = {1, 5, 4, 2, 9, 9, 9};
+        cout << "Maximum sum of k distinct array is: "
+             << findMaximumSumOfDistinctArray(numbers2, 3);
     }
 }
 
