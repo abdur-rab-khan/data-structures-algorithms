@@ -51,7 +51,7 @@
 | 💠 "Extract Last Set Bit": To extract last set bit we will use "n & (-n)", -n means two's compliment.                                                                              |
 |                                                                                                                                                                                    |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                       KEY RULES                                                                                    |
+|                                                                              BIT MANIPULATION OPERATORS                                                                            |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                                    |
 | ⭐ "AND (&)":                                                                                                                                                                      |
@@ -131,9 +131,9 @@ namespace basic {
     // GETTING LAST BIT
     void getLastBit(int n){
         if(n & 1) {
-            cout << "Last bit is " << 1;
+            cout << "Last bit is " << 1 << endl;
         }else {
-            cout << "Last bit is " << 0;
+            cout << "Last bit is " << 0 << endl;
         }
     }
 
@@ -175,6 +175,21 @@ namespace basic {
         return (n & (n - 1));
     }
 
+    int findMaximumXORWithConstraint(const vector<int>& numbers, int query, int limit){
+        int maxXOR = 0;
+
+        // Step 1.
+        for (int i = 0; i < numbers.size(); i++) {
+            if (numbers[i] > limit)
+                continue;
+
+            int xorValue = query ^ numbers[i];
+            maxXOR = max(maxXOR, xorValue);
+        }
+
+    return maxXOR;
+}
+
     // Main function
     void main() {
         // EVEN ODD
@@ -199,7 +214,7 @@ namespace basic {
         cout << "Total number of set bits of " << 13 << " is: " << countSetBits(13) << endl;
 
         // CHECKING IF THE NUMBER IF POWER OF 2 OF NOT
-        cout << "Is 16 is power of 2: " << isPowerOfTwo(16);
+        cout << "Is 16 is power of 2: " << isPowerOfTwo(16) << endl;
     }
 }
 
@@ -231,18 +246,18 @@ namespace dsa_problems {
         cout << "Unique Number is: " << unique << endl;
     }
 
-    void findUniqueAndRepeated(vector<int>& numbers){
+    void findMissingAndRepeated(vector<int>& numbers){
         size_t size = numbers.size();
-        int xORValue = 0;
+        int xOrAll = 0;
 
         // Step 1. Using XOR Operation We'll get "unique" and "duplicate" at end, All number will be canceled only remaining will be ("unique" ^ "duplicate").
         for (int i = 0; i < numbers.size(); i++){
-            xORValue ^= numbers[i];
-            xORValue ^= (i + 1);
+            xOrAll ^= numbers[i];
+            xOrAll ^= (i + 1);
         }
 
         // Step 2. Here we are calculating the different set bit from right side on ("unique" ^ "duplicate"), So that we can easily find it.
-        int rightMostSetBit = xORValue & (-xORValue);
+        int rightMostSetBit = xOrAll & (-xOrAll);
 
         // Step 3. Grouping: Right most set bit tells, which bit from right is different in both of them. To find "unique" and "duplicate".
         int bucket1 = 0;
@@ -253,11 +268,11 @@ namespace dsa_problems {
                 bucket1 ^= numbers[i];
             }else{
                 bucket2 ^= numbers[i];
-            }
+            } 
 
             if((i + 1) & rightMostSetBit){
                 bucket1 ^= (i + 1);
-            }else {
+            }else{
                 bucket2 ^= (i + 1);
             }
         }
@@ -423,7 +438,7 @@ namespace dsa_problems {
 
         findSingleElement(n);
         convertNumberToBinary(5);
-        findUniqueAndRepeated(k);
+        findMissingAndRepeated(k);
         findTwoUniques(sensorIds);
 
         cout << str << " has a unique numbers: " << hasUniqueChar(str) << endl;

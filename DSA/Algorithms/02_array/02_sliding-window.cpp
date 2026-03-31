@@ -1,4 +1,64 @@
 /*
+╔════════════════════════════════════════════════════════════════════════════════════════╗
+║                    🎯 SLIDING WINDOW - QUICK CHEAT SHEET 🎯                           ║
+╚════════════════════════════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────────────────────────────────────────────┐
+│ ⚡ KEY PATTERNS                                                                        │
+├────────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                        │
+│  1. FIXED SIZE:    while(right - left == k-1) { process(); left++; }                   │
+│  2. AT MOST K:     while(freq.size() > k) { shrink(); }                                │
+│  3. SUM >= TARGET: while(sum >= target) { update(); shrink(); }                        │
+│  4. NO DUPLICATES: if(freq[char] > 0) left = last_seen[char] + 1;                      │
+│  5. MAX FREQ:      while(winsize - maxfreq > k) { shrink(); }                          │
+│  6. Types of Sliding window:                                                           │
+│                                                                                        │
+└────────────────────────────────────────────────────────────────────────────────────────┘
+
+ ⏱️  Always O(n) | 💡 Left pointer never goes backwards
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                   🪟 SLIDING WINDOW                                                                                                 |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -105,7 +165,6 @@
 */
 
 #include <bits/stdc++.h>
-
 #include "../dsa_utils.hpp"
 
 using namespace std;
@@ -123,8 +182,7 @@ bool isVowel(char ch) {
 
 /*
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                            🪟
-SLIDING WINDOW EASY PROBLEMS |
+|                                                                                            🪟SLIDING WINDOW EASY PROBLEMS                                                                                           |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 namespace easy_problems {
@@ -307,8 +365,7 @@ namespace easy_problems {
 
 /*
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                           🪟
-SLIDING WINDOW MEDIUM PROBLEMS |
+|                                                                                           🪟 SLIDING WINDOW MEDIUM PROBLEMS                                                                                         |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 namespace medium_problems {
@@ -583,8 +640,7 @@ namespace medium_problems {
 
 /*
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                            🪟
-SLIDING WINDOW HARD PROBLEMS |
+|                                                                                            🪟 SLIDING WINDOW HARD PROBLEMS                                                                                          |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 namespace hard_problems {
@@ -605,6 +661,7 @@ namespace hard_problems {
         }
 
         for (int rightIndex = 0; rightIndex < str.size(); rightIndex++) {
+
             // Step 2: Expand window
             if (freq.count(str[rightIndex])) {
                 if (freq[str[rightIndex]] > 0) {
@@ -637,10 +694,32 @@ namespace hard_problems {
     }
 
     vector<int> findMaximumWindow(const vector<int>& numbers, int k) {
-        // LOGIC TO HANDLE IT.
-        vector<int> window = {};
+        int leftIndex = 0;
 
-        return window;
+        deque<int> deq;
+        vector<int> maximumValues = {};
+
+        for (int rightIndex = 0; rightIndex < numbers.size(); rightIndex++){
+            // Step 1: Remove smaller from back 
+            while(!deq.empty() && numbers[deq.back()] < numbers[rightIndex]){
+                deq.pop_back();
+            }
+            
+            // Add current index
+            deq.push_back(rightIndex);
+
+            // Step 2: Remove elements out of window 
+            if(!deq.empty() && deq.front() <= rightIndex - k){
+                deq.pop_front();
+            }
+
+            // Step 3: Store result when window is valid
+            if(rightIndex >= k - 1){
+                maximumValues.push_back(numbers[deq.front()]);
+            }
+        }
+
+        return maximumValues;
     }
 
     string findMinimumWindowSequence(string str, string target) {
@@ -662,8 +741,17 @@ namespace hard_problems {
     void main() {
         cout << "Sliding Window Hard Problems: " << endl;
 
+        // Finding minimum substring containing all elements.
         string str = "aaabc", pattern = "abc";
         cout << "Minimum substring containing all elements from pattern is: " << findMinimumWindowSubstring(str, pattern) << endl;
+        
+        // Finding Maximum Value in a "k" window size.
+        vector<int> numbers = {1, 3, -1, -3, 5, 3, 6, 7};
+        cout << "Maximum numbers are: ";
+        for(int n : findMaximumWindow(numbers, 3)){
+            cout << n << " ";
+        }
+        cout << endl;
 
         cout << endl << endl;
     }
