@@ -177,41 +177,39 @@ namespace mergeSort{
         int firstTempSize = mid - left + 1;
         int secondTempSize = right - mid;
 
-        // Step 1. Creating two temp arrays.
+        // Step 1. Creating temp vectors.
         vector<int> firstTemp(firstTempSize), secondTemp(secondTempSize);
 
-        // Step 2. Copying elements into both temps.
+        // Step 2. Copying elements to temp vector.
         for (int i = 0; i < firstTempSize; i++)
             firstTemp[i] = numbers[left + i];
 
-        for(int j = 0; j < secondTempSize; j++)
+        for (int j = 0; j < secondTempSize; j++)
             secondTemp[j] = numbers[mid + 1 + j];
 
-        // Step 3. Merge the temp vector.
+        // Step 3. Merging the elements in a sorted manner
         int i = 0, j = 0;
         int k = left;
 
-        while (i < firstTempSize && j < secondTempSize) {
-            if (firstTemp[i] <= secondTemp[j]) {
+        while(i < firstTempSize && j < secondTempSize){
+            if(firstTemp[i] <= secondTemp[j]){
                 numbers[k] = firstTemp[i];
                 i++;
-            }
-            else {
+            }else {
                 numbers[k] = secondTemp[j];
                 j++;
             }
             k++;
         }
 
-        // Step 4. Copy the remaining elements of L[]. 
-        while (i < firstTempSize) {
+        // Step 4. Merging remaining numbers
+        while(i < firstTempSize){
             numbers[k] = firstTemp[i];
             i++;
             k++;
         }
 
-        // Step 5. Copy the remaining elements of R[]. 
-        while (j < secondTempSize) {
+        while(j < secondTempSize){
             numbers[k] = secondTemp[j];
             j++;
             k++;
@@ -254,17 +252,57 @@ namespace mergeSort{
 |                                                                                                    🏃 Quick Sort                                                                                                    |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                                                                     |
+| 🟡 Step-by-Step Process (Divide and Conquer):                                                                                                                                                                       |
+|     1. Choose a "pivot" (could be "left", "right") element from the array                                                                                                                                           |
+|     2. Partition the array so that:                                                                                                                                                                                 |
+|        - All elements smaller than pivot are on the left                                                                                                                                                            |
+|        - All elements greater than pivot are on the right                                                                                                                                                           |
+|        - Pivot is now in its final sorted position                                                                                                                                                                  |
+|     3. Recursively apply steps 1-2 to the left subarray                                                                                                                                                             |
+|     4. Recursively apply steps 1-2 to the right subarray                                                                                                                                                            |
+|     5. Continue until all subarrays are sorted (base case: array size ≤ 1)                                                                                                                                          |
 |                                                                                                                                                                                                                     |
-|                                                                                                                                                                                                                     |
-|                                                                                                                                                                                                                     |
-|                                                                                                                                                                                                                     |
-|                                                                                                                                                                                                                     |
+| 🔷 Time Complexity: O(n log n) average, O(n²) worst case | Space Complexity: O(log n)                                                                                                                               |
 |                                                                                                                                                                                                                     |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 namespace quickSort{
-    void quickSort(vector<int>& numbers){
+    int partition(vector<int>& numbers, int left, int right){
+        // Choose rightmost element as pivot
+        int pivot = numbers[right];
+        int i = left - 1;
 
+        // Move all smaller elements to the left
+        for(int j = left; j < right; j++){
+            if(numbers[j] < pivot){
+                i++;
+                swap(numbers[i], numbers[j]);
+            }
+        }
+
+        // Place pivot in its correct position
+        swap(numbers[i + 1], numbers[right]);
+        return i + 1;
+    }
+
+    void quickSort(vector<int>& numbers, int left, int right){
+        // Base condition
+        if(left >= right)
+            return;
+
+        // Partition and get pivot position
+        int pivotIdx = partition(numbers, left, right);
+
+        // Recursively sort left subarray
+        quickSort(numbers, left, pivotIdx - 1);
+
+        // Recursively sort right subarray
+        quickSort(numbers, pivotIdx + 1, right);
+    }
+
+    void quickSort(vector<int>& numbers){
+        if(numbers.size() > 0)
+            quickSort(numbers, 0, numbers.size() - 1);
     }
 
     void main(){
@@ -285,6 +323,7 @@ int main() {
     selectionSort::main();
     insertionSort::main();
     mergeSort::main();
+    quickSort::main();
 
     return 0;
 }
