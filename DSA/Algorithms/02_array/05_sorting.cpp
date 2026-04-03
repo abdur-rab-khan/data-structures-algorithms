@@ -268,46 +268,39 @@ namespace mergeSort{
 */
 namespace quickSort{
     int partition(vector<int>& numbers, int left, int right){
-        // Choose rightmost element as pivot
-        int pivot = numbers[right];
-        int i = left - 1;
+        // Step 1. Declaring pivot point as a "left" value.
+        int pivotElem = numbers[right];
 
-        // Move all smaller elements to the left
-        for(int j = left; j < right; j++){
-            if(numbers[j] < pivot){
+        // Step 2. Arranging smaller than "pivot" element towards pivots "left" and grater towards pivots "right".
+        int i = left - 1;
+        for (int j = left; j <= right - 1; j++){
+            if(pivotElem > numbers[j]){
                 i++;
                 swap(numbers[i], numbers[j]);
             }
         }
 
-        // Place pivot in its correct position
+        // Step 3. Placing pivot element to the correct position.
         swap(numbers[i + 1], numbers[right]);
         return i + 1;
     }
 
     void quickSort(vector<int>& numbers, int left, int right){
-        // Base condition
+        // Step 1. Base condition (when only single element is there)
         if(left >= right)
             return;
 
-        // Partition and get pivot position
-        int pivotIdx = partition(numbers, left, right);
+        // Step 2. Calculating pivot point
+        int pivotPoint = partition(numbers, left, right);
 
-        // Recursively sort left subarray
-        quickSort(numbers, left, pivotIdx - 1);
-
-        // Recursively sort right subarray
-        quickSort(numbers, pivotIdx + 1, right);
-    }
-
-    void quickSort(vector<int>& numbers){
-        if(numbers.size() > 0)
-            quickSort(numbers, 0, numbers.size() - 1);
+        // Step 3. Calling recursively quick sort for "left" and "right" side of pivot point
+        quickSort(numbers, left, pivotPoint - 1);
+        quickSort(numbers, pivotPoint + 1, right);
     }
 
     void main(){
         vector<int> num1 = {3, 5, 1, 6, 2, 7, 4, 8};
-        quickSort(num1);
+        quickSort(num1, 0, num1.size() - 1);
 
         cout << "Quick sort: " << endl << endl;
         cout << "Array elements are: ";

@@ -91,16 +91,18 @@ RawStringFormats:
   - Delimiter: pb
     Language: TextProto
     BasedOnStyle: google
-ReflowComments: true
+ReflowComments: false
 SortIncludes: true
 SortUsingDeclarations: true
 SpaceAfterCStyleCast: false
+SpaceBeforeCpp11BracedList: true
+SpacesInAngles: Never
+SpaceInEmptyBlock: false
 SpaceAfterTemplateKeyword: true
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeParens: ControlStatements
 SpaceInEmptyParentheses: false
 SpacesBeforeTrailingComments: 2
-SpacesInAngles: false
 SpacesInContainerLiterals: true
 SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
