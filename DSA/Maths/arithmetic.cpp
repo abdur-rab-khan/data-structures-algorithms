@@ -18,37 +18,36 @@
 |             => So the answer is 2.                                                                                                                |
 |                                                                                                                                                   |
 |    3. 4 % 2:                                                                                                                                      |
-|             => How many whole time 2 will fit into 4 (2 * 2 = 4).                                                                                 |
+|             => How many whole time 2 will fit into 4, (2 * 2 = 4).                                                                                 |
 |             => So to find the modulo, we can do: 4 - (2 * 2) = 4 - 4 = 0.                                                                         |
 |             => So the answer is 0.                                                                                                                |
 |                                                                                                                                                   |
 |    4. 2 % 5:                                                                                                                                      |
-|             => How many whole time 5 will fit into 2 (5 * 0 = 0).                                                                                 |
+|             => How many whole time 5 will fit into 2, (5 * 0 = 0).                                                                                 |
 |             => So to find the modulo, we can do: 2 - (5 * 0) = 2 - 0 = 2.                                                                         |
 |             => So the answer is 2.                                                                                                                |
 |                                                                                                                                                   |
 +---------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 
-
 #include <bits/stdc++.h>
 #include <unistd.h>
 using namespace std;
 
 int main() {
-   // Suppose i want
-   for(int i = 1; i <= 5; i++){
+    // Suppose i want
+    for (int i = 1; i <= 5; i++) {
         int j = 1;
-        
+
         // It will print the value of j until it is divisible by 5, and then it will stop.
-        while((j % 6) != 0){
+        while ((j % 6) != 0) {
             cout << j << " ";
             j++;
         }
         cout << endl;
 
         sleep(1);
-   }
-    
+    }
+
     return 0;
 }

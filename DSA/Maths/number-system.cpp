@@ -117,65 +117,69 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Basic Problems
+/*
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                       🟡 BASIC                                                                                     |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+*/
 namespace basic {
     // EASY PROBLEMS
-    void isEvenOdd(int n){
-        if(n & 1){
+    void isEvenOdd(int n) {
+        if (n & 1) {
             cout << n << " is odd" << endl;
-        }else {
+        } else {
             cout << n << " is even" << endl;
         }
     }
 
     // GETTING LAST BIT
-    void getLastBit(int n){
-        if(n & 1) {
+    void getLastBit(int n) {
+        if (n & 1) {
             cout << "Last bit is " << 1 << endl;
-        }else {
+        } else {
             cout << "Last bit is " << 0 << endl;
         }
     }
 
     // CHECKING K-TH BIT IS SET OR NOT
     void checkBitSet(int n, int k) {
-        if((n & (1 << (k - 1))) == 0){
+        if ((n & (1 << (k - 1))) == 0) {
             cout << k << "th" << " bit is not set" << endl;
-        }else{
+        } else {
             cout << k << "th" << " bit is set" << endl;
         }
     }
 
-    // TOGGLING K-TH BIT TO SET 
-    void toggleSet(int n , int k){
+    // TOGGLING K-TH BIT TO SET
+    void toggleSet(int n, int k) {
         int toggledN = n | (1 << k - 1);
         cout << "Toggle " << k << "th" << " bit to set " << toggledN << endl;
     }
 
     // FLIPPING K-TH BIT
-    void flippingBit(int n, int k){
+    void flippingBit(int n, int k) {
         int flippedN = n ^ (1 << k - 1);
         cout << "Flipped " << n << " is: " << flippedN << endl;
     }
 
     // COUNTING NUMBER OF SET BITS - In Binary decimal number are sum of power of 2 So (13 = 2³ + 2² + 2⁰ = 13 So in binary there wil be "3 set bits")
-    int countSetBits(int n){
+    int countSetBits(int n) {
         int count = 0;
 
-        while(n > 0){
+        while (n > 0) {
             count++;
             n = n & (n - 1);
         }
-        
+
         return count;
     }
 
     // CHECKING WHETHER IT'S POWER OF 2 OR NOT
-    bool isPowerOfTwo(int n){
+    bool isPowerOfTwo(int n) {
         return (n & (n - 1));
     }
 
-    int findMaximumXORWithConstraint(const vector<int>& numbers, int query, int limit){
+    int findMaximumXORWithConstraint(const vector<int>& numbers, int query, int limit) {
         int maxXOR = 0;
 
         // Step 1.
@@ -187,8 +191,8 @@ namespace basic {
             maxXOR = max(maxXOR, xorValue);
         }
 
-    return maxXOR;
-}
+        return maxXOR;
+    }
 
     // Main function
     void main() {
@@ -216,42 +220,46 @@ namespace basic {
         // CHECKING IF THE NUMBER IF POWER OF 2 OF NOT
         cout << "Is 16 is power of 2: " << isPowerOfTwo(16) << endl;
     }
-}
+}  // namespace basic
 
-// DSA Problems
+/*
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                    🟡 DSA Problems                                                                                 |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+*/
 namespace dsa_problems {
     void convertNumberToBinary(int n) {
         string binary = "";
 
-        while(n != 0){
+        while (n != 0) {
             binary += to_string(n % 2);
             n /= 2;
         }
 
-        binary.reserve(); // Reversing the binary value
+        binary.reserve();  // Reversing the binary value
 
-        for(const char b: binary){
+        for (const char b : binary) {
             cout << b << " ";
         }
         cout << endl;
     }
 
-    void findSingleElement(vector<int>& n){
+    void findUniqueElement(vector<int>& n) {
         int unique = 0;
 
-        for(const int& num: n){
+        for (const int& num : n) {
             unique ^= num;
         }
 
         cout << "Unique Number is: " << unique << endl;
     }
 
-    void findMissingAndRepeated(vector<int>& numbers){
+    void findMissingAndRepeated(vector<int>& numbers) {
         size_t size = numbers.size();
         int xOrAll = 0;
 
         // Step 1. Using XOR Operation We'll get "unique" and "duplicate" at end, All number will be canceled only remaining will be ("unique" ^ "duplicate").
-        for (int i = 0; i < numbers.size(); i++){
+        for (int i = 0; i < numbers.size(); i++) {
             xOrAll ^= numbers[i];
             xOrAll ^= (i + 1);
         }
@@ -263,16 +271,16 @@ namespace dsa_problems {
         int bucket1 = 0;
         int bucket2 = 0;
 
-        for (int i = 0; i < numbers.size(); i++){
-            if(numbers[i] & rightMostSetBit){
+        for (int i = 0; i < numbers.size(); i++) {
+            if (numbers[i] & rightMostSetBit) {
                 bucket1 ^= numbers[i];
-            }else{
+            } else {
                 bucket2 ^= numbers[i];
-            } 
+            }
 
-            if((i + 1) & rightMostSetBit){
+            if ((i + 1) & rightMostSetBit) {
                 bucket1 ^= (i + 1);
-            }else{
+            } else {
                 bucket2 ^= (i + 1);
             }
         }
@@ -281,13 +289,13 @@ namespace dsa_problems {
         int missing = 0;
         int duplicate = 0;
 
-        for(const int& num: numbers){
-            if(num == bucket1){
+        for (const int& num : numbers) {
+            if (num == bucket1) {
                 duplicate = bucket1;
                 missing = bucket2;
             }
 
-            if(num == bucket2){
+            if (num == bucket2) {
                 duplicate = bucket2;
                 missing = bucket1;
             }
@@ -297,15 +305,15 @@ namespace dsa_problems {
         cout << "Duplicate number is: " << duplicate << endl;
     }
 
-    void findTwoUniques(vector<int>& numbers){
-        if(numbers.empty())
+    void findTwoUniques(vector<int>& numbers) {
+        if (numbers.empty())
             return;
 
         size_t size = numbers.size();
         int xORCalculatedValue = 0;
 
         // Step 1. Performing "XOR" on the numbers so that, at the end we'll get ("unique" ^ "unique").
-        for (const int& num:numbers){
+        for (const int& num : numbers) {
             xORCalculatedValue ^= num;
         }
 
@@ -316,10 +324,10 @@ namespace dsa_problems {
         int firstUnique = 0;
         int secondUnique = 0;
 
-        for(const int& num:numbers){
-            if(num & rightMostSetBit){
+        for (const int& num : numbers) {
+            if (num & rightMostSetBit) {
                 firstUnique ^= num;
-            }else {
+            } else {
                 secondUnique ^= num;
             }
         }
@@ -327,13 +335,13 @@ namespace dsa_problems {
         cout << "Two unique numbers are: " << firstUnique << ", " << secondUnique << endl;
     }
 
-    bool hasUniqueChar(string& str){
+    bool hasUniqueChar(string& str) {
         int mask = 0;
 
-        for(int i = 0; i < str.size(); i++){
+        for (int i = 0; i < str.size(); i++) {
             int position = str[i] - 'a';
 
-            if(mask & (1 << position)){
+            if (mask & (1 << position)) {
                 return false;
             }
 
@@ -343,19 +351,19 @@ namespace dsa_problems {
         return true;
     }
 
-    vector<vector<int>> findSubsets(vector<int>& nums){
-        vector<vector<int>> subsets = {};
+    vector<vector<int>> findSubsets(vector<int>& nums) {
         int numsSize = nums.size();
+        vector<vector<int>> subsets = {};
 
         // Looping through all subset masks
-        for(int mask = 0; mask < (1 << numsSize); mask++){
+        for (int mask = 0; mask < (1 << numsSize); mask++) {
             subsets.push_back({});
 
             // Checking the set bit
-            for(int j = 0; j < numsSize; j++){
+            for (int j = 0; j < numsSize; j++) {
                 bool hasSetBit = mask & (1 << j);
 
-                if(hasSetBit){
+                if (hasSetBit) {
                     subsets.back().push_back(nums[j]);
                 }
             }
@@ -364,10 +372,10 @@ namespace dsa_problems {
         return subsets;
     }
 
-    unsigned int computeReverseBits(unsigned int number){
+    unsigned int computeReverseBits(unsigned int number) {
         unsigned int reverseBits = 0;
 
-        for (int i = 0; i < 32; i++){
+        for (int i = 0; i < 32; i++) {
             reverseBits <<= 1;
             reverseBits |= (number & 1);
             number >>= 1;
@@ -379,15 +387,15 @@ namespace dsa_problems {
     int findOneUniquesFromThree(vector<int>& nums) {
         unsigned int result = 0;
 
-        for(int i = 0; i < 32; i++){
+        for (int i = 0; i < 32; i++) {
             int count = 0;
 
-            for(int n: nums){
-                if(((unsigned int)n >> i) & 1u)
+            for (int n : nums) {
+                if (((unsigned int)n >> i) & 1u)
                     count++;
             }
 
-            if(count % 3){
+            if (count % 3) {
                 result |= (1u << i);
             }
         }
@@ -425,7 +433,7 @@ namespace dsa_problems {
 
         return count;
     }
-    
+
     // Main function
     void main() {
         vector<int> k = {4, 2, 3, 2};
@@ -436,19 +444,19 @@ namespace dsa_problems {
 
         string str = "abdur";
 
-        findSingleElement(n);
+        findUniqueElement(n);
         convertNumberToBinary(5);
         findMissingAndRepeated(k);
         findTwoUniques(sensorIds);
 
         cout << str << " has a unique numbers: " << hasUniqueChar(str) << endl;
-        
+
         // Find all subsets
         cout << "Printing subsets: ";
         vector<int> num = {1, 2, 3};
-        for(const vector<int>& subsets: findSubsets(num)){
+        for (const vector<int>& subsets : findSubsets(num)) {
             cout << "[ ";
-            for(const int& val: subsets){
+            for (const int& val : subsets) {
                 cout << val << " ";
             }
             cout << "]" << endl;
@@ -456,16 +464,16 @@ namespace dsa_problems {
 
         // Reversing bits
         cout << "Reverse bits of " << 3 << " is: " << computeReverseBits(3) << endl;
-        cout << "Reverse bits of " << 3221225472 << " is: " << computeReverseBits(3221225472) << endl;
+        cout << "Reverse bits of " << 3221225472 << " is: " << computeReverseBits(3221225472)
+             << endl;
 
         // Finding one unique from three
-        cout << "Finding one unique from three: " << findOneUniquesFromThree(threeRepeated)
-                << endl;
+        cout << "Finding one unique from three: " << findOneUniquesFromThree(threeRepeated) << endl;
 
         // Count XOR Subarray
         cout << "Total XOR Subarrays are: " << findXORSubarray(xorSubarray, 6) << endl;
     }
-}
+}  // namespace dsa_problems
 
 int main() {
     basic::main();
