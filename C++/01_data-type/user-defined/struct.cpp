@@ -60,6 +60,7 @@ using namespace std;
 struct Colors {
     string haxCode;
 
+    //  1. STRUCT CONSTRUCTOR
     // Colors(string code) : haxCode(code) {}
 
     Colors(string code){

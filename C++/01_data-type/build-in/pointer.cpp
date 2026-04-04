@@ -6,7 +6,7 @@
 | 🟡 C++, Provides a ways to directly reference a variable instead of store them using a pointer, it's similar to accessing from "*ptr" but       | 
 |         without storing in a pointer.                                                                                                           |
 |    Example:                                                                                                                                     |                                                   
-|            "type& variable_name = ref_variable;"                                                                                                |                                                     
+|            "type* variable_name = ref_variable;"                                                                                                |                                                     
 | 🟡 To store address of a pointer and the address of that pointer so on, we would add "**..." as level of memory address increases.              |
 | 🟡 "nullptr" is represent a pointer variable that does not point to any variable address yet.                                                   | 
 |                                                                                                                                                 |
@@ -14,7 +14,7 @@
 |                                                                    About "&"                                                                    |
 +-------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                 |
-| In C++, "&" has two different meanings based on the context it is used:                                                                         |
+| 🟡 In C++, "&" has two different meanings based on the context it is used:                                                                      |
 |                                                                                                                                                 |
 | 1. Address-of Operator: When used in an expression, "&" is the address-of operator, which returns the memory address of a variable.             |
 |    Example:                                                                                                                                     |
@@ -89,6 +89,12 @@ int main() {
     dynamicAllocation(&ptr);
 
     cout << "Value of ptr is: " << *ptr << endl;
+
+
+    int number = 32;
+    void* numberPtr = &number;
+
+    // cout << "Number is: " << static_cast<int>(*numberPtr) << endl;
 
     return 0;
 }
