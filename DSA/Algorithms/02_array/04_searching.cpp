@@ -234,10 +234,19 @@ namespace easyProblems {
     float findMaximumAvgSubarray(const vector<int>& numbers, int maxSize) {
         int leftIndex = 0;
 
-        int maximumAvg = 0;
+        float maximumAvg = 0;
         int totalSum = 0;
 
         for (int rightIndex = 0; rightIndex < numbers.size(); rightIndex++) {
+            totalSum += numbers[rightIndex];
+
+            if ((rightIndex - leftIndex + 1) == maxSize) {
+                float avg = totalSum / maxSize;
+                maximumAvg = max(maximumAvg, avg);
+
+                totalSum -= numbers[leftIndex];
+                leftIndex++;
+            }
         }
 
         return maximumAvg;
