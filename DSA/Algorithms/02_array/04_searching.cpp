@@ -23,7 +23,9 @@
 |                                                                                                                                                                                                                     |
 | 🟡 Pattern 3. "Find First/Last Occurrence":                                                                                                                                                                         |
 |                                                                                                                                                                                                                     |
-| 🟡 Pattern 4. "Rotated Sorted Array":                                                                                                                                                                               |
+| 🟡 Pattern 4. "Rotated Sorted Array": Normally, Sort array are arranged in an ascending order but in "Rotated Sorted Array" numbers are divided into two part and both two parts are sorted in there own way.       |
+|                                       Suppose sorted array looks like this [1, 2, 3, 4, 5, 6, 7], then "rotated array" will looks like this [[4, 5, 6, 7], [1, 2, 3]], We got two parts.                            |
+|                                       To solve these problems, We have to find drop point in this case that is "7 and 1" Which find using "middle > last" -> "drop is in right direction", "middle" < "last" -> left |
 |                                                                                                                                                                                                                     |
 | 🟡 Pattern 5. "Hash Map Search":                                                                                                                                                                                    |
 |                                                                                                                                                                                                                     |
@@ -252,6 +254,27 @@ namespace easyProblems {
         return maximumAvg;
     }
 
+    int guessHightOrLowerNum(int size, int secretNum) {
+        int left = 1;
+        int right = size;
+
+        while (left <= right) {
+            int middle = left + (right - left) / 2;
+
+            if (middle == secretNum) {
+                return middle;
+            }
+
+            if (middle > secretNum) {
+                right = middle - 1;
+            } else {
+                left = middle + 1;
+            }
+        }
+
+        return -1;
+    }
+
     void main() {
         cout << "Easy Problems: " << endl;
 
@@ -282,6 +305,8 @@ namespace easyProblems {
         numbers = {1, 12, -5, -6, 50, 3};
         cout << "Maximum Average of Subarray is: " << findMaximumAvgSubarray(numbers, 4) << endl;
 
+        cout << "Guess number is: " << guessHightOrLowerNum(10, 6) << endl;
+
         cout << endl << endl;
     }
 }  // namespace easyProblems
@@ -292,9 +317,96 @@ namespace easyProblems {
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 namespace mediumProblems {
+    int findMinimumInRotatedSortedArr(const vector<int>& numbers) {
+        int leftIndex = 0;
+        int rightIndex = numbers.size() - 1;
+
+        int miniValue = INT_MAX;
+
+        while (leftIndex <= rightIndex) {
+            int middleIndex = leftIndex + (rightIndex - leftIndex) / 2;
+
+            // Means "second" half is at left direction.
+            if (numbers[middleIndex] > numbers[rightIndex]) {
+                leftIndex = middleIndex + 1;
+            } else {
+                rightIndex = middleIndex - 1;
+                miniValue = min(miniValue, numbers[middleIndex]);
+            }
+        }
+
+        return miniValue;
+    }
+
+    int searchInRotatedArray(const vector<int>& numbers, int target) {
+        int leftIndex = 0;
+        int rightIndex = numbers.size() - 1;
+
+        while (leftIndex <= rightIndex) {
+            int middleIndex = leftIndex + (rightIndex - leftIndex) / 2;
+
+            if (numbers[middleIndex] == target) {
+                return middleIndex;
+            }
+
+            // Check which half is sorted
+            if (numbers[leftIndex] <= numbers[middleIndex]) {
+                // Left half is sorted
+                if (target >= numbers[leftIndex] && target < numbers[middleIndex]) {
+                    rightIndex = middleIndex - 1;  // target is in left half
+                } else {
+                    leftIndex = middleIndex + 1;  // target is in right half
+                }
+            } else {
+                // Right half is sorted
+                if (target > numbers[middleIndex] && target <= numbers[rightIndex]) {
+                    leftIndex = middleIndex + 1;  // target is in right half
+                } else {
+                    rightIndex = middleIndex - 1;  // target is in left half
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    int findMinimumSizeSubarray(const vector<int>& numbers, int target) {
+        int leftIndex = 0;
+
+        int totalSum = 0;
+        int minSize = INT_MAX;
+
+        for (int rightIndex = 0; rightIndex < numbers.size(); rightIndex++) {
+            totalSum += numbers[rightIndex];
+
+            while (totalSum >= target) {
+                minSize = min((rightIndex - leftIndex + 1), minSize);
+                totalSum -= numbers[leftIndex];
+                leftIndex++;
+            }
+        }
+
+        return minSize;
+    }
+
     void main() {
-        cout << "Easy Problems: " << endl;
-        // PROBLEMS
+        cout << "Medium Problems: " << endl;
+
+        // FINDING MINIMUM IN ROTATED SORTED ARRAY.
+        vector<int> numbers = {3, 4, 5, 6, 7, 1, 2};
+        cout << "Minimum number in rotated sorted array is: "
+             << findMinimumInRotatedSortedArr(numbers) << endl;
+
+        // SEARCHING IN AN ROTATED SORTED ARRAY
+        numbers = {4, 5, 6, 7, 0, 1, 2};
+        int targetValue = 0;
+        cout << targetValue << " found at index: " << searchInRotatedArray(numbers, targetValue)
+             << endl;
+
+        // MIN SIZE SUBARRAY
+        numbers = {1, 4, 4};
+        cout << "Min size of sum of subarray is: " << findMinimumSizeSubarray(numbers, 4) << endl;
+
         cout << endl << endl;
     }
 }  // namespace mediumProblems
@@ -317,9 +429,9 @@ int main() {
     // binarySearch::main();
 
     // Problems
-    easyProblems::main();
+    // easyProblems::main();
     mediumProblems::main();
-    hardProblems::main();
+    // hardProblems::main();
 
     return 0;
 }
