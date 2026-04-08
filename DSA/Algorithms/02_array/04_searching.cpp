@@ -24,8 +24,8 @@
 | 🟡 Pattern 3. "Find First/Last Occurrence":                                                                                                                                                                         |
 |                                                                                                                                                                                                                     |
 | 🟡 Pattern 4. "Rotated Sorted Array": Normally, Sort array are arranged in an ascending order but in "Rotated Sorted Array" numbers are divided into two part and both two parts are sorted in there own way.       |
-|                                       Suppose sorted array looks like this [1, 2, 3, 4, 5, 6, 7], then "rotated array" will looks like this [[4, 5, 6, 7], [1, 2, 3]], We got two parts.                            |
-|                                       To solve these problems, We have to find drop point in this case that is "7 and 1" Which find using "middle > last" -> "drop is in right direction", "middle" < "last" -> left |
+|                                      Suppose sorted array looks like this [1, 2, 3, 4, 5, 6, 7], then "rotated array" will looks like this [[4, 5, 6, 7], [1, 2, 3]], We got two parts.                             |
+|                                      To solve these problems, We have to find drop point in this case which is "7 and 1" We find using "middle > last" -> "drop is in right direction", "middle" < "last" -> left   |
 |                                                                                                                                                                                                                     |
 | 🟡 Pattern 5. "Hash Map Search":                                                                                                                                                                                    |
 |                                                                                                                                                                                                                     |
