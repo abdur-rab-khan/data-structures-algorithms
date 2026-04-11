@@ -1,4 +1,7 @@
 #include <bits/stdc++.h>
+
+#include "../dsa_utils.hpp"
+
 using namespace std;
 
 namespace queues {
@@ -80,40 +83,68 @@ namespace easy_problems {
 }  // namespace easy_problems
 
 namespace medium_problems {
-    int totalInterval(const vector<char>& tasks) {
-        priority_queue<int> pQueue;
-
-        // Step 1. Pre-processing adding every element into priority queue
+    int totalInterval(const vector<char>& tasks, int n) {
+        // Step 1. Count frequency of each task
         unordered_map<char, int> freq;
         for (char t : tasks) {
             freq[t]++;
         }
+
+        // Step 2. Push all frequencies into max priority queue
+        priority_queue<int> pq;
         for (const auto& p : freq) {
-            pQueue.push(p.second);
+            pq.push(p.second);
         }
 
-        // Step 2. Doing calculation
-        int prevTask = 0;
-        int totalInterval = 0;
+        // Step 3. Use a waiting queue to hold tasks on cooldown
+        queue<pair<int, int>> waitingQueue;
 
-        for (int i = 0; i < pQueue.size(); i++) {
-            if (i != 0) {
+        int time = 1;
+
+        // Step 4. Run until both queue is empty.
+        while (!pq.empty() || !waitingQueue.empty()) {
+            time++;
+
+            if (!pq.empty()) {
+                int top = pq.top() - 1;
+                pq.pop();
+
+                if (top > 0) {
+                    waitingQueue.push({top, time + n});
+                }
             }
 
-            prevTask = (prevTask + 1) % pQueue.size();
-            totalInterval++;
+            if (!waitingQueue.empty() && waitingQueue.front().second == time) {
+                pq.push(waitingQueue.front().first);
+                waitingQueue.pop();
+            }
         }
 
-        return totalInterval;
+        return time;
     }
 
     void main() {
-        vector<char> tasks = {'A', 'A', 'B', 'B', 'B'};
-        cout << "Total interval takes: " << totalInterval << endl;
+        vector<char> tasks = {'A', 'B', 'C'};
+        cout << "Total interval takes: " << totalInterval(tasks, 2) << endl;
     }
 }  // namespace medium_problems
 
+namespace hard_problems {
+    vector<int> minimumValueInWindow(const vector<int>& numbers) {
+        // LOGIC TO SOLVE THIS.
+    }
+
+    void main() {
+        cout << "Hard Problems: " << endl;
+        vector<int> numbers = {2, 3, 4, 2, 6, 2};
+        printArrayElements(numbers, "Minimum values are: ");
+    }
+}  // namespace hard_problems
+
 int main() {
-    easy_problems::main();
+    // easy_problems::main();
+    // medium_problems::main();
+    hard_problems::main();
+
     return 0;
 }
