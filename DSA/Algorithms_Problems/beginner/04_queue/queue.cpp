@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 
-#include "../dsa_utils.hpp"
+#include "../../dsa_utils.hpp"
 
 using namespace std;
 
@@ -130,14 +130,39 @@ namespace medium_problems {
 }  // namespace medium_problems
 
 namespace hard_problems {
-    vector<int> minimumValueInWindow(const vector<int>& numbers) {
-        // LOGIC TO SOLVE THIS.
+    vector<int> findMinimumWindow(const vector<int>& numbers, int k) {
+        int leftIndex = 0;
+
+        deque<int> deq;
+        vector<int> minimumValues = {};
+
+        for (int rightIndex = 0; rightIndex < numbers.size(); rightIndex++) {
+            // Step 1: Remove greater from back
+            while (!deq.empty() && numbers[deq.back()] > numbers[rightIndex]) {
+                deq.pop_back();
+            }
+
+            // Add current index
+            deq.push_back(rightIndex);
+
+            // Step 2: Remove elements out of window
+            if (!deq.empty() && deq.front() <= rightIndex - k) {
+                deq.pop_front();
+            }
+
+            // Step 3: Store result when window is valid
+            if (rightIndex >= k - 1) {
+                minimumValues.push_back(numbers[deq.front()]);
+            }
+        }
+
+        return minimumValues;
     }
 
     void main() {
         cout << "Hard Problems: " << endl;
         vector<int> numbers = {2, 3, 4, 2, 6, 2};
-        printArrayElements(numbers, "Minimum values are: ");
+        printArrayElements(findMinimumWindow(numbers, 3), "Minimum values are: ");
     }
 }  // namespace hard_problems
 
