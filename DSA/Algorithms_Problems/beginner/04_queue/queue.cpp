@@ -58,6 +58,22 @@ namespace queues {
 }  // namespace queues
 
 namespace easy_problems {
+    /**
+     * Counts how many recent calls happened within the last 3000 time units.
+     *
+     * Given a sequence of timestamps, return the number of timestamps that fall
+     * within the most recent 3000-unit window ending at the last timestamp.
+     *
+     * Example:
+     * Input: timeStamps = {1, 100, 3001, 3002, 8001}
+     * Output: 3
+     *
+     * Time Complexity: O(n)
+     * Space Complexity: O(n)
+     *
+     * @param timeStamps Ordered list of request timestamps
+     * @return Number of recent calls in the last 3000 units
+     */
     int numberOfRecentCalls(const vector<int>& timeStamps) {
         int size = timeStamps.size();
 
@@ -83,6 +99,24 @@ namespace easy_problems {
 }  // namespace easy_problems
 
 namespace medium_problems {
+    /**
+     * Computes the minimum total interval needed to finish all tasks with cooldown.
+     *
+     * Given a list of task labels and a cooldown value n, return the minimum
+     * total time units needed to schedule all tasks so identical tasks are at
+     * least n units apart.
+     *
+     * Example:
+     * Input: tasks = ['A', 'B', 'C'], n = 2
+     * Output: 3
+     *
+     * Time Complexity: O(m log m) where m is the number of distinct tasks
+     * Space Complexity: O(m)
+     *
+     * @param tasks List of task labels
+     * @param n Cooldown interval between identical tasks
+     * @return Minimum total interval needed to finish all tasks
+     */
     int totalInterval(const vector<char>& tasks, int n) {
         // Step 1. Count frequency of each task
         unordered_map<char, int> freq;
@@ -130,6 +164,23 @@ namespace medium_problems {
 }  // namespace medium_problems
 
 namespace hard_problems {
+    /**
+     * Finds the minimum value in every contiguous window of size k.
+     *
+     * Given an array and a window size k, return a list containing the minimum
+     * value from each window.
+     *
+     * Example:
+     * Input: numbers = {2, 3, 4, 2, 6, 2}, k = 3
+     * Output: {2, 2, 2, 2}
+     *
+     * Time Complexity: O(n)
+     * Space Complexity: O(k)
+     *
+     * @param numbers Input array of integers
+     * @param k Window size
+     * @return Minimum value of each window
+     */
     vector<int> findMinimumWindow(const vector<int>& numbers, int k) {
         int leftIndex = 0;
 
