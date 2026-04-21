@@ -19,45 +19,6 @@
  ⏱️  Always O(n) | 💡 Left pointer never goes backwards
 */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                   🪟 SLIDING WINDOW                                                                                                 |
@@ -165,10 +126,27 @@
 */
 
 #include <bits/stdc++.h>
+
 #include "../dsa_utils.hpp"
 
 using namespace std;
 
+/**
+ * Checks whether a character is a vowel.
+ *
+ * Given a single character, determine whether it is one of the lowercase
+ * vowels: a, e, i, o, or u.
+ *
+ * Example:
+ * Input: ch = 'a'
+ * Output: true
+ *
+ * Time Complexity: O(1)
+ * Space Complexity: O(1)
+ *
+ * @param ch Character to check
+ * @return True if the character is a vowel, otherwise false
+ */
 bool isVowel(char ch) {
     vector<char> vowels = {'a', 'e', 'i', 'o', 'u'};
 
@@ -186,6 +164,23 @@ bool isVowel(char ch) {
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 namespace easy_problems {
+    /**
+     * Finds the maximum sum of any contiguous subarray of size k.
+     *
+     * Given an integer array and a window size k, return the largest sum among
+     * all contiguous subarrays of length k.
+     *
+     * Example:
+     * Input: numbers = [2, 1, 5, 1, 3, 2], k = 3
+     * Output: 9
+     *
+     * Time Complexity: O(n)
+     * Space Complexity: O(1)
+     *
+     * @param numbers Input array of integers
+     * @param target Window size
+     * @return Maximum sum of any subarray of size k
+     */
     int computeMaximumSumWithTarget(const vector<int>& numbers, int target) {
         if (numbers.size() == target)
             return 0;
@@ -213,6 +208,23 @@ namespace easy_problems {
         return maxSum;
     }
 
+    /**
+     * Computes the average of every contiguous subarray of size k.
+     *
+     * Given an integer array and a window size k, return the average of each
+     * contiguous subarray of length k.
+     *
+     * Example:
+     * Input: numbers = [1, 3, 2, 6, -1, 4, 1, 8, 2], k = 5
+     * Output: [2.2, 2.8, 2.4, 3.6, 2.8]
+     *
+     * Time Complexity: O(n)
+     * Space Complexity: O(n) for the output list
+     *
+     * @param numbers Input array of integers
+     * @param target Window size
+     * @return A vector of averages for each size-k window
+     */
     vector<float> computeAverageSumWithTarget(const vector<int>& numbers, int target) {
         if (numbers.size() == target)
             return {};
@@ -241,6 +253,23 @@ namespace easy_problems {
         return sumOfAverage;
     }
 
+    /**
+     * Finds the maximum number of vowels in any substring of size k.
+     *
+     * Given a string and a fixed window size k, return the maximum number of
+     * vowels found in any contiguous substring of length k.
+     *
+     * Example:
+     * Input: str = "abciiidef", k = 3
+     * Output: 3
+     *
+     * Time Complexity: O(n)
+     * Space Complexity: O(1)
+     *
+     * @param str Input string
+     * @param target Window size
+     * @return Maximum vowel count across all size-k substrings
+     */
     int countMaximumVowelInSubstring(string str, int target) {
         if (str.size() == target)
             return 0;
@@ -273,6 +302,23 @@ namespace easy_problems {
         return maxVowelCount;
     }
 
+    /**
+     * Checks whether any duplicate exists inside a window of size k.
+     *
+     * Given an array and a window size k, return true if any contiguous window
+     * of length k contains a repeated value.
+     *
+     * Example:
+     * Input: numbers = [1, 2, 1, 3, 6, 8], k = 3
+     * Output: true
+     *
+     * Time Complexity: O(n)
+     * Space Complexity: O(k)
+     *
+     * @param numbers Input array
+     * @param target Window size to inspect
+     * @return True if a duplicate exists within any size-k window
+     */
     bool checkContainsTwoDuplicates(const vector<int>& numbers, int target) {
         if (numbers.size() < target)
             return false;
@@ -299,6 +345,22 @@ namespace easy_problems {
         return false;
     }
 
+    /**
+     * Finds the length of the longest substring without repeating characters.
+     *
+     * Given a string, return the length of the longest contiguous substring
+     * that contains no repeated characters.
+     *
+     * Example:
+     * Input: str = "abcabcbb"
+     * Output: 3
+     *
+     * Time Complexity: O(n)
+     * Space Complexity: O(n)
+     *
+     * @param str Input string
+     * @return Length of the longest substring with all unique characters
+     */
     int findUniqueLongestSubstring(string str) {
         size_t size = str.size();
 
@@ -326,7 +388,6 @@ namespace easy_problems {
         return longestSubstring;
     }
 
-    // Main function
     void main() {
         cout << "Sliding Window Easy Problems: " << endl;
 
@@ -370,23 +431,24 @@ namespace easy_problems {
 */
 namespace medium_problems {
     /**
-     * Finds the length of the longest repeating character replacement substring.
-     *
-     * Given a string, finds the maximum length of a contiguous substring where you
-     * can replace at most 'minLength' characters to make all characters in the substring identical.
+    * Finds the length of the longest substring that can be made of one repeated character.
+    *
+    * Given a string of uppercase letters and an integer minLength, return the
+    * maximum length of a contiguous substring that can be turned into all the
+    * same character by replacing at most minLength characters.
      *
      * Example:
-     * Input: str = "ABBCBKK", minLength = 1
+    * Input: str = "ABBCBKK", minLength = 1
      * Output: 4
-     * Explanation: Replace one 'C' with 'B' to get "BBBB" (length 4), or replace 'B' with 'K' to
-     * get "KKKK" (length 4).
+    * Explanation: Replace one character in a length-4 window to make all
+    * characters identical.
      *
-     * Time Complexity: O(n) where n is the length of the string
-     * Space Complexity: O(1) space for the frequency array of 26 uppercase letters
+    * Time Complexity: O(n)
+    * Space Complexity: O(1)
      *
-     * @param str The original string of characters
-     * @param minLength Maximum number of characters that can be replaced
-     * @return Length of the longest substring with identical characters after replacements
+    * @param str Input string of uppercase letters
+    * @param minLength Maximum number of replacements allowed
+    * @return Length of the longest valid substring
      */
     int findLongestRepeatingSubstring(string str, int minLength) {
         /*
@@ -424,23 +486,22 @@ namespace medium_problems {
     }
 
     /**
-     * Finds the maximum number of fruits that can be collected.
-     *
-     * Finds the length of the longest contiguous subarray that contains at most
-     * 'maximumAllowedType' distinct elements (representing different types of fruit).
+        * Finds the length of the longest subarray with at most k distinct values.
+        *
+        * Given an array of fruit types and a limit on the number of distinct types,
+        * return the maximum number of fruits that can be collected from one window.
      *
      * Example:
-     * Input: fruits = [1, 2, 1, 2, 3], maximumAllowedType = 2
+    * Input: fruits = [1, 2, 1, 2, 3], maximumAllowedType = 2
      * Output: 4
-     * Explanation: The longest subarray with at most 2 distinct types is [1, 2, 1, 2] with
-     * length 4.
+    * Explanation: The best window is [1, 2, 1, 2].
      *
-     * Time Complexity: O(n) where n is the number of fruits
-     * Space Complexity: O(k) where k is the maximumAllowedType (size of the hash map)
+    * Time Complexity: O(n)
+    * Space Complexity: O(k)
      *
-     * @param fruits Array representing the types of fruit available
-     * @param maximumAllowedType Maximum number of different fruit types allowed
-     * @return Maximum number of fruits you can collect
+    * @param fruits Input array representing fruit types
+    * @param maximumAllowedType Maximum number of distinct fruit types allowed
+    * @return Maximum window length that satisfies the constraint
      */
     int findMaximumNumberOfFruits(const vector<int>& fruits, int maximumAllowedType) {
         int leftIndex = 0;
@@ -467,23 +528,22 @@ namespace medium_problems {
     }
 
     /**
-     * Finds the minimal length of a contiguous subarray with sum >= target.
-     *
-     * Given an array of positive integers and a target integer, finds the
-     * minimum length of a contiguous subarray whose sum is greater than or equal to the target.
-     * If there is no such subarray, returns 0.
+        * Finds the minimum length of a contiguous subarray whose sum reaches a target.
+        *
+        * Given a positive integer array and a target sum, return the shortest
+        * contiguous subarray whose sum is greater than or equal to the target.
      *
      * Example:
-     * Input: numbers = [2, 3, 1, 2, 4, 3], target = 7
+    * Input: numbers = [2, 3, 1, 2, 4, 3], target = 7
      * Output: 2
-     * Explanation: The subarray [4, 3] has the minimal length (2) under the problem constraint.
+    * Explanation: The subarray [4, 3] has the smallest valid length.
      *
-     * Time Complexity: O(n) where n is the number of elements
+    * Time Complexity: O(n)
      * Space Complexity: O(1)
      *
-     * @param numbers Array of integers
-     * @param target The target sum to reach or exceed
-     * @return Minimum length of a valid subarray, or 0 if none exists
+    * @param numbers Input array of positive integers
+    * @param target Target sum to reach or exceed
+    * @return Minimum length of a valid subarray, or 0 if none exists
      */
     int findMinimumSizeSubarraySum(const vector<int>& numbers, int target) {
         int leftIndex = 0;
@@ -512,27 +572,22 @@ namespace medium_problems {
     //                    Think about what to do immediately when a duplicate enters the window
 
     /**
-     * Finds the maximum sum of a distinct subarray of size k.
-     *
-     * Finds the maximum sum of a contiguous subarray of size exactly 'k'
-     * where all elements in the subarray are distinct.
+        * Finds the maximum sum of any subarray of size k with all distinct values.
+        *
+        * Given an integer array and a window size k, return the maximum sum among
+        * all contiguous subarrays of length k that contain no duplicate values.
      *
      * Example:
-     * Input: numbers = [1, 5, 4, 2, 9, 9, 9], k = 3
+    * Input: numbers = [1, 5, 4, 2, 9, 9, 9], k = 3
      * Output: 15
-     * Explanation: The subarrays of length 3 are:
-     *              [1, 5, 4] -> sum: 10 (distinct)
-     *              [5, 4, 2] -> sum: 11 (distinct)
-     *              [4, 2, 9] -> sum: 15 (distinct)
-     *              [2, 9, 9] -> invalid (contains duplicate 9s)
-     *              Max valid sum is 15.
+    * Explanation: The best valid window is [4, 2, 9] with sum 15.
      *
-     * Time Complexity: O(n) where n is the number of elements
-     * Space Complexity: O(k) for the hash map to store frequencies of the current window
+    * Time Complexity: O(n)
+    * Space Complexity: O(k)
      *
-     * @param numbers Array of integers
-     * @param k The exact size of the distinct subarray
-     * @return Maximum sum of a valid subarray, or 0 if no such subarray exists
+    * @param numbers Input array of integers
+    * @param k Required window size
+    * @return Maximum sum of a valid distinct-size-k subarray, or 0 if none exists
      */
     int findMaximumSumOfDistinctArray(const vector<int>& numbers, int k) {
         int leftIndex = 0;
@@ -565,23 +620,22 @@ namespace medium_problems {
     }
 
     /**
-     * Finds the length of the longest subarray of 1s after flipping at most k zeros.
-     *
-     * Given an array containing only 0s and 1s, find the maximum length of a subarray
-     * that can be obtained by flipping at most k zeros to ones.
+        * Finds the length of the longest subarray of 1s after flipping at most k zeros.
+        *
+        * Given a binary array and an integer k, return the maximum length of a
+        * contiguous subarray containing only 1s after flipping at most k zeros.
      *
      * Example:
-     * Input: numbers = [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0], k = 2
+    * Input: numbers = [1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0], k = 2
      * Output: 6
-     * Explanation: Flip the two zeros at indices 3 and 4 to get [1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0]
-     *              The longest subarray of 1s is [1, 1, 1, 1, 1] with length 6.
+    * Explanation: Flip two zeros to make a window of length 6 containing only 1s.
      *
-     * Time Complexity: O(n)
+    * Time Complexity: O(n)
      * Space Complexity: O(1)
      *
-     * @param numbers Array of 0s and 1s
-     * @param k Maximum number of zeros that can be flipped
-     * @return Length of longest subarray of 1s after flipping at most k zeros
+    * @param numbers Binary input array of 0s and 1s
+    * @param k Maximum number of zeros that can be flipped
+    * @return Length of the longest valid subarray
      */
     int findLongestOnesAfterKFlips(const vector<int>& numbers, int k) {
         int leftIndex = 0;
@@ -606,7 +660,6 @@ namespace medium_problems {
         return maximumSize;
     }
 
-    // Main function
     void main() {
         cout << "Sliding Window Medium Problems: " << endl;
 
@@ -644,6 +697,23 @@ namespace medium_problems {
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 namespace hard_problems {
+    /**
+     * Finds the smallest substring that contains every character from a pattern.
+     *
+     * Given a source string and a pattern string, return the shortest contiguous
+     * substring of the source that contains all characters of the pattern.
+     *
+     * Example:
+     * Input: str = "aaabc", pattern = "abc"
+     * Output: "abc"
+     *
+     * Time Complexity: O(n)
+     * Space Complexity: O(m)
+     *
+     * @param str Source string
+     * @param pattern Pattern string whose characters must be covered
+     * @return The smallest valid substring, or an empty string if none exists
+     */
     string findMinimumWindowSubstring(string str, string pattern) {
         int leftIndex = 0;
 
@@ -661,7 +731,6 @@ namespace hard_problems {
         }
 
         for (int rightIndex = 0; rightIndex < str.size(); rightIndex++) {
-
             // Step 2: Expand window
             if (freq.count(str[rightIndex])) {
                 if (freq[str[rightIndex]] > 0) {
@@ -672,7 +741,6 @@ namespace hard_problems {
 
             // Step 3: Shrink window
             while (formedCount == requiredCount) {
-                
                 int windowSize = rightIndex - leftIndex + 1;
                 if (windowSize < minSubstringSize) {
                     minSubstringSize = windowSize;
@@ -685,7 +753,7 @@ namespace hard_problems {
                     }
                     freq[str[leftIndex]]++;
                 }
-                
+
                 leftIndex++;
             }
         }
@@ -693,28 +761,45 @@ namespace hard_problems {
         return startIndex == -1 ? "" : str.substr(startIndex, minSubstringSize);
     }
 
+    /**
+     * Finds the maximum value in every contiguous subarray of size k.
+     *
+     * Given an array and a window size k, return a list containing the maximum
+     * value from each window.
+     *
+     * Example:
+     * Input: numbers = [1, 3, -1, -3, 5, 3, 6, 7], k = 3
+     * Output: [3, 3, 5, 5, 6, 7]
+     *
+     * Time Complexity: O(n)
+     * Space Complexity: O(k)
+     *
+     * @param numbers Input array
+     * @param k Window size
+     * @return Maximum values for each window
+     */
     vector<int> findMaximumWindow(const vector<int>& numbers, int k) {
         int leftIndex = 0;
 
         deque<int> deq;
         vector<int> maximumValues = {};
 
-        for (int rightIndex = 0; rightIndex < numbers.size(); rightIndex++){
-            // Step 1: Remove smaller from back 
-            while(!deq.empty() && numbers[deq.back()] < numbers[rightIndex]){
+        for (int rightIndex = 0; rightIndex < numbers.size(); rightIndex++) {
+            // Step 1: Remove smaller from back
+            while (!deq.empty() && numbers[deq.back()] < numbers[rightIndex]) {
                 deq.pop_back();
             }
-            
+
             // Add current index
             deq.push_back(rightIndex);
 
-            // Step 2: Remove elements out of window 
-            if(!deq.empty() && deq.front() <= rightIndex - k){
+            // Step 2: Remove elements out of window
+            if (!deq.empty() && deq.front() <= rightIndex - k) {
                 deq.pop_front();
             }
 
             // Step 3: Store result when window is valid
-            if(rightIndex >= k - 1){
+            if (rightIndex >= k - 1) {
                 maximumValues.push_back(numbers[deq.front()]);
             }
         }
@@ -722,33 +807,79 @@ namespace hard_problems {
         return maximumValues;
     }
 
+    /**
+     * Placeholder for the minimum window subsequence problem.
+     *
+     * Given a source string and a target string, the goal is to find the
+     * shortest subsequence window that matches the target in order.
+     *
+     * Example:
+     * Input: str = "abcdebdde", target = "bde"
+     * Output: "bcde"
+     *
+     * Time Complexity: Not implemented
+     * Space Complexity: Not implemented
+     *
+     * @param str Source string
+     * @param target Target string
+     * @return Currently returns an empty string
+     */
     string findMinimumWindowSequence(string str, string target) {
-        // LOGIC TO HANDLE IT.
         return "";
     }
 
+    /**
+     * Placeholder for the maximum number of robots within a budget problem.
+     *
+     * Given robot costs or efficiencies, determine the maximum number of robots
+     * that can be selected under a cost constraint.
+     *
+     * Example:
+     * Input: robot = [3, 6, 1, 3, 4], budget = 15
+     * Output: depends on the final problem definition
+     *
+     * Time Complexity: Not implemented
+     * Space Complexity: Not implemented
+     *
+     * @param robot Input robot values
+     * @return Currently returns 0
+     */
     int findMaximumNumberOfRobots(const vector<int>& robot) {
-        // LOGIC TO HANDLE IT.
         return 0;
     }
 
+    /**
+     * Placeholder for counting subarrays with fixed bounds.
+     *
+     * Given an array and boundary values, count the subarrays whose minimum and
+     * maximum values stay within the required bounds.
+     *
+     * Example:
+     * Input: number = [1, 3, 5, 2, 7, 5], bounds = [1, 5]
+     * Output: depends on the final problem definition
+     *
+     * Time Complexity: Not implemented
+     * Space Complexity: Not implemented
+     *
+     * @param number Input array
+     * @return Currently returns 0
+     */
     int findSubarraysWithFixedBounds(const vector<int>& number) {
-        // LOGIC TO HANDLE IT.
         return 0;
     }
 
-    // Main function
     void main() {
         cout << "Sliding Window Hard Problems: " << endl;
 
         // Finding minimum substring containing all elements.
         string str = "aaabc", pattern = "abc";
-        cout << "Minimum substring containing all elements from pattern is: " << findMinimumWindowSubstring(str, pattern) << endl;
-        
+        cout << "Minimum substring containing all elements from pattern is: "
+             << findMinimumWindowSubstring(str, pattern) << endl;
+
         // Finding Maximum Value in a "k" window size.
         vector<int> numbers = {1, 3, -1, -3, 5, 3, 6, 7};
         cout << "Maximum numbers are: ";
-        for(int n : findMaximumWindow(numbers, 3)){
+        for (int n : findMaximumWindow(numbers, 3)) {
             cout << n << " ";
         }
         cout << endl;

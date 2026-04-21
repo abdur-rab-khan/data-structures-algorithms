@@ -44,17 +44,17 @@ using namespace std;
 */
 namespace linearSearch {
     /**
-     * Performs a linear search to find a target value in an array.
-     *
-     * Scans each element of the array sequentially from the beginning until the
-     * target value is found or the end of the array is reached.
+    * Finds the index of a target value in an unsorted array.
+    *
+    * Given an array and a target value, return the first index where the
+    * target appears. If the value is not present, return -1.
      *
      * Example:
      * Input: numbers = [3, 7, 1, 9, 4, 6, 2, 8], targetValue = 6
      * Output: 5
      *
-     * Time Complexity: O(n) where n is the total number of elements.
-     * Space Complexity: O(1) as no extra space is used.
+    * Time Complexity: O(n)
+    * Space Complexity: O(1)
      *
      * @param numbers The vector of integers to search through.
      * @param targetValue The integer value to find.
@@ -97,23 +97,21 @@ namespace linearSearch {
 */
 namespace binarySearch {
     /**
-     * Finds the length of the longest repeating character replacement substring.
-     *
-     * Given a string, finds the maximum length of a contiguous substring where you
-     * can replace at most 'minLength' characters to make all characters in the substring identical.
+    * Searches for a target value in a sorted array using binary search.
+    *
+    * Given a sorted array of integers and a target value, return the index of
+    * the target if it exists; otherwise return -1.
      *
      * Example:
-     * Input: str = "ABBCBKK", minLength = 1
-     * Output: 4
-     * Explanation: Replace one 'C' with 'B' to get "BBBB" (length 4), or replace 'B' with 'K' to
-     * get "KKKK" (length 4).
+    * Input: numbers = [1, 2, 3, 4, 6, 7, 8, 9], targetValue = 4
+    * Output: 3
      *
-     * Time Complexity: O(n) where n is the length of the string
-     * Space Complexity: O(1) space for the frequency array of 26 uppercase letters
+    * Time Complexity: O(log n)
+    * Space Complexity: O(1)
      *
-     * @param str The original string of characters
-     * @param minLength Maximum number of characters that can be replaced
-     * @return Length of the longest substring with identical characters after replacements
+    * @param numbers Sorted array of integers
+    * @param targetValue Value to search for
+    * @return Index of the target value, or -1 if not found
      */
     int iterativeBinarySearch(const vector<int>& numbers, int targetValue) {
         int leftIndex = 0;
@@ -140,19 +138,23 @@ namespace binarySearch {
     }
 
     /**
-     * Recursively searches for a target value in a sorted array using Binary Search.
+     * Searches for a target value in a sorted array using recursion.
      *
-     * Uses the call stack to divide the search interval in half at each step until 
-     * the target value is found or the interval is empty.
+     * Given a sorted array of integers and a target value, return the index of
+     * the target if it exists; otherwise return -1.
      *
-     * Time Complexity: O(log n) where n is the number of elements.
-     * Space Complexity: O(log n) due to the recursive call stack.
+     * Example:
+     * Input: numbers = [1, 2, 3, 4, 6, 7, 8, 9], targetValue = 4
+     * Output: 3
      *
-     * @param numbers A sorted vector of integers.
-     * @param targetValue The target integer to find.
-     * @param leftIndex The starting index of the current search interval.
-     * @param rightIndex The ending index of the current search interval.
-     * @return The index of the target value, or -1 if not found.
+     * Time Complexity: O(log n)
+     * Space Complexity: O(log n)
+     *
+     * @param numbers Sorted array of integers
+     * @param targetValue Value to search for
+     * @param leftIndex Left boundary of the current search interval
+     * @param rightIndex Right boundary of the current search interval
+     * @return Index of the target value, or -1 if not found
      */
     int recursiveBinarySearch(const vector<int>& numbers, int targetValue, int leftIndex,
                               int rightIndex) {
@@ -176,6 +178,13 @@ namespace binarySearch {
         return recursiveBinarySearch(numbers, targetValue, midIndex + 1, rightIndex);
     }
 
+    /**
+     * Runs the binary search examples.
+     *
+     * Example:
+     * Input: numbers = [1, 2, 3, 4, 6, 7, 8, 9], targetValue = 4
+     * Output: 3
+     */
     void main() {
         int targetValue = 4;
         vector<int> numbers = {1, 2, 3, 4, 6, 7, 8, 9};
@@ -197,6 +206,23 @@ namespace binarySearch {
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 namespace easyProblems {
+    /**
+     * Searches for a target value in a sorted array.
+     *
+     * Given a sorted array, return the index of the target value if it exists,
+     * otherwise return -1.
+     *
+     * Example:
+     * Input: numbers = [2, 5, 8, 12], targetValue = 8
+     * Output: 2
+     *
+     * Time Complexity: O(log n)
+     * Space Complexity: O(1)
+     *
+     * @param numbers Sorted array of integers
+     * @param targetValue Value to search for
+     * @return Index of the target value, or -1 if not found
+     */
     int binarySearch(const vector<int>& numbers, int targetValue) {
         const int NOT_FOUND = -1;
 
@@ -225,22 +251,22 @@ namespace easyProblems {
     }
 
     /**
-     * Finds the index where a target should be inserted in a sorted array.
+     * Finds the insert position for a target in a sorted array.
      *
-     * Uses binary search to find the position to insert a target value such that
-     * the array remains sorted if the target is not currently in the array.
+     * Given a sorted array and a target value, return the index where the target
+     * should be inserted to keep the array sorted.
      *
      * Example:
      * Input: numbers = [1, 3, 5, 7], targetValue = 7
      * Output: 3
-     * Explanation: 7 is found at index 3. Wait, the logic actually finds the last max insert position.
+     * Explanation: The target already exists at index 3.
      *
      * Time Complexity: O(log n)
      * Space Complexity: O(1)
      *
-     * @param numbers A sorted vector of integers.
-     * @param targetValue The target to insert or find.
-     * @return The index where the target is or should be inserted.
+     * @param numbers Sorted array of integers
+     * @param targetValue Target to search for
+     * @return Insert position for the target value
      */
     int searchingInsertPosition(const vector<int>& numbers, int targetValue) {
         if (numbers.empty()) {
@@ -267,10 +293,10 @@ namespace easyProblems {
     }
 
     /**
-     * Finds a pair of adjacent elements that sum up to the target value.
+     * Finds adjacent indices whose values sum to a target.
      *
-     * Iterates through the array and stores the sum of consecutive neighboring 
-     * pairs (i-1 and i) in a hashmap to quickly identify if any adjacent combination matches.
+     * Given an array and a target value, return the pair of neighboring indices
+     * whose values add up to the target.
      *
      * Example:
      * Input: numbers = [2, 7, 11, 15], targetValue = 9
@@ -278,11 +304,11 @@ namespace easyProblems {
      * Explanation: numbers[0] + numbers[1] = 2 + 7 = 9.
      *
      * Time Complexity: O(n)
-     * Space Complexity: O(n) to store the sums in the hash map.
+     * Space Complexity: O(n)
      *
-     * @param numbers The vector of integers.
-     * @param targetValue The desired sum of adjacency elements.
-     * @return A pair of indices corresponding to the two elements, or {-1, -1} if not found.
+     * @param numbers Input array of integers
+     * @param targetValue Target sum of two adjacent values
+     * @return Pair of indices, or {-1, -1} if no match exists
      */
     pair<int, int> findTwoSumPairs(const vector<int>& numbers, int targetValue) {
         int size = numbers.size();
@@ -304,17 +330,17 @@ namespace easyProblems {
     }
 
     /**
-     * Determines if the array contains any duplicate values.
+     * Determines whether an array contains duplicate values.
      *
      * Example:
      * Input: numbers = [1, 2, 3, 1]
      * Output: true
      *
-     * Time Complexity: O(n) space time, average case.
-     * Space Complexity: O(n) for the hash map to store frequencies.
+     * Time Complexity: O(n)
+     * Space Complexity: O(n)
      *
-     * @param numbers The vector of integers to check.
-     * @return True if at least one value appears at least twice, false otherwise.
+     * @param numbers Input array of integers
+     * @return True if at least one value appears more than once, otherwise false
      */
     bool isContainingDuplicates(const vector<int>& numbers) {
         unordered_map<int, int> hashMap;
@@ -331,22 +357,22 @@ namespace easyProblems {
     }
 
     /**
-     * Finds the maximum average of a contiguous subarray of a fixed size.
+     * Finds the maximum average of a contiguous subarray of fixed size.
      *
-     * Uses the sliding window technique to efficiently calculate the sums 
-     * and averages of subarrays of size 'maxSize'.
+     * Given an array and a window size, return the maximum average over all
+     * contiguous subarrays of that size.
      *
      * Example:
      * Input: numbers = [1, 12, -5, -6, 50, 3], maxSize = 4
      * Output: 12.75
-     * Explanation: Maximum average is (12 - 5 - 6 + 50) / 4 = 51 / 4 = 12.75.
+     * Explanation: Maximum average is (12 - 5 - 6 + 50) / 4 = 12.75.
      *
-     * Time Complexity: O(n) where n is the number of elements.
-     * Space Complexity: O(1) since we only store sums and sliding window boundaries.
+     * Time Complexity: O(n)
+     * Space Complexity: O(1)
      *
-     * @param numbers The vector of integers.
-     * @param maxSize The fixed size of the contiguous subarray.
-     * @return The maximum average calculated.
+     * @param numbers Input array of integers
+     * @param maxSize Fixed window size
+     * @return Maximum average across all windows of size maxSize
      */
     float findMaximumAvgSubarray(const vector<int>& numbers, int maxSize) {
         int leftIndex = 0;
@@ -370,18 +396,18 @@ namespace easyProblems {
     }
 
     /**
-     * Finds the first bad software version using binary search.
+     * Finds the first bad version in an ordered list of versions.
      *
      * Example:
-     * Input: versions = [...], firstBad = 4
+     * Input: versions = [1, 2, 3, 4, 5], firstBad = 4
      * Output: 4
      *
      * Time Complexity: O(log n)
      * Space Complexity: O(1)
      *
-     * @param versions The array representing different software versions.
-     * @param firstBad A target version considered as the starting bad version point.
-     * @return The index/version number of the first bad version.
+     * @param versions Array of version numbers
+     * @param firstBad First bad version number
+     * @return The first bad version number
      */
     int findBadVersion(const vector<int>& versions, int firstBad) {
         int leftIndex = 0;
@@ -407,14 +433,21 @@ namespace easyProblems {
     }
 
     /**
-     * Guesses a secret number within a sequence constraint via binary guessing.
+     * Guesses a secret number in a known range.
+     *
+     * Given a range from 1 to size, return the secret number if it exists in the
+     * range.
+     *
+     * Example:
+     * Input: size = 10, secretNum = 7
+     * Output: 7
      *
      * Time Complexity: O(log n)
      * Space Complexity: O(1)
      *
-     * @param size The upper limit of the number range (1 to size).
-     * @param secretNum The actual secret number to search for.
-     * @return The secret number if guessed correctly, or -1 otherwise.
+     * @param size Upper bound of the search range
+     * @param secretNum Secret number to find
+     * @return The secret number if found, otherwise -1
      */
     int guessHightOrLowerNum(int size, int secretNum) {
         int left = 1;
@@ -478,10 +511,10 @@ namespace easyProblems {
 */
 namespace mediumProblems {
     /**
-     * Finds the minimum element in a rotated sorted array.
+     * Finds the minimum value in a rotated sorted array.
      *
-     * A rotated sorted array is an array sorted in ascending order that has been 
-     * shifted at an unknown pivot (e.g., [3,4,5,1,2]). Uses binary search to find the drop point.
+     * Given a sorted array that has been rotated, return the smallest value in
+     * the array.
      *
      * Example:
      * Input: numbers = [3, 4, 5, 6, 7, 1, 2]
@@ -490,8 +523,8 @@ namespace mediumProblems {
      * Time Complexity: O(log n)
      * Space Complexity: O(1)
      *
-     * @param numbers The rotated sorted vector of integers.
-     * @return The minimum integer found in the array.
+     * @param numbers Rotated sorted array
+     * @return Minimum value in the array
      */
     int findMinimumInRotatedSortedArr(const vector<int>& numbers) {
         int leftIndex = 0;
@@ -515,10 +548,10 @@ namespace mediumProblems {
     }
 
     /**
-     * Searches for a target value within a rotated sorted array.
+     * Searches for a target value in a rotated sorted array.
      *
-     * Uses binary search by continuously checking which half (left or right) of 
-     * the array is correctly sorted, and then determining if the target falls within that sorted range.
+     * Given a rotated sorted array and a target value, return the index of the
+     * target if it exists; otherwise return -1.
      *
      * Example:
      * Input: numbers = [4, 5, 6, 7, 0, 1, 2], target = 0
@@ -527,9 +560,9 @@ namespace mediumProblems {
      * Time Complexity: O(log n)
      * Space Complexity: O(1)
      *
-     * @param numbers The rotated sorted vector.
-     * @param target The target value to search for.
-     * @return The index of the target value, or -1 if not found.
+     * @param numbers Rotated sorted array
+     * @param target Target value
+     * @return Index of the target value, or -1 if not found
      */
     int searchInRotatedArray(const vector<int>& numbers, int target) {
         int leftIndex = 0;
@@ -564,22 +597,22 @@ namespace mediumProblems {
     }
 
     /**
-     * Finds the minimal length of a contiguous subarray whose sum is greater than or equal to a target.
+     * Finds the minimum length of a contiguous subarray whose sum reaches a target.
      *
-     * Uses a dynamic sliding window. It expands to the right to meet the target sum, 
-     * and shrinks from the left to find the absolute minimum length that satisfies the condition.
+     * Given a positive integer array and a target, return the smallest length
+     * of a contiguous subarray whose sum is greater than or equal to the target.
      *
      * Example:
      * Input: numbers = [1, 4, 4], target = 4
      * Output: 1
-     * Explanation: The subarray [4] has minimum length under the condition sum >= 4.
+     * Explanation: The subarray [4] has the shortest valid length.
      *
      * Time Complexity: O(n)
      * Space Complexity: O(1)
      *
-     * @param numbers The vector of positive integers.
-     * @param target The minimum bound for the sum of the contiguous subarray.
-     * @return The minimum length of the subarray, or INT_MAX if no such setup exists.
+     * @param numbers Input array of positive integers
+     * @param target Target sum
+     * @return Minimum valid subarray length, or INT_MAX if none exists
      */
     int findMinimumSizeSubarray(const vector<int>& numbers, int target) {
         int leftIndex = 0;
@@ -601,21 +634,21 @@ namespace mediumProblems {
     }
 
     /**
-     * Finds the minimum eating speed to consume all banana piles within given hours.
+     * Finds the minimum eating speed needed to finish all banana piles within h hours.
      *
-     * Also known as "Koko Eating Bananas". Uses binary search on the "answer" (speed).
-     * Checks if eating at 'middle' bananas/hour allows finishing before 'h' hours.
-     * 
+     * Given banana piles and a number of hours, return the minimum integer speed
+     * required to finish all bananas.
+     *
      * Example:
      * Input: piles = [3, 6, 7, 11], h = 8
      * Output: 4
      *
-     * Time Complexity: O(n * log(max(piles))) where n is the number of piles.
+     * Time Complexity: O(n * log(max(piles)))
      * Space Complexity: O(1)
      *
-     * @param piles Array where each element represents bananas in a pile.
-     * @param h Maximum hours allowed to eat all bananas.
-     * @return Minimum eating speed (bananas per hour).
+     * @param piles Array of banana piles
+     * @param h Maximum hours allowed
+     * @return Minimum eating speed
      */
     int minEatingSpeed(const vector<int>& piles, int h) {
         if (piles.empty())
@@ -647,10 +680,10 @@ namespace mediumProblems {
     }
 
     /**
-     * Finds the maximum length of a contiguous subarray whose total sum is at most 'k'.
-     * 
-     * Expands a right index boundary and contracts a left index boundary when the 
-     * total sum exceeds constraints (sliding window strategy).
+     * Finds the maximum length of a contiguous subarray whose sum is at most k.
+     *
+     * Given an integer array and an upper bound k, return the longest contiguous
+     * subarray whose total sum does not exceed k.
      *
      * Example:
      * Input: numbers = [1, 2, 1, 0, 1], k = 4
@@ -660,9 +693,9 @@ namespace mediumProblems {
      * Time Complexity: O(n)
      * Space Complexity: O(1)
      *
-     * @param numbers The vector of integers.
-     * @param k The upper limit for the total sum of the sub array.
-     * @return The maximum length valid configuration.
+     * @param numbers Input array of integers
+     * @param k Maximum allowed sum
+     * @return Maximum valid window length
      */
     int longestSumOfSubarrayLength(const vector<int>& numbers, int k) {
         int leftIndex = 0;
@@ -685,20 +718,20 @@ namespace mediumProblems {
     }
 
     /**
-     * Finds all unique triplets in an array that sum up to zero.
+     * Finds all unique triplets in an array that sum to zero.
      *
-     * Sorts the original array to deploy a "two-pointer" methodology inside an outer 
-     * iteration loop. Deduplicates outcomes logically.
+     * Given an integer array, return all unique triplets [a, b, c] such that
+     * a + b + c = 0.
      *
      * Example:
      * Input: numbers = [-1, 0, 1, 2, -1, -4]
      * Output: [[-1, -1, 2], [-1, 0, 1]]
      *
-     * Time Complexity: O(n^2) tracking outer and pair-pointers.
-     * Space Complexity: O(1) or O(n) dependent on library sort layout (excluding output array).
+     * Time Complexity: O(n^2)
+     * Space Complexity: O(1) excluding output
      *
-     * @param numbers The vector of integers.
-     * @return A 2D vector where each child vector represents a valid resulting triplet array.
+     * @param numbers Input array of integers
+     * @return All unique triplets that sum to zero
      */
     vector<vector<int>> threeSumEqualToZero(vector<int>& numbers) {
         vector<vector<int>> groups;
@@ -798,13 +831,13 @@ namespace hardProblems {
 }  // namespace hardProblems
 
 int main() {
-    // linearSearch::main();
-    // binarySearch::main();
+    linearSearch::main();
+    binarySearch::main();
 
     // Problems
-    // easyProblems::main();
+    easyProblems::main();
     mediumProblems::main();
-    // hardProblems::main();
+    hardProblems::main();
 
     return 0;
 }
