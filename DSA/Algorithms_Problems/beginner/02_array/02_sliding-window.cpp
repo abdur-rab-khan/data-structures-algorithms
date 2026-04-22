@@ -127,7 +127,7 @@
 
 #include <bits/stdc++.h>
 
-#include "../dsa_utils.hpp"
+#include "../../dsa_utils.hpp"
 
 using namespace std;
 
@@ -451,28 +451,23 @@ namespace medium_problems {
     * @return Length of the longest valid substring
      */
     int findLongestRepeatingSubstring(string str, int minLength) {
-        /*
-        Problem: Given a string, find the length of the longest substring where you can replace at
-        most 'minLength' characters to make all characters in the substring the same.
-
-        Example:
-        Input: str = "ABBCBKK", minLength = 1
-        Output: 4
-        Explanation: Replace one 'C' with 'B' to get "BBBB" or one 'B' with 'K' to get "KKKK".
-        */
-
         int leftIndex = 0;
         int rightIndex = 0;
 
-        int maxSubstringLength = 0;
         int maxFrequency = 0;
+        int maxSubstringLength = 0;
 
         vector<int> charFrequencyCount(26, 0);
 
         while (rightIndex < str.size()) {
             charFrequencyCount[str[rightIndex] - 'A']++;
-            maxFrequency = max(maxFrequency, charFrequencyCount[str[rightIndex] - 'A']);
+            maxFrequency =
+                max(maxFrequency,
+                    charFrequencyCount[str[rightIndex] -
+                                       'A']);  // Tracking the number which is most dominant.
 
+            // If most dominant number - current window size, become greater than "minLength".
+            // Means there is an element Who is not same and we already replace it, Now we need to reduce the size.
             while ((rightIndex - leftIndex + 1) - maxFrequency > minLength) {
                 charFrequencyCount[str[leftIndex] - 'A']--;
                 leftIndex++;
@@ -891,8 +886,8 @@ namespace hard_problems {
 int main() {
     // Calling main functions
     // easy_problems::main();
-    // medium_problems::main();
-    hard_problems::main();
+    medium_problems::main();
+    // hard_problems::main();
 
     return 0;
 }
