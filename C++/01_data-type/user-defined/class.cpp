@@ -57,14 +57,14 @@
 using namespace std;
 
 class Vector {
+    private:
+     double* elem;
+     int sz;
+    
     public:
         Vector(int s): elem{new double[s]}, sz{s} {}
         double& operator[](int i) { return elem[i]; } // subscript operator --> means we can access like this --> v[0], v[1]
         int size() { return sz; }
-    
-    private:
-     double* elem;
-     int sz;
 };
 
 int main() {
