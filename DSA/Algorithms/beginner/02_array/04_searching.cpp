@@ -398,6 +398,13 @@ namespace easyProblems {
     /**
      * Finds the first bad version in an ordered list of versions.
      *
+     * A "bad" version is any version that is known to fail or violate the required
+     * correctness criteria. In this problem, once a version becomes bad, all later
+     * versions are also considered bad.
+     *
+     * The goal is to return the earliest version number that is bad, i.e. the
+     * smallest version where the bad condition starts.
+     *
      * Example:
      * Input: versions = [1, 2, 3, 4, 5], firstBad = 4
      * Output: 4

@@ -461,10 +461,8 @@ namespace medium_problems {
 
         while (rightIndex < str.size()) {
             charFrequencyCount[str[rightIndex] - 'A']++;
-            maxFrequency =
-                max(maxFrequency,
-                    charFrequencyCount[str[rightIndex] -
-                                       'A']);  // Tracking the number which is most dominant.
+            // Tracking the number which is most dominant.
+            maxFrequency = max(maxFrequency, charFrequencyCount[str[rightIndex] - 'A']);
 
             // If most dominant number - current window size, become greater than "minLength".
             // Means there is an element Who is not same and we already replace it, Now we need to reduce the size.

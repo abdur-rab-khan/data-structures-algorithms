@@ -21,38 +21,39 @@ using namespace std;
 |                                                                                                                                                                                                                     |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
-namespace bubbleSort{
-    void bubbleSort(vector<int>& numbers){
+namespace bubbleSort {
+    void bubbleSort(vector<int>& numbers) {
         int size = numbers.size();
-        bool swapped = false;
+        bool isSwapped = false;
 
-        for(int i = 0; i < size - 1; i++){
-            swapped = false;
+        for (int i = 0; i < size - 1; i++) {
+            isSwapped = false;
 
-            for (int j = 0; j < size - i - 1; j++){
-                if(numbers[j] > numbers[j + 1]){
-                    swapped = true;
+            for (int j = 0; j < size - i - 1; j++) {
+                if (numbers[j] > numbers[j + 1]) {
+                    isSwapped = true;
                     swap(numbers[j], numbers[j + 1]);
                 }
             }
 
-            if (!swapped)
+            // Everything is already sorted.
+            if (!isSwapped)
                 break;
         }
     }
 
-    void main(){
+    void main() {
         vector<int> num1 = {3, 5, 1, 6, 2, 7, 4, 8};
         bubbleSort(num1);
 
         cout << "Bubble sort: " << endl << endl;
         cout << "Array elements are: ";
-        for(const int& num:num1){
+        for (const int& num : num1) {
             cout << num << " ";
         }
         cout << endl << endl;
     }
-}
+}  // namespace bubbleSort
 
 /*
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -71,15 +72,15 @@ namespace bubbleSort{
 |                                                                                                                                                                                                                     |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
-namespace selectionSort{
-    void selectionSort(vector<int>& numbers){
+namespace selectionSort {
+    void selectionSort(vector<int>& numbers) {
         int size = numbers.size();
 
-        for (int i = 0; i < size - 1; i++){
+        for (int i = 0; i < size - 1; i++) {
             int smallestIdx = i;
 
-            for (int j = i + 1; j < size; j++){
-                if(numbers[j] < numbers[smallestIdx]){
+            for (int j = i + 1; j < size; j++) {
+                if (numbers[j] < numbers[smallestIdx]) {
                     smallestIdx = j;
                 }
             }
@@ -88,18 +89,18 @@ namespace selectionSort{
         }
     }
 
-    void main(){
+    void main() {
         vector<int> num1 = {3, 5, 1, 6, 2, 7, 4, 8};
         selectionSort(num1);
 
         cout << "Selection sort: " << endl << endl;
         cout << "Array elements are: ";
-        for(const int& num:num1){
+        for (const int& num : num1) {
             cout << num << " ";
         }
         cout << endl << endl;
     }
-}
+}  // namespace selectionSort
 
 /*
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -120,15 +121,15 @@ namespace selectionSort{
 |                                                                                                                                                                                                                     |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
-namespace insertionSort{
-    void insertionSort(vector<int>& numbers){
+namespace insertionSort {
+    void insertionSort(vector<int>& numbers) {
         int size = numbers.size();
 
-        for (int i = 1; i < size; i++){
+        for (int i = 1; i < size; i++) {
             int j = i - 1;
             int elem = numbers[i];
 
-            while(j >= 0 && numbers[j] > elem){
+            while (j >= 0 && numbers[j] > elem) {
                 numbers[j + 1] = numbers[j];
                 j--;
             }
@@ -136,18 +137,18 @@ namespace insertionSort{
         }
     }
 
-    void main(){
+    void main() {
         vector<int> num1 = {3, 5, 1, 6, 2, 7, 4, 8};
         insertionSort(num1);
 
         cout << "Insertion sort: " << endl << endl;
         cout << "Array elements are: ";
-        for(const int& num:num1){
+        for (const int& num : num1) {
             cout << num << " ";
         }
         cout << endl << endl;
     }
-}
+}  // namespace insertionSort
 
 /*
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -172,8 +173,8 @@ namespace insertionSort{
 |                                                                                                                                                                                                                     |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
-namespace mergeSort{
-    void merge(vector<int>& numbers, int left, int mid, int right){
+namespace mergeSort {
+    void merge(vector<int>& numbers, int left, int mid, int right) {
         int firstTempSize = mid - left + 1;
         int secondTempSize = right - mid;
 
@@ -191,11 +192,11 @@ namespace mergeSort{
         int i = 0, j = 0;
         int k = left;
 
-        while(i < firstTempSize && j < secondTempSize){
-            if(firstTemp[i] <= secondTemp[j]){
+        while (i < firstTempSize && j < secondTempSize) {
+            if (firstTemp[i] <= secondTemp[j]) {
                 numbers[k] = firstTemp[i];
                 i++;
-            }else {
+            } else {
                 numbers[k] = secondTemp[j];
                 j++;
             }
@@ -203,49 +204,49 @@ namespace mergeSort{
         }
 
         // Step 4. Merging remaining numbers
-        while(i < firstTempSize){
+        while (i < firstTempSize) {
             numbers[k] = firstTemp[i];
             i++;
             k++;
         }
 
-        while(j < secondTempSize){
+        while (j < secondTempSize) {
             numbers[k] = secondTemp[j];
             j++;
             k++;
         }
-    } 
-    
-    void mergeSort(vector<int>& numbers, int left, int right){
+    }
+
+    void mergeSort(vector<int>& numbers, int left, int right) {
         // Step 1. Base condition
-        if(left >= right)
+        if (left >= right)
             return;
 
         // Step 2. Dividing into two equal parts
         int mid = left + (right - left) / 2;
-        
+
         // Step 3. Dividing start to mid again.
         mergeSort(numbers, left, mid);
-        
+
         // Step 4. Dividing mid + 1 to end again.
         mergeSort(numbers, mid + 1, right);
-        
+
         // Step 5. Merging and sorting both divided array part.
         merge(numbers, left, mid, right);
     }
 
-    void main(){
+    void main() {
         vector<int> num1 = {3, 5, 1, 6, 2, 7, 4, 8};
         mergeSort(num1, 0, num1.size() - 1);
 
         cout << "Merge sort: " << endl << endl;
         cout << "Array elements are: ";
-        for(const int& num:num1){
+        for (const int& num : num1) {
             cout << num << " ";
         }
         cout << endl << endl;
     }
-}
+}  // namespace mergeSort
 
 /*
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -266,15 +267,15 @@ namespace mergeSort{
 |                                                                                                                                                                                                                     |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
-namespace quickSort{
-    int partition(vector<int>& numbers, int left, int right){
+namespace quickSort {
+    int partition(vector<int>& numbers, int left, int right) {
         // Step 1. Declaring pivot point as a "left" value.
         int pivotElem = numbers[right];
 
         // Step 2. Arranging smaller than "pivot" element towards pivots "left" and grater towards pivots "right".
         int i = left - 1;
-        for (int j = left; j <= right - 1; j++){
-            if(pivotElem > numbers[j]){
+        for (int j = left; j <= right - 1; j++) {
+            if (pivotElem > numbers[j]) {
                 i++;
                 swap(numbers[i], numbers[j]);
             }
@@ -285,9 +286,9 @@ namespace quickSort{
         return i + 1;
     }
 
-    void quickSort(vector<int>& numbers, int left, int right){
+    void quickSort(vector<int>& numbers, int left, int right) {
         // Step 1. Base condition (when only single element is there)
-        if(left >= right)
+        if (left >= right)
             return;
 
         // Step 2. Calculating pivot point
@@ -298,18 +299,18 @@ namespace quickSort{
         quickSort(numbers, pivotPoint + 1, right);
     }
 
-    void main(){
+    void main() {
         vector<int> num1 = {3, 5, 1, 6, 2, 7, 4, 8};
         quickSort(num1, 0, num1.size() - 1);
 
         cout << "Quick sort: " << endl << endl;
         cout << "Array elements are: ";
-        for(const int& num:num1){
+        for (const int& num : num1) {
             cout << num << " ";
         }
         cout << endl << endl;
     }
-}
+}  // namespace quickSort
 
 int main() {
     bubbleSort::main();

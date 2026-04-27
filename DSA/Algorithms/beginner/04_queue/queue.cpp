@@ -218,8 +218,8 @@ namespace hard_problems {
 }  // namespace hard_problems
 
 int main() {
-    // easy_problems::main();
-    // medium_problems::main();
+    easy_problems::main();
+    medium_problems::main();
     hard_problems::main();
 
     return 0;
