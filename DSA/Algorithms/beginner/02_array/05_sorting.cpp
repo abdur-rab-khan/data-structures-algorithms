@@ -313,10 +313,10 @@ namespace quickSort {
 }  // namespace quickSort
 
 int main() {
-    bubbleSort::main();
-    selectionSort::main();
-    insertionSort::main();
-    mergeSort::main();
+    // bubbleSort::main();
+    // selectionSort::main();
+    // insertionSort::main();
+    // mergeSort::main();
     quickSort::main();
 
     return 0;
