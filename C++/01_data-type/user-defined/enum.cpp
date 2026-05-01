@@ -35,7 +35,8 @@ int main() {
     cout << "Code is: " << static_cast<int>(status) << endl;
 
     // Color enum
-    Color col = red;
+    Color col = Color::red;
+    Color colSimple = red; // It works because enum do'nt have any "scope".
 
     cout << col << endl;
 
