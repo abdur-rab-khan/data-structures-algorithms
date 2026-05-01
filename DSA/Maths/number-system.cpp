@@ -92,6 +92,50 @@
 |              8 = 0010     ==> Used to divide by power of 2.     a << n = a / 2^n                                                                                                   |
 |                                                                                                                                                                                    |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                       FORMULAS                                                                                     |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                                    |
+| 1.  "n & (n-1)"          : Removes the rightmost set bit.                                                                                                                          |
+|                                                                                                                                                                                    |
+| 2.  "n & (-n)"           : Isolates the rightmost set bit.                                                                                                                         |
+|                                                                                                                                                                                    |
+| 3.  "n | (1 << i)"       : Sets the bit at position i.                                                                                                                             |
+|                                                                                                                                                                                    |
+| 4.  "n & ~(1 << i)"      : Clears the bit at position i.                                                                                                                           |
+|                                                                                                                                                                                    |
+| 5.  "n ^ (1 << i)"       : Toggles the bit at position i.                                                                                                                          |
+|                                                                                                                                                                                    |
+| 6.  "(n >> i) & 1"       : Checks if bit at position i is set.                                                                                                                     |
+|                                                                                                                                                                                    |
+| 7.  "n & (1 << i)"       : Checks if bit at position i is set (non-zero = set).                                                                                                    |
+|                                                                                                                                                                                    |
+| 8.  "n & 1"              : Checks if n is odd (1 = odd, 0 = even).                                                                                                                 |
+|                                                                                                                                                                                    |
+| 9.  "n << 1"             : Multiplies n by 2.                                                                                                                                      |
+|                                                                                                                                                                                    |
+| 10. "n >> 1"             : Divides n by 2.                                                                                                                                         |
+|                                                                                                                                                                                    |
+| 11. "n & (n-1) == 0"     : Checks if n is a power of 2.                                                                                                                            |
+|                                                                                                                                                                                    |
+| 12. "n ^ n"              : Always gives 0.                                                                                                                                         |
+|                                                                                                                                                                                    |
+| 13. "n ^ 0"              : Always gives n.                                                                                                                                         |
+|                                                                                                                                                                                    |
+| 14. "a ^= b; b ^= a; a ^= b" : Swaps a and b without a temp variable.                                                                                                              |
+|                                                                                                                                                                                    |
+| 15. "(a ^ b) < 0"        : Checks if a and b have opposite signs.                                                                                                                  |
+|                                                                                                                                                                                    |
+| 16. "n & ((1 << k) - 1)" : Gets the last k bits of n.                                                                                                                              |
+|                                                                                                                                                                                    |
+| 17. "n & ~((1 << k) - 1)": Clears the last k bits of n.                                                                                                                            |
+|                                                                                                                                                                                    |
+| 18. "n & ~(1<<(len-1))"  : Removes the leftmost set bit.                                                                                                                           |
+|                                                                                                                                                                                    |
+| 19. "n | (n-1)"          : Sets all bits after the rightmost set bit.                                                                                                              |
+|                                                                                                                                                                                    |
+| 20. "__builtin_popcount(n)"  : Counts total set bits in n (C++ built-in).                                                                                                          |
+|                                                                                                                                                                                    |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                   BINARY NUMBERS                                                                                   |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                                    |
@@ -163,6 +207,7 @@ namespace basic {
     }
 
     // COUNTING NUMBER OF SET BITS - In Binary decimal number are sum of power of 2 So (13 = 2³ + 2² + 2⁰ = 13 So in binary there wil be "3 set bits")
+    // To count number of set bits -> Will use a format that remove the set bit from right hand side, if we keep removing set bits from right hand side at the end we got total count.
     int countSetBits(int n) {
         int count = 0;
 

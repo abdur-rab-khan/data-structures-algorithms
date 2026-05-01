@@ -26,3 +26,13 @@ void printArrayElements(const std::vector<T>& elements, const std::string& msg =
 
     std::cout << std::endl;
 }
+
+int testCount = 0;
+
+template <typename T, typename X>
+void submitForTesting() {
+    // Calling a function here.
+
+    std::cout << "Test No. " << testCount << " run Successfully" << endl;
+    testCount++;
+}

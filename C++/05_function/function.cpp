@@ -1,5 +1,7 @@
 /*
-+---------------------------------------------------------------+ FUNCTION IN C++ +----------------------------------------------------------------+
++--------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                  FUNCTION IN C++                                                                 | 
++--------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                  |
 | 🟡 Function in C++ is similar to functions in other programming languages. It contains a block of code that performs a specific task and can be  |
 |    called from other parts of the program.                                                                                                       |
@@ -34,10 +36,10 @@
 |                                                                                                                                                  |
 | 🟡 In C++, Passing an arguments to a function can be done in two ways:                                                                           |
 |                                                                                                                                                  |
-|   1️⃣. Pass by Value: In this method, a copy of the actual argument is passed to the function. Which means if the size of the data is large,       |
+|   1️⃣. Pass by Value: In this method, a copy of the actual argument is passed to the function. Which means if the size of the data is large,      |
 |                       passing by value can be inefficient as it involves copying the entire data.                                                |
 |                                                                                                                                                  |
-|   2️⃣. Pass by Reference: In this method, instead of passing a copy, We pass the reference (address) of the actual argument to the function.       | 
+|   2️⃣. Pass by Reference: In this method, instead of passing a copy, We pass the reference (address) of the actual argument to the function.      | 
 |                          This allows more efficient memory usage, especially for large data structures, as it avoids copying the entire data.    |
 |                                                                                                                                                  |
 | ⭐ Note: The concern with pass by reference is that the modification of the parameter inside the function will affect the original arguments.    |
@@ -51,7 +53,9 @@
 |      copyValue = copyValue + 20; // Modifies only the local copy                                                                                 |
 |  }                                                                                                                                               |
 |                                                                                                                                                  |
-+----------------------------------------------------------------+ RETURN VALUES +-----------------------------------------------------------------+
++--------------------------------------------------------------------------------------------------------------------------------------------------+                                                                                                                                             |
+|                                                                    RETURN VALUES                                                                 | 
++--------------------------------------------------------------------------------------------------------------------------------------------------+                                                                                                                                             |
 |                                                                                                                                                  |
 | 🟡 By computing the result, We have to ways to return it back to the caller by "reference" or by "value".                                        |
 |                                                                                                                                                  |
@@ -72,7 +76,26 @@
 |    } // destroyed after function ends                                                                                                            | 
 |                                                                                                                                                  |
 +--------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                      SYNTAX                                                                      |
+|                                                      👉 FUNCTION ARGS AND RETURN VALUES                                                          |
++--------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                  |
+| 🟡 In C++, It's very easy to passing functions as a agrs to C++ Function, There are mainly two ways for doing this.                              |
+|                                                                                                                                                  |
+|    1. "Passing Function By Pointers": Just like how normal "pointers do", Using this we pass direct address of the function.                     |
+|                                                                                                                                                  |
+|       void runWithPointer(void (*fn)(...args)){                                                                                                  |
+|           fn();                                                                                                                                  |
+|       }                                                                                                                                          |
+|                                                                                                                                                  |
+|    2. "Passing as std::function": General callable container.                                                                                    |
+|                                                                                                                                                  |
+|       void runWithFunction(function<void(..args)> fn){                                                                                           |
+|           fn()                                                                                                                                   |
+|       }                                                                                                                                          |
+|                                                                                                                                                  |
+|                                                                                                                                                  |
++--------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                   🧑‍💻 SYNTAX                                                                      |
 +--------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                  |
 | return_type function_name(parameter_type paremeter_name, ...) [qualifiers] {                                                                     |
@@ -83,7 +106,6 @@
 +---------------------------------------------------------------------+ END +----------------------------------------------------------------------+
 */
 
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -92,54 +114,41 @@ class Matrix {
     int rows, cols;
     double* data;
 
-    public:
-        Matrix(int r, int c): rows(r), cols(c), data(new double[r * c]()) {}
-        ~Matrix() {
-            delete[] data;
-        }
-    
+   public:
+    Matrix(int r, int c) : rows(r), cols(c), data(new double[r * c]()) {}
+    ~Matrix() { delete[] data; }
+
     // Copy constructor (expensive)
     Matrix(const Matrix& other)
-        : rows(other.rows), cols(other.cols),
-          data(other.data ? new double[rows*cols] : nullptr)
-    {
+        : rows(other.rows), cols(other.cols), data(other.data ? new double[rows * cols] : nullptr) {
         for (int i = 0; i < rows * cols; i++)
             data[i] = other.data[i];
     }
 
-
     // Move constructor (cheap)
-    Matrix(Matrix&& other) noexcept
-        : rows(other.rows), cols(other.cols), data(other.data)
-    {
+    Matrix(Matrix&& other) noexcept : rows(other.rows), cols(other.cols), data(other.data) {
         other.data = nullptr;
         other.rows = other.cols = 0;
     }
 
-    Matrix operator+(const Matrix& other) const
-    {
+    Matrix operator+(const Matrix& other) const {
         Matrix res(rows, cols);
 
         for (int i = 0; i < rows; i++)
             for (int j = 0; j < cols; j++)
                 res(i, j) = (*this)(i, j) + other(i, j);
 
-        return res; // key line
+        return res;  // key line
     }
 
+    double& operator()(int r, int c) { return data[r * cols + c]; }
 
-    double& operator()(int r, int c) {
-        return data[r * cols + c];
-    }
-
-    const double& operator()(int r, int c) const {
-        return data[r * cols + c];
-    }
+    const double& operator()(int r, int c) const { return data[r * cols + c]; }
 };
 
-void test(vector<int>& v1, vector<int> v2){
-    v1[0] = 100; // Modifies the original vector
-    v2[1] = 200; // Modifies only the local copy
+void test(vector<int>& v1, vector<int> v2) {
+    v1[0] = 100;  // Modifies the original vector
+    v2[1] = 200;  // Modifies only the local copy
 }
 
 int main() {

@@ -3,24 +3,25 @@
 #include <cassert>
 using namespace std;
 
-// TODO: THIS ONE BREAK WHEN ARRAY HAS NEGATIVE NUMBERS, SO WE CAN'T SOLVE WITH SLIDING WINDOW WE NEED TO USE PREFIX SUM.
 int subarraySum(vector<int>& nums, int k) {
-    int totalSum = 0;
-    int leftIdx = 0;
+    int sum = 0;
+    int prefixCount = 0;
 
-    for (int rightIdx = 0; rightIdx < nums.size(); rightIdx++) {
-        totalSum += nums[rightIdx];
+    unordered_map<int, int> prefixFreq;
 
-        if (totalSum == k)
-            return ((rightIdx - leftIdx) + 1);
+    prefixFreq.insert({0, 1});
 
-        while (totalSum >= k) {
-            totalSum -= nums[leftIdx];
-            leftIdx++;
-        }
+    for (int i = 0; i < nums.size(); i++) {
+        sum += nums[i];
+        int diff = sum - k;
+
+        if (prefixFreq.count(diff))
+            prefixCount += prefixFreq[diff];
+
+        prefixFreq[sum]++;
     }
 
-    return -1;
+    return prefixCount;
 }
 
 int testCount = 1;
@@ -35,6 +36,6 @@ void submitForTesting(vector<int> numbers, int target, int expected) {
 int main() {
     submitForTesting({1, 1, 1}, 2, 2);
     submitForTesting({1, 2, 3}, 3, 2);
-    submitForTesting({1, 2, 8, 6, 7}, 13, 2);
+    submitForTesting({1, 2, 8, 6, 7}, 13, 1);
     return 0;
 }
