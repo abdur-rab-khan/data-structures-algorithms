@@ -2,6 +2,26 @@
 using namespace std;
 
 // APPROACH 1 "o(log n)"
+/**
+ * Checks if n is a power of two using recursion.
+ *
+ * Repeatedly divides n by 2 until it reaches 2 (power of two) or falls below
+ * 1 (not a power of two).
+ *
+ * Example:
+ * Input: n = 16
+ * Output: true
+ *
+ * Example:
+ * Input: n = 7
+ * Output: false
+ *
+ * Time Complexity: O(log n) - One division per recursion level
+ * Space Complexity: O(log n) - Call stack depth
+ *
+ * @param n Integer to check
+ * @return True if n is a power of two, otherwise false
+ */
 bool isPowerOfTwo1(int n) {
     if (n == 2)
         return true;
@@ -13,6 +33,26 @@ bool isPowerOfTwo1(int n) {
 }
 
 // APPROACH 2 "o(1)"
+/**
+ * Checks if n is a power of two using bit manipulation.
+ *
+ * A power of two has exactly one set bit. The expression (n & (n - 1))
+ * clears the lowest set bit, so it becomes zero only for powers of two.
+ *
+ * Example:
+ * Input: n = 32
+ * Output: true
+ *
+ * Example:
+ * Input: n = 3
+ * Output: false
+ *
+ * Time Complexity: O(1)
+ * Space Complexity: O(1)
+ *
+ * @param n Integer to check
+ * @return True if n is a power of two, otherwise false
+ */
 bool isPowerOfTwo(int n) {
     if (n <= 0)
         return false;

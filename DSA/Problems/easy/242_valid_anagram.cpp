@@ -5,6 +5,28 @@
 using namespace std;
 
 // APPROACH 1 USING "''HASHMAP''"
+/**
+ * Checks whether two strings are anagrams using a hash map.
+ *
+ * Counts the frequency of each lowercase letter in s, then decrements using t.
+ * Non-alphabetic characters are ignored, and it assumes lowercase a-z input
+ * for correct indexing.
+ *
+ * Example:
+ * Input: s = "cat", t = "act"
+ * Output: true
+ *
+ * Example:
+ * Input: s = "computer", t = "desktop"
+ * Output: false
+ *
+ * Time Complexity: O(n) - Single pass over both strings
+ * Space Complexity: O(1) - Fixed alphabet size (26)
+ *
+ * @param s First string
+ * @param t Second string
+ * @return True if s and t are anagrams, otherwise false
+ */
 bool isAnagram(string s, string t) {
     if (s.size() != t.size())
         return false;
@@ -37,6 +59,27 @@ bool isAnagram(string s, string t) {
 }
 
 // APPROACH 2 USING "''ARRAY''";
+/**
+ * Checks whether two strings are anagrams using a fixed-size array.
+ *
+ * Increments counts for s and decrements for t in the same loop, then verifies
+ * all counts return to zero. Assumes lowercase a-z input.
+ *
+ * Example:
+ * Input: s = "evil", t = "liev"
+ * Output: true
+ *
+ * Example:
+ * Input: s = "abc", t = "abd"
+ * Output: false
+ *
+ * Time Complexity: O(n) - Single pass over both strings
+ * Space Complexity: O(1) - Fixed array of size 26
+ *
+ * @param s First string
+ * @param t Second string
+ * @return True if s and t are anagrams, otherwise false
+ */
 bool isAnagram1(string s, string t) {
     if (s.size() != t.size())
         return false;

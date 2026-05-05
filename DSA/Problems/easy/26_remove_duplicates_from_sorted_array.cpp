@@ -3,6 +3,27 @@
 #include <cassert>
 using namespace std;
 
+/**
+ * Removes duplicates from a sorted array in place and returns the new length.
+ *
+ * Uses a two-pointer sweep: the left pointer tracks the last unique element
+ * while the right pointer scans forward. When a new value is found, it is
+ * placed at the next left position.
+ *
+ * Example:
+ * Input: nums = [1, 1, 2]
+ * Output: 2, nums = [1, 2]
+ *
+ * Example:
+ * Input: nums = [0, 0, 1, 1, 2, 2, 3]
+ * Output: 4, nums = [0, 1, 2, 3]
+ *
+ * Time Complexity: O(n) - Single pass through the array
+ * Space Complexity: O(1) - In-place updates only
+ *
+ * @param nums Sorted vector of integers to deduplicate
+ * @return The count of unique elements after in-place modification
+ */
 int removeDuplicates(vector<int>& nums) {
     int leftIndex = 0;
 

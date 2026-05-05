@@ -3,6 +3,28 @@
 #include <cassert>
 using namespace std;
 
+/**
+ * Counts the number of subarrays whose sum equals k.
+ *
+ * Uses prefix sums and a frequency map. For each position, the number of
+ * prior prefixes with sum (currentSum - k) indicates how many subarrays
+ * ending here add up to k.
+ *
+ * Example:
+ * Input: nums = [1, 1, 1], k = 2
+ * Output: 2
+ *
+ * Example:
+ * Input: nums = [1, 2, 3], k = 3
+ * Output: 2
+ *
+ * Time Complexity: O(n) - Single pass through the array
+ * Space Complexity: O(n) - Stores prefix sum frequencies
+ *
+ * @param nums Vector of integers
+ * @param k Target sum for subarrays
+ * @return Count of subarrays whose sum equals k
+ */
 int subarraySum(vector<int>& nums, int k) {
     int sum = 0;
     int prefixCount = 0;
@@ -25,6 +47,13 @@ int subarraySum(vector<int>& nums, int k) {
 }
 
 int testCount = 1;
+/**
+ * Runs an assertion-based test for subarraySum.
+ *
+ * @param numbers Input array to test
+ * @param target Target sum to search for
+ * @param expected Expected count of matching subarrays
+ */
 void submitForTesting(vector<int> numbers, int target, int expected) {
     int output = subarraySum(numbers, target);
 
@@ -33,6 +62,9 @@ void submitForTesting(vector<int> numbers, int target, int expected) {
     testCount++;
 }
 
+/**
+ * Executes sample test cases.
+ */
 int main() {
     submitForTesting({1, 1, 1}, 2, 2);
     submitForTesting({1, 2, 3}, 3, 2);

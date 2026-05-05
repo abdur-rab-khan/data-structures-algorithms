@@ -1,9 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/**
+ * Supports range sum queries using a prefix sum array.
+ */
 class NumArray {
    public:
     vector<int> prefixSum;
+    /**
+     * Builds a prefix sum array from the input numbers.
+     *
+     * Example:
+     * Input: nums = [-2, 0, 3, -5, 2, -1]
+     * prefixSum = [-2, -2, 1, -4, -2, -3]
+     *
+     * Time Complexity: O(n) - One pass to build prefix sums
+     * Space Complexity: O(n) - Stores prefix sums
+     *
+     * @param nums Vector of integers to preprocess
+     */
     NumArray(vector<int>& nums) {
         if (nums.empty())
             return;
@@ -16,6 +31,20 @@ class NumArray {
         }
     }
 
+    /**
+     * Returns the sum of elements between left and right (inclusive).
+     *
+     * Example:
+     * Input: left = 0, right = 2
+     * Output: 1
+     *
+     * Time Complexity: O(1) - Prefix sum lookup
+     * Space Complexity: O(1) - No extra space per query
+     *
+     * @param left Left index of the range
+     * @param right Right index of the range
+     * @return Sum of nums[left..right]
+     */
     int sumRange(int left, int right) {
         if (left == 0)
             return this->prefixSum[right];
