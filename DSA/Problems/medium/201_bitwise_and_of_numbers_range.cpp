@@ -13,6 +13,30 @@ Why it works:
 
 Complexity — Time: O(32) = O(1), Space: O(1)
 */
+
+/*
+Let's see using example:
+    5 = 0 1 0 1
+    7 = 1 1 1 0
+
+
+    * Iteration 0:
+        0 1 0 0 (left) <<= 1   👉 1 0 1 0
+        1 1 1 0 (right) <<= 1  👉 1 1 1 0
+
+    * Iteration 1:
+        1 0 1 0 (left) <<= 1   👉 0 1 0 0
+        1 1 0 0 (right) <<= 1  👉 1 1 0 0
+
+    * Iteration 2:
+        0 1 0 0 (left) <<= 1   👉 1 0 0 0
+        1 1 0 0 (right) <<= 1  👉 1 0 0 0
+
+    🟡 left == right ✅ -> Means only bits remain who is similar on both.
+
+    🟡 left << 2 -> 1 0 0 0 ✅ Answer is four.
+*/
+
 int rangeBitwiseAnd(int left, int right) {
     int count = 0;
 

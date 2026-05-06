@@ -300,7 +300,7 @@ namespace quickSort {
     }
 
     void main() {
-        vector<int> num1 = {3, 5, 1, 6, 2, 7, 4, 8};
+        vector<int> num1 = {3, 5, 2, 1, 4, 3};
         quickSort(num1, 0, num1.size() - 1);
 
         cout << "Quick sort: " << endl << endl;
