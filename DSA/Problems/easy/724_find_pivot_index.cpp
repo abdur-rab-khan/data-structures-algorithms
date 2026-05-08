@@ -1,6 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+    * "Pivot Index:" Every numbers to "left" from "pivot index" is strictly equal to every number to "right".
+    * For Example in this: [1, 7, 3, 6, 5, 6]
+    * 
+    * Pivot index is 6 so: 1 + 7 + 3 = 11 and 5 + 6 = 11;
+*/
 int findPivotIndex(vector<int>& nums) {
     int leftSum = 0;
     int totalSum = accumulate(nums.begin(), nums.end(), 0);
