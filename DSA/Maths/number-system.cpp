@@ -85,7 +85,7 @@
 |          <<  1                                                                                                                                                                     |
 |              8 = 1000     ==> Used to multiply by power of 2.     a << n = a x 2^n                                                                                                 |
 |                                                                                                                                                                                    |
-| ⭐ "RIGHT-SHIFT (>>)": Shift bits to right                                                                                                                                         |
+| ⭐ "RIGHT-SHIFT (>>)": Shift bits to right                                                                                                                                         | 
 |                                                                                                                                                                                    |
 |              4 = 0100                                                                                                                                                              |
 |          >>  1                                                                                                                                                                     |
