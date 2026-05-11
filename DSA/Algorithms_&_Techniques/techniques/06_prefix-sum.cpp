@@ -32,6 +32,8 @@
 
 #include <bits/stdc++.h>
 
+#include "../../dsa_utils.hpp"
+
 using namespace std;
 
 // Easy Prefix Sum Problems
@@ -50,23 +52,74 @@ namespace easy {
         };
     }
 
+    vector<int> leftRightDifference(vector<int>& numbers) {
+        vector<int> diffArray(numbers.size());
+
+        int totalSum = accumulate(numbers.begin(), numbers.end(), 0);
+        int leftSum = 0;
+
+        for (int i = 0; i < numbers.size(); i++) {
+            int rightSum = totalSum - (leftSum + numbers[i]);
+            int diff = abs(rightSum - leftSum);
+
+            diffArray[i] = diff;
+            leftSum += numbers[i];
+        }
+
+        return diffArray;
+    }
+
     void main() {
+        // Question 1: Sum Query Range.
         vector<int> nums = {3, 7, 2, 5, 8};
         auto sumQuery = sumQueryRange(nums);
 
         cout << "Sum of nums from 0 to 2 is: " << sumQuery(0, 2) << endl;
         cout << "Sum of nums from 2 to 4 is: " << sumQuery(2, 4) << endl;
+
+        // Question 2: Left Right Difference.
+        std::vector<int> numbers = {10, 4, 8, 3};
+        printArrayElements(leftRightDifference(numbers), "Array Difference are: ");
     }
 }  // namespace easy
 
 // Medium Prefix Sum Problems
-namespace medium {}
+namespace medium {
+    int subarraySum(vector<int>& nums, int k) {
+        int sum = 0;
+        int prefixCount = 0;
+
+        unordered_map<int, int> prefixFreq;
+
+        prefixFreq.insert({0, 1});
+
+        for (int i = 0; i < nums.size(); i++) {
+            sum += nums[i];
+            int diff = sum - k;
+
+            if (prefixFreq.count(diff))
+                prefixCount += prefixFreq[diff];
+
+            prefixFreq[sum]++;
+        }
+
+        return prefixCount;
+    }
+
+    void main() {
+        // Question 1. Sub Array Sum
+        vector<int> numbers = {1, 1, 1};
+        cout << "Total subArrays are: " << subarraySum(numbers, 2) << endl;
+    }
+
+}  // namespace medium
 
 // Hard Prefix Sum Problems
 namespace hard {}
 
 int main() {
-    easy::main();
+    // easy::main();
+    medium::main();
 
     return 0;
 }
