@@ -106,10 +106,40 @@ namespace medium {
         return prefixCount;
     }
 
+    std::vector<int> productExceptSelf(std::vector<int>& nums) {
+        int n = nums.size();
+
+        std::vector<int> answer(n);
+        std::vector<int> prefix(n);
+        std::vector<int> suffix(n);
+
+        prefix[0] = 1;
+        for (int i = 1; i < n; i++) {
+            prefix[i] = prefix[i - 1] * nums[i - 1];
+        }
+
+        suffix[n - 1] = 1;
+        for (int i = n - 2; i >= 0; i--) {
+            suffix[i] = suffix[i + 1] * nums[i + 1];
+        }
+
+        for (int i = 0; i < n; i++) {
+            answer[i] = prefix[i] * suffix[i];
+        }
+
+        return answer;
+    }
+
     void main() {
         // Question 1. Sub Array Sum
         vector<int> numbers = {1, 1, 1};
         cout << "Total subArrays are: " << subarraySum(numbers, 2) << endl;
+
+        // Question 2. Product Except Self
+        std::vector<int> nums = {1, 2, 3, 4};
+        std::vector<int> result = productExceptSelf(nums);
+
+        printArrayElements(result, "Expected product self is: ");
     }
 
 }  // namespace medium
