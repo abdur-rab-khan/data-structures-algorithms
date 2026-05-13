@@ -31,11 +31,11 @@ std::vector<int> productExceptSelf(std::vector<int>& nums) {
 // More Efficient
 std::vector<int> productExceptSelf2(std::vector<int>& nums) {
     int n = nums.size();
-    std::vector<int> answer(n, 1);
+    std::vector<int> answer(n);
 
     int curr = 1;
     for (int i = 0; i < n; i++) {
-        answer[i] *= curr;
+        answer[i] = curr;
         curr *= nums[i];
     }
 

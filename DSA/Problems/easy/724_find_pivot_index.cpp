@@ -25,7 +25,7 @@ int findPivotIndex(vector<int>& nums) {
 }
 
 int main() {
-    vector<int> nums = {1, 7, 3, 6, 5, 6};
+    vector<int> nums = {1, 5, 1, 2, 1, 1, 5, 11};
     cout << "Pivot index is: " << findPivotIndex(nums) << endl;
 
     return 0;
