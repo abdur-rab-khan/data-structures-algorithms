@@ -27,8 +27,31 @@ int findMaxLength(vector<int>& nums) {
     return maxSubArraySize;
 }
 
-// ==> TODO: OPTIMIZED APPROACH USING HASHMAP
+// ==> OPTIMIZED APPROACH USING HASHMAP
+int findMaxLengthFirst(vector<int>& nums) {
+    unordered_map<int, int> firstSeen;
+    firstSeen[0] = -1;
+
+    int maxLen = 0;
+    int runningSum = 0;
+
+    for (int i = 0; i < nums.size(); i++) {
+        runningSum += (nums[i] == 0) ? -1 : 1;
+
+        if (firstSeen.count(runningSum)) {
+            maxLen = max(maxLen, i - firstSeen[runningSum]);
+        } else {
+            firstSeen[runningSum] = i;
+        }
+    }
+
+    return maxLen;
+}
 
 int main() {
+    vector<int> numbers = {0, 1, 1, 0, 1, 0, 1};
+    cout << "Max Length is: " << findMaxLength(numbers) << endl;
+    cout << "Max Length is: " << findMaxLengthFirst(numbers) << endl;
+
     return 0;
 }
