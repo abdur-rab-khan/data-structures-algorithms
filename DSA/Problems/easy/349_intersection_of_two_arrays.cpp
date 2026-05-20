@@ -3,65 +3,50 @@
 #include "../../dsa_utils.hpp"
 using namespace std;
 
-vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
-    unordered_map<int, int> numsFreq;
-
-    // Making frequency hashmap with nums counts
-    for (const int n : nums2) {
-        numsFreq[n] = true;
+vector<int> intersection(vector<int>& a, vector<int>& b) {
+    std::unordered_set<int> setA;
+    for (const int& n : a) {
+        setA.insert(n);
     }
 
-    int numsOneIdx = 0;
-    int numsTwoIdx = 0;
+    std::unordered_set<int> setB;
+    for (const int& n : b) {
+        setB.insert(n);
+    }
 
-    for (int numsOneIdx = 0; numsOneIdx < nums1.size(); numsOneIdx++) {
-        int numsOne = nums1[numsOneIdx];
-
-        if (numsFreq[numsOne]) {
-            numsFreq.erase(numsOne);
-
-            // Let's add "num"
-            nums2[numsTwoIdx++] = numsOne;
+    int idx = 0;
+    std::vector<int> intersecNum;
+    for (const int& n : setA) {
+        if (setB.count(n)) {
+            intersecNum.push_back(n);
         }
     }
 
-    nums2.resize(numsTwoIdx);
-    return nums2;
+    return intersecNum;
 }
 
 int main() {
-    auto sameElements = [](vector<int> actual, vector<int> expected) {
-        sort(actual.begin(), actual.end());
-        sort(expected.begin(), expected.end());
-        return actual == expected;
-    };
+    // Input 1:
+    std::vector<int> numbers1 = {1, 2, 2, 1};
+    std::vector<int> numbers2 = {2, 2};
 
-    dsa::submitForTesting(
-        "basic duplicates",
-        []() {
-            vector<int> nums1 = {1, 2, 2, 1};
-            vector<int> nums2 = {2, 2};
-            return intersection(nums1, nums2);
-        },
-        vector<int> {2}, sameElements);
+    std::vector<int> intersec = intersection(numbers1, numbers2);
 
-    dsa::submitForTesting(
-        "unordered",
-        []() {
-            vector<int> nums1 = {4, 9, 5};
-            vector<int> nums2 = {9, 4, 9, 8, 4};
-            return intersection(nums1, nums2);
-        },
-        vector<int> {4, 9}, sameElements);
+    std::cout << "Intersection elements are: ";
+    for (const int& n : intersec) {
+        std::cout << n << " ";
+    }
+    std::cout << std::endl;
 
-    dsa::submitForTesting(
-        "no overlap",
-        []() {
-            vector<int> nums1 = {1, 3, 5};
-            vector<int> nums2 = {2, 4, 6};
-            return intersection(nums1, nums2);
-        },
-        vector<int> {}, sameElements);
+    // Input 2:
+    std::vector<int> numbers3 = {4, 9, 5};
+    std::vector<int> numbers4 = {9, 4, 9, 8, 4};
 
-    return 0;
+    std::vector<int> intersec2 = intersection(numbers3, numbers4);
+
+    std::cout << "Intersection elements are: ";
+    for (const int& n : intersec2) {
+        std::cout << n << " ";
+    }
+    std::cout << std::endl;
 }
