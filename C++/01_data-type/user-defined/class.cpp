@@ -52,30 +52,31 @@
 +----------------------------------------------------------------------------------+ END +----------------------------------------------------------------------------------+
 */
 
-
 #include <bits/stdc++.h>
 using namespace std;
 
 class Vector {
-    private:
-     double* elem;
-     int sz;
-    
-    public:
-        Vector(int s): elem{new double[s]}, sz{s} {}
-        double& operator[](int i) { return elem[i]; } // subscript operator --> means we can access like this --> v[0], v[1]
-        int size() { return sz; }
+   private:
+    double* elem;
+    int sz;
+
+   public:
+    Vector(int s) : elem {new double[s]}, sz {s} {}
+    double& operator[](int i) {
+        return elem[i];
+    }  // subscript operator --> means we can access like this --> v[0], v[1]
+    int size() { return sz; }
 };
 
 int main() {
     Vector v(5);
 
     for (int i = 0; i < v.size(); i++) {
-        v[i] = i * 2; // using subscript operator
+        v[i] = i * 2;  // using subscript operator
     }
 
     for (int i = 0; i < v.size(); i++) {
-        cout << v[i] << " "; // using subscript operator
+        cout << v[i] << " ";  // using subscript operator
     }
 
     return 0;
