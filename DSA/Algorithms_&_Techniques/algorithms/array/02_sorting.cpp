@@ -273,17 +273,17 @@ namespace quickSort {
         int pivotElem = numbers[right];
 
         // Step 2. Arranging smaller than "pivot" element towards pivots "left" and grater towards pivots "right".
-        int i = left - 1;
+        int i = left;
         for (int j = left; j <= right - 1; j++) {
             if (pivotElem > numbers[j]) {
-                i++;
                 swap(numbers[i], numbers[j]);
+                i++;
             }
         }
 
         // Step 3. Placing pivot element to the correct position.
-        swap(numbers[i + 1], numbers[right]);
-        return i + 1;
+        swap(numbers[i], numbers[right]);
+        return i;
     }
 
     void quickSort(vector<int>& numbers, int left, int right) {
