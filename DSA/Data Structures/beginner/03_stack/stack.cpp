@@ -149,15 +149,40 @@ namespace StackDS {
 
 }  // namespace StackDS
 
-namespace Problems {
-    void main() {
-        // different problems
-    }
-}  // namespace Problems
+// 🟡 Different types of Stacks
+namespace TypesOfStack {
+    /* 2️⃣. Monotonic Stack
+        * In normal stack, there is no rule while pushing the element into the stack, but in monotonic stack there is a rule for pushing onto the stack.
+        * 🟡 Types of Monotonic Stack
+        *    1️⃣. Increasing Stack: In this case, If current element is greater than elements inside stack then we'll remove every elements smaller than current one, but if current element is smaller we push like in normal stack.
+        *    2️⃣. Decreasing Stack: In this case, If current element is smaller than elements inside stack than we'll remove every elements greater than current one, but if current element is greater than we push like in normal stack.
+    */
+    class MonotonicInc {
+        // LOGIC FOR MONOTONIC INC STACK
+    };
+
+    class MonotonicDec {
+        // LOGIC FOR MONOTONIC DEC STACK
+    };
+
+    /* 3️⃣. Min/Max Stack
+        * In normal stack, there is no rule while pushing the element into the stack, but in min/max stack there is a rule for pushing onto the stack.
+        * 🟡 Types of min/max Stack
+        *    1️⃣. min Stack: In this case, If current element is greater than top elements inside stack, than instead of pushing current element we push ""current top element"", but if current one is smaller than we push like in normal stack.
+        *    2️⃣. max Stack: In this case, If current element is smaller than top elements inside stack, than instead of pushing current element we push ""current top element"", but if current one is greater than we push like in normal stack.
+    */
+    class MinStack {};
+
+    class MaxStack {};
+
+    // 4️⃣. Stack + Hashmap
+
+    void main() {}
+};  // namespace TypesOfStack
 
 int main() {
     StackDS::main();
-    Problems::main();
+    TypesOfStack::main();
 
     return 0;
 }
