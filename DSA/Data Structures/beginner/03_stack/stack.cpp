@@ -157,12 +157,62 @@ namespace TypesOfStack {
         *    1️⃣. Increasing Stack: In this case, If current element is greater than elements inside stack then we'll remove every elements smaller than current one, but if current element is smaller we push like in normal stack.
         *    2️⃣. Decreasing Stack: In this case, If current element is smaller than elements inside stack than we'll remove every elements greater than current one, but if current element is greater than we push like in normal stack.
     */
-    class MonotonicInc {
-        // LOGIC FOR MONOTONIC INC STACK
+    class MonotonicInc : public StackDS::IStack {
+        std::stack<int> st;
+
+       public:
+        void push(int v) override {
+            // Remove smaller from top
+            if (!st.empty()) {
+                int top = st.top();
+                while (!st.empty() && st.top() < v) {
+                    st.pop();
+                }
+            }
+
+            st.push(v);
+        }
+
+        int pop() override {
+            int top = st.top();
+            st.pop();
+            return top;
+        }
+
+        int peek() override { return st.top(); }
+
+        bool isEmpty() override { return st.empty(); }
+
+        int size() { return st.size(); }
     };
 
-    class MonotonicDec {
-        // LOGIC FOR MONOTONIC DEC STACK
+    class MonotonicDec : public StackDS::IStack {
+        std::stack<int> st;
+
+       public:
+        void push(int v) override {
+            // Remove smaller from top
+            if (!st.empty()) {
+                int top = st.top();
+                while (!st.empty() && v < st.top()) {
+                    st.pop();
+                }
+            }
+
+            st.push(v);
+        }
+
+        int pop() override {
+            int top = st.top();
+            st.pop();
+            return top;
+        }
+
+        int peek() override { return st.top(); }
+
+        bool isEmpty() override { return st.empty(); }
+
+        int size() { return st.size(); }
     };
 
     /* 3️⃣. Min/Max Stack
@@ -171,17 +221,130 @@ namespace TypesOfStack {
         *    1️⃣. min Stack: In this case, If current element is greater than top elements inside stack, than instead of pushing current element we push ""current top element"", but if current one is smaller than we push like in normal stack.
         *    2️⃣. max Stack: In this case, If current element is smaller than top elements inside stack, than instead of pushing current element we push ""current top element"", but if current one is greater than we push like in normal stack.
     */
-    class MinStack {};
+    class MinStack : public StackDS::IStack {
+        std::stack<int> val;
+        std::stack<int> min;
 
-    class MaxStack {};
+       public:
+        void push(int v) override {
+            val.push(v);
 
-    // 4️⃣. Stack + Hashmap
+            if (min.empty())
+                min.push(v);
+            else
+                min.push(std::min(v, min.top()));
+        }
 
-    void main() {}
+        int pop() override {
+            int top = val.top();
+            val.pop();
+            min.pop();
+            return top;
+        }
+
+        int peek() override { return val.top(); }
+
+        int getMin() { return min.top(); }
+
+        bool isEmpty() override { return val.empty(); }
+    };
+
+    class MaxStack : public StackDS::IStack {
+        std::stack<int> val;
+        std::stack<int> max;
+
+       public:
+        void push(int v) override {
+            val.push(v);
+
+            if (max.empty())
+                max.push(v);
+            else
+                max.push(std::min(v, max.top()));
+        }
+
+        int pop() override {
+            int top = val.top();
+            val.pop();
+            max.pop();
+            return top;
+        }
+
+        int peek() override { return val.top(); }
+
+        int getMax() { return max.top(); }
+
+        bool isEmpty() override { return val.empty(); }
+    };
+
+    // 4️⃣. Two Stacks
+    class TwoStack : public StackDS::IStack {
+        std::stack<int> inbox;
+        std::stack<int> outbox;
+
+       public:
+        TwoStack() {}
+
+        void push(int x) override { inbox.push(x); }
+
+        int pop() override {
+            if (outbox.empty()) {
+                while (!inbox.empty()) {
+                    int top = inbox.top();
+                    outbox.push(top);
+                    inbox.pop();
+                }
+            }
+
+            int top = outbox.top();
+            outbox.pop();
+            return top;
+        }
+
+        int peek() override {
+            if (outbox.empty()) {
+                while (!inbox.empty()) {
+                    int top = inbox.top();
+                    outbox.push(top);
+                    inbox.pop();
+                }
+            }
+
+            return outbox.top();
+        }
+
+        bool isEmpty() override { return outbox.empty() && inbox.empty(); }
+    };
+
+    void main() {
+        // 2️⃣. Monotonic Stack
+        MonotonicInc mst;
+
+        mst.push(5);
+        mst.push(1);
+        mst.push(2);
+
+        std::cout << "Top element is: " << mst.peek() << " -- Size is: " << mst.size() << std::endl;
+
+        mst.push(15);  // Now all the previous small elements will be removed.
+
+        std::cout << "Top element is: " << mst.peek() << " -- Size is: " << mst.size() << std::endl;
+
+        // 4️⃣. Two Stacks
+        TwoStack st;
+
+        st.push(1);
+        st.push(2);
+        st.push(3);
+        st.push(4);
+        st.push(5);
+
+        std::cout << "Top element is: " << st.peek() << std::endl;
+    }
 };  // namespace TypesOfStack
 
 int main() {
-    StackDS::main();
+    // StackDS::main();
     TypesOfStack::main();
 
     return 0;
