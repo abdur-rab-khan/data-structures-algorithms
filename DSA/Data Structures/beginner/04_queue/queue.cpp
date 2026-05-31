@@ -371,8 +371,8 @@ namespace Deque {
 */
 
 int main() {
-    // SimpleQueue::main();
-    // CircularQueue::main();
+    SimpleQueue::main();
+    CircularQueue::main();
     Deque::main();
 
     return 0;

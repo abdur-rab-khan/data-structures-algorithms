@@ -14,12 +14,25 @@ using namespace std;
 
     To find odds between 4 to 10, We'll find odds between 1 to 10 and 1 to 3 then we'll minus the odds between 1 to 10 with 1 to 3.
 */
+
+// Counting how many odd numbers are exists between a range [low, high]
+// Uses a prefix-count formula countOddsUpto(high) - countOddsUpto(low - 1);
 int countOdds(int low, int high) {
-    low = low == 0 ? low : low - 1;
+    // Count odd numbers from 1 to num
+    // Working by round off the number, So from 1 - 4 (there will be 4 / 2 -> odds)
+    // If "high" is even it will give perfect number of odds/even but if it's odd than we have to make them even by increasing.
+    auto countOddsUpto = [](int num) -> int {
+        if (num <= 0) {
+            return 0;
+        }
 
-    auto f = [](int n) { return n / 2 + (n % 2 == 0 ? 0 : 1); };
+        const int nearestEven = (num % 2 == 0) ? num : num + 1;
+        return nearestEven / 2;
+    };
 
-    return f(high) - f(low);
+    // Adjust low, So that always we get a minimum range 1 to n;
+    const int adjustedLow = (low <= 0) ? 1 : low;
+    return countOddsUpto(high) - countOddsUpto(adjustedLow - 1);
 }
 
 int main() {
