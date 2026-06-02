@@ -29,29 +29,29 @@ std::vector<int> productExceptSelf(std::vector<int>& nums) {
 }
 
 // More Efficient
-std::vector<int> productExceptSelf2(std::vector<int>& nums) {
-    int n = nums.size();
-    std::vector<int> answer(n);
+std::vector<int> calculateProductExceptSelf(std::vector<int>& nums) {
+    const int numCount = static_cast<int>(nums.size());
+    std::vector<int> products(nums.size(), 1);
 
-    int curr = 1;
-    for (int i = 0; i < n; i++) {
-        answer[i] = curr;
-        curr *= nums[i];
+    int runningProduct = 1;
+    for (int i = 0; i < numCount; i++) {
+        products[i] *= runningProduct;
+        runningProduct *= nums[i];
     }
 
-    curr = 1;
-    for (int i = n - 1; i >= 0; i--) {
-        answer[i] *= curr;
-        curr *= nums[i];
+    runningProduct = 1;
+    for (int i = numCount - 1; i >= 0; i--) {
+        products[i] *= runningProduct;
+        runningProduct *= nums[i];
     }
 
-    return answer;
+    return products;
 }
 
 int main() {
     std::vector<int> nums = {1, 2, 3, 4};
     std::vector<int> result = productExceptSelf(nums);
-    std::vector<int> result2 = productExceptSelf2(nums);
+    std::vector<int> result2 = calculateProductExceptSelf(nums);
 
     printArrayElements(result, "Expected product self is: ");
     printArrayElements(result2, "Expected product self is: ");

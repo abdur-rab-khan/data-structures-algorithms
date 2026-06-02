@@ -3,27 +3,14 @@
 
 using namespace std;
 
-/**
- * Finds the length of the longest substring that can be made uniform with k replacements.
- *
- * Uses a sliding window and tracks the maximum frequency character within
- * the window. The window is valid if (windowSize - maxFrequency) <= k.
- *
- * Example:
- * Input: str = "ABAB", k = 2
- * Output: 4
- *
- * Example:
- * Input: str = "AABABBA", k = 1
- * Output: 4
- *
- * Time Complexity: O(n) - Each character is processed at most twice
- * Space Complexity: O(1) - Fixed-size frequency array
- *
- * @param str Uppercase string
- * @param k Maximum number of character replacements allowed
- * @return Length of the longest valid substring
- */
+/*
+    * Find the longest repeating character after replacing "K" times.
+    *
+    * ❌ "WRONG": Comparing everything for str[leftIdx] is wrong.
+    * 🤔 "Why It broke": leftIdx character is not always the majority.
+    * 👉 "Fix": To fix instead of making constant reference, track max frequency count by characters.
+    * 👉 "Example:" "BAAAB" -> We can't only rely on "leftIdx char -> B", instead track by frequency character.
+*/
 int findLongestSubstring(string str, int k) {
     int leftIndex = 0;
 
@@ -49,13 +36,6 @@ int findLongestSubstring(string str, int k) {
 }
 
 int testCount = 0;
-/**
- * Runs an assertion-based test for findLongestSubstring.
- *
- * @param str Input string to test
- * @param k Maximum number of replacements
- * @param expected Expected longest length
- */
 void submitForTesting(string str, int k, int expected) {
     testCount++;
     int longestSize = findLongestSubstring(str, k);
@@ -64,9 +44,6 @@ void submitForTesting(string str, int k, int expected) {
     cout << "Test no. " << testCount << " is done." << endl;
 }
 
-/**
- * Executes sample test cases.
- */
 int main() {
     submitForTesting("ABAB", 2, 4);
     submitForTesting("AABABBA", 1, 4);
