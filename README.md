@@ -10,6 +10,19 @@
 
 This repository contains implementations, explanations, and examples of common data structures and algorithms. These are fundamental building blocks for creating efficient solutions to computational problems.
 
+## IDE setup
+
+This repo is configured as a lightweight IntelliJ/VS Code workspace for standalone C++ practice files.
+
+## Working on standalone problems
+
+This repo is meant for loose `.cpp` practice files, not a single build project.
+
+- Open the repository root in VS Code or IntelliJ.
+- Edit any `.cpp` file directly.
+- Build the active file with the existing C++ task/debug config.
+- Keep snippets self-contained unless you intentionally reuse helpers from `DSA/`.
+
 ## Data Structures
 
 ### 1. String

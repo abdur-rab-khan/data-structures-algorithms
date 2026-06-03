@@ -8,11 +8,10 @@
 |    3️⃣. double: Used to store floating number, more accurate than float.                                                                                      |
 |    4️⃣. long long: Used to store very large whole number.                                                                                                     |
 |                                                                                                                                                              |
-| 🪧 Signed and UnSigned Numbers                                                                                                                               |
+| 🪧 Signed and UnSigned Numbers                                                                                                                                |
 |                                                                                                                                                              |
 |    1️⃣. signed [int, float, long long]: Number can be positive or negative                                                                                    |
 |    2️⃣. unsigned [int, float, long long]: Number can only positive                                                                                            |
-|                                                                                                                                                              |
 |                                                                                                                                                              |
 +----------------------------------------------------------------------------+ END +---------------------------------------------------------------------------+
 */

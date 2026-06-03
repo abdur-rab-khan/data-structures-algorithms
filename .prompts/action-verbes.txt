@@ -1,0 +1,225 @@
+﻿1. Core Action Verbs (Most Important)
+
+	* Create / Build
+		* create
+		* build
+		* generate
+		* construct
+		* initialize
+		* instantiate
+		* setup
+		* configure
+
+		* Example:
+			* createUser
+			* buildTree
+			* initializeArray
+
+	* Get / Fetch / Retrieve
+		* get
+		* fetch
+		* retrieve
+		* obtain
+		* load
+		* read
+
+		* Example:
+			* fetchUserData
+			* getCurrentUser
+			* loadConfig
+
+	* Update / Modify
+		* update
+		* modify
+		* change
+		* adjust
+		* revise
+		* edit
+
+		* Example:
+			* updateProfile
+			* modifySettings
+
+	* Delete / Remove
+		* delete
+		* remove
+		* clear
+		* erase
+		* destroy
+
+		* Example:
+			* deleteAccount
+			* removeItem
+			* clearCache
+
+	* Add / Insert
+
+		* add
+		* insert
+		* append
+		* push
+		* include
+
+		* Example:
+			* addItem
+			* insertNode
+			* appendValue
+
+2. Calculation / Processing Verbs (DSA Important)
+
+	* calculate
+	* compute
+	* evaluate
+	* determine
+	* find
+	* search
+	* locate
+	* detect
+	* identify
+	* count
+	* sum
+	* merge
+	* sort
+	* compare
+	* validate
+	* check
+	* verify
+
+	* Example:
+		* calculateSum
+		* findMaxValue
+		* validateInput
+		* mergeSortedArrays
+
+	* These are extremely common in DSA.
+
+3. Boolean / Checking Verbs
+
+	* Very important for clean code.
+
+	* is
+	* has
+	* can
+	* should
+	* contains
+	* exists
+	* matches
+	* equals
+
+	* Example:
+		* isValid
+		* hasPermission
+		* canAccess
+		* containsDuplicate
+
+	* Boolean naming becomes very clean with these.
+
+4. State / Flow Verbs
+
+	* Used in backend and web.
+
+	* start
+	* stop
+	* pause
+	* resume
+	* reset
+	* handle
+	* process
+	* execute
+	* run
+	* trigger
+	* dispatch
+
+	* Example:
+		* startServer
+		* handleRequest
+		* processPayment
+
+5. Data Transformation Verbs
+
+	* Very important in DSA and backend.
+
+	* convert
+	* transform
+	* map
+	* filter
+	* reduce
+	* parse
+	* serialize
+	* deserialize
+	* encode
+	* decode
+
+	* Example:
+		* parseJSON
+		* convertToString
+		* filterUsers
+
+6. Web Development Important Verbs
+
+	* Frontend + Backend common ones:
+
+	* render
+	* submit
+	* fetch
+	* send
+	* receive
+	* authenticate
+	* authorize
+	* register
+	* login
+	* logout
+	* upload
+	* download
+	* subscribe
+	* publish
+
+	* Example:
+		* renderPage
+		* authenticateUser
+		* uploadFile
+
+7. Clean Function Naming Formula
+
+	* Here is a simple formula you can use:
+
+	* Verb + Object
+
+	* Examples:
+		* calculateTotalPrice
+		* fetchUserProfile
+		* validateInputData
+		* mergeIntervals
+		* updateUserSettings
+
+	* Never write:
+		* dataProcess
+		* thingHandler
+		* doWork
+
+	* Those are weak.
+
+8. 20 Most Powerful Verbs (Memorize These)
+
+	* If you only learn these, you're already strong:
+
+	* create
+	* build
+	* generate
+	* fetch
+	* retrieve
+	* update
+	* delete
+	* add
+	* remove
+	* calculate
+	* compute
+	* find
+	* search
+	* validate
+	* check
+	* merge
+	* sort
+	* compare
+	* convert
+	* handle

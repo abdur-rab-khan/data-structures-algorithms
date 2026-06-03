@@ -10,8 +10,8 @@
 |     2️⃣. Dynamic Structs: Created at runtime using pointers and dynamic memory allocation.  --> Members are accessed using the arrow (->) operator.       |
 |                                                                                                                                                          |
 | 🟡 There are two ways to access members from an object.                                                                                                  |                                   
-|    1️⃣. Static object: dot (.)                                                                                                                            |                                             
-|    2️⃣. Dynamic object: arrow (->)                                                                                                                        |
+|    1️⃣. Static object: dot (.): used when you have a regular object.                                                                                      |
+|    2️⃣. Dynamic object: arrow (->): used when you have a pointer to an object.                                                                            |
 |                                                                                                                                                          |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                          STRUCT                                                                          |
@@ -60,17 +60,17 @@ using namespace std;
 struct Colors {
     string haxCode;
 
+    //  1. STRUCT CONSTRUCTOR
     // Colors(string code) : haxCode(code) {}
 
-    Colors(string code){
-        
+    Colors(string code) {
         // Add directly if color is in hex format
-        if(code[0] == '#'){
+        if (code[0] == '#') {
             haxCode = code;
             return;
         }
 
-        if(code.substr(0, 3) == "RGB"){
+        if (code.substr(0, 3) == "RGB") {
             int r, g, b;
             sscanf(code.c_str(), "RGB(%d, %d, %d)", &r, &g, &b);
             char buffer[8];
@@ -91,8 +91,8 @@ struct Colors {
 };
 
 int main() {
-    Colors c2("RGB(34, 139, 34)"); // Static allocation --> Stack memory --> No need to delete
-    Colors* c1 = new Colors("#FF5733"); // Dynamic allocation
+    Colors c2("RGB(34, 139, 34)");       // Static allocation --> Stack memory --> No need to delete
+    Colors* c1 = new Colors("#FF5733");  // Dynamic allocation
 
     cout << "RGB value of " << c1->haxCode << " is: " << c1->toRGB() << endl;
 
