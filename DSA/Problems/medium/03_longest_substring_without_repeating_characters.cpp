@@ -1,33 +1,34 @@
 #include <iostream>
 #include <string>
-#include <unordered_set>
+#include <vector>
 
-int findLongestWithoutRepeatingSubstring(const std::string& str) {
+int findLongestSubstringWithoutRepeating(const std::string& str) {
     if (str.empty()) {
         return 0;
     }
 
-    int maxSubstringLength = 0;
+    int maxSubstringSize = 0;
 
-    std::unordered_set<char> windowCharacters;
+    std::vector<int> characterFreqTracker(95, 0);
 
     int leftIdx = 0;
     for (int rightIdx = 0; rightIdx < str.size(); rightIdx++) {
-        while (windowCharacters.count(str[rightIdx])) {
-            windowCharacters.erase(str[leftIdx]);
+        characterFreqTracker[str[rightIdx] - 32]++;
+
+        while (characterFreqTracker[str[rightIdx] - 32] > 1) {
+            characterFreqTracker[str[leftIdx] - 32]--;
             leftIdx++;
         }
 
-        windowCharacters.insert(str[rightIdx]);
-        maxSubstringLength = std::max(maxSubstringLength, rightIdx - leftIdx + 1);
+        maxSubstringSize = std::max(maxSubstringSize, rightIdx - leftIdx + 1);
     }
 
-    return maxSubstringLength;
+    return maxSubstringSize;
 }
 
 int main() {
     std::string str = "pwwkew";
-    std::cout << "Max subarray length is: " << findLongestWithoutRepeatingSubstring(str)
+    std::cout << "Max subarray length is: " << findLongestSubstringWithoutRepeating(str)
               << std::endl;
 
     return 0;

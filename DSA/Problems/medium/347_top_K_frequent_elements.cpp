@@ -1,41 +1,44 @@
 #include <iostream>
-#include <unordered_set>
+#include <queue>
+#include <unordered_map>
 #include <vector>
 
 using std::cout;
 using std::endl;
-using std::unordered_set;
+using std::pair;
+using std::priority_queue;
+using std::unordered_map;
 using std::vector;
 
 vector<int> findTopKFrequentElements(const vector<int>& nums, int k) {
-    unordered_set<int> lastSeenTracker;
-
-    vector<int> topMostFrequentElements;
-
-    for (int i = 0; i < nums.size() - 1; i++) {
-        if (lastSeenTracker.count(nums[i]))
-            continue;
-
-        int currentNumCount = 0;
-        int currentNum      = nums[i];
-
-        for (int j = i; j < nums.size(); j++) {
-            if (nums[j] == currentNum) {
-                currentNumCount++;
-            }
-        }
-
-        if (currentNumCount >= k) {
-            topMostFrequentElements.push_back(currentNum);
-        }
-        lastSeenTracker.insert(currentNum);
+    // Guard against invalid inputs:
+    if (nums.empty() || k <= 0) {
+        return {};
     }
 
-    return topMostFrequentElements;
+    unordered_map<int, int> numFrequency;
+    for (const int& num : nums) {
+        numFrequency[num]++;
+    }
+
+    // Max-Heap ordered by frequency so the most frequent element is always on top
+    priority_queue<pair<int, int>> maxFreqHeap;
+    for (auto& [num, freq] : numFrequency) {
+        maxFreqHeap.push({freq, num});
+    }
+
+    vector<int> result;
+    result.reserve(k);
+    for (int i = 0; i < k && !maxFreqHeap.empty(); i++) {
+        result.push_back(maxFreqHeap.top().second);
+        maxFreqHeap.pop();
+    }
+
+    return result;
 }
 
 int main() {
-    vector<int> nums = {1, 2, 1, 2, 1, 2, 3, 1, 3, 3, 3, 3, 2};
+    vector<int> nums = {1, 1, 1, 2, 2, 3, 3, 3};
 
     cout << "Top Most elements are: ";
     for (const int& num : findTopKFrequentElements(nums, 2)) {
