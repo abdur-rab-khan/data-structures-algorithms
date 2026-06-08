@@ -4,8 +4,10 @@
 
 int calculateMaxConsecutiveAnswers(const std::string& answerKey, int k) {
     // 🟡 "constexpr": It means it will going to evaluate during compile time and each instance of will have there own copy.
-    // 🟡 "static": Variable, functions in class build using "static" it will create only once and share the instance among everyone.
-    // 🟡 "static constexpr": It means only store once per all the instance and "constexpr" will evaluate on compile time.
+    // 🟡 "static": Variable, functions in class build using "static" it will create only once and share the instance among everyone, Actually there are three means of "static" keywords.
+    //              1️⃣. "static on a Normal Variable (inside a function)": Means once a function is called, it will create "variable with static once" and share that reference with among all the functions. It saves alot mem.
+    //              2️⃣. "static on a Function and Variable (outside any fun/class)":
+    //              3️⃣. "static on class":
     static constexpr char kTrueAnswer = 'T';
 
     if (answerKey.empty())
