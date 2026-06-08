@@ -58,7 +58,8 @@ std::vector<std::vector<std::string>> findGroupAnagrams(std::vector<std::string>
 
 // Optimized approach
 /*
-    * 
+    * In this approach instead of using "0(n^2)" time complexity, we use "0(n * log n)" by sorting the "anagram"
+    * Every similar anagrams will have same "word" after sorting it.
 */
 std::vector<std::vector<std::string>> findAnagramsGroup(std::vector<std::string> anagrams) {
     std::unordered_map<std::string, std::vector<std::string>> sortedAnagramsMap;
@@ -77,6 +78,48 @@ std::vector<std::vector<std::string>> findAnagramsGroup(std::vector<std::string>
     }
 
     return groupedAnagrams;
+}
+
+// More approach
+/*
+    * It's similar like previous one but instead of "o(n * log n)", we are doing within "O(n)" time complexity
+*/
+std::vector<std::vector<std::string>> findGroupedAnagrams(
+    const std::vector<std::string>& anagrams) {
+    if (anagrams.empty()) {
+        return {};
+    }
+
+    std::unordered_map<std::string, std::vector<std::string>> commonAnagramsMap;
+
+    for (const std::string& anagram : anagrams) {
+        std::vector<int> charCounts(26, 0);
+
+        for (const char& ch : anagram) {
+            charCounts[ch - 'a']++;
+        }
+
+        // Build a unique key from frequencies, The '#' separator prevents
+        // ambiguous key (e.g, counts [1, 2] vs [12] could collide without it).
+        std::string frequencyKey = "";
+        for (const int& count : charCounts) {
+            frequencyKey += std::to_string(count) + "#";
+        }
+
+        // 👉 First time this key is seen:
+        // 👉 C++ automatically does this behind the scenes.
+        // 👉 commonAnagramsMap[frequencyKey] = vector<string> {}; // auto-creates (based on provided type)
+        commonAnagramsMap[frequencyKey].push_back(anagram);  // then word is added.
+    }
+
+    std::vector<std::vector<std::string>> anagramGroups;
+    anagramGroups.reserve(commonAnagramsMap.size());
+
+    for (auto& [_, anagrams] : commonAnagramsMap) {
+        anagramGroups.push_back(std::move(anagrams));
+    }
+
+    return anagramGroups;
 }
 
 int main() {

@@ -5,27 +5,22 @@
     * In this approach with are using with counter variable called depth, the problem in me is we can’t feature it out we can use depth in this approach for tracking outer parentheses and inner parentheses.
     * So next time when we are going to solve the problem "please please please", break down the question into separate chunks. Then feature out what things are needed to solve this problem.
 */
-std::string removeOuterMostParentheses(std::string& parentheses) {
-    if (parentheses.empty()) {
+std::string removeOuterParentheses(const std::string& str) {
+    if (str.empty()) {
         return "";
     }
 
     int depth = 0;
+
     std::string result = "";
 
-    for (const char& bracket : parentheses) {
-        if (bracket == '(') {
-            if (depth > 0) {
-                result.push_back(bracket);
-            }
+    for (const char& ch : str) {
+        depth += ch == '(' ? 1 : -1;
 
-            depth++;
-        } else {
-            depth--;
-
-            if (depth > 0) {
-                result.push_back(bracket);
-            }
+        if (ch == '(' && depth > 1) {
+            result += ch;
+        } else if (ch == ')' && depth >= 1) {
+            result += ch;
         }
     }
 
@@ -37,12 +32,12 @@ int main() {
     std::string parentheses2 = "(()())(())(()(()))";
     std::string parentheses3 = "()()";
 
-    std::cout << "After Removing outer most parentheses: "
-              << removeOuterMostParentheses(parentheses1) << std::endl;
-    std::cout << "After Removing outer most parentheses: "
-              << removeOuterMostParentheses(parentheses2) << std::endl;
-    std::cout << "After Removing outer most parentheses: "
-              << removeOuterMostParentheses(parentheses3) << std::endl;
+    std::cout << "After Removing outer most parentheses: " << removeOuterParentheses(parentheses1)
+              << std::endl;
+    std::cout << "After Removing outer most parentheses: " << removeOuterParentheses(parentheses2)
+              << std::endl;
+    std::cout << "After Removing outer most parentheses: " << removeOuterParentheses(parentheses3)
+              << std::endl;
 
     return 0;
 }
