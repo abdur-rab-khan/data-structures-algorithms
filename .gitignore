@@ -1,4 +1,8 @@
 *.exe
-.idea
+.idea/*
+!.idea/.name
+!.idea/modules.xml
+!.idea/data-structures-algorithms.iml
 tempCodeRunnerFile.cpp
 *.tldr
+Revision
