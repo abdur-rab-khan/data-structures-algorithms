@@ -8,34 +8,44 @@ int calculateMaxConsecutiveAnswers(const std::string& answerKey, int k) {
     // 🟡 "static constexpr": It means only store once per all the instance and "constexpr" will evaluate on compile time.
     static constexpr char kTrueAnswer = 'T';
 
-    int dominantAnswerCount           = 0;
-    int maxConsecutiveAnswer          = 0;
-    int leftIdx                       = 0;
+    if (answerKey.empty())
+        return 0;
 
-    std::vector<int> answerFreqCount(2, 0);
+    int falseCount = 0;
+    int trueCount  = 0;
 
-    for (int rightIdx = 0; rightIdx < answerKey.size(); rightIdx++) {
-        const int rightAnswerIdx = (answerKey[rightIdx] == kTrueAnswer) ? 1 : 0;
-        answerFreqCount[rightAnswerIdx]++;
+    int dominantAnswerCount     = 0;
+    int maxConsecutiveQuestions = 0;
 
-        dominantAnswerCount = std::max(dominantAnswerCount, answerFreqCount[rightAnswerIdx]);
+    int leftIdx = 0;
+    for (int rightIdx = 0; rightIdx < static_cast<int>(answerKey.size()); rightIdx++) {
+        if (answerKey[rightIdx] == kTrueAnswer) {
+            trueCount++;
+        } else {
+            falseCount++;
+        }
 
-        while ((rightIdx - leftIdx + 1) - dominantAnswerCount > k && true) {
-            const int leftAnswerIdx = answerKey[leftIdx] == 'T' ? 1 : 0;
+        dominantAnswerCount = std::max(dominantAnswerCount, std::max(falseCount, trueCount));
 
-            answerFreqCount[leftAnswerIdx]--;
+        while ((rightIdx - leftIdx + 1) - dominantAnswerCount > k) {
+            if (answerKey[leftIdx] == kTrueAnswer) {
+                trueCount--;
+            } else {
+                falseCount--;
+            }
+
             leftIdx++;
         }
 
-        maxConsecutiveAnswer = std::max(maxConsecutiveAnswer, rightIdx - leftIdx + 1);
+        maxConsecutiveQuestions = std::max(maxConsecutiveQuestions, (rightIdx - leftIdx + 1));
     }
 
-    return maxConsecutiveAnswer;
+    return maxConsecutiveQuestions;
 }
 
 int main() {
-    std::string answerKey = "TTFTTFTT";
-    std::cout << "Max consecutive answer is: " << calculateMaxConsecutiveAnswers(answerKey, 1)
+    std::string answerKey = "TTFF";
+    std::cout << "Max consecutive answer is: " << calculateMaxConsecutiveAnswers(answerKey, 2)
               << std::endl;
 
     return 0;
