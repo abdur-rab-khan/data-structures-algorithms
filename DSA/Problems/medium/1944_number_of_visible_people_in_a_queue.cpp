@@ -2,6 +2,32 @@
 #include <stack>
 #include <vector>
 
+// 👉 Brute force approach
+// std::vector<int> findSenablePeoples(const std::vector<int>& heights) {
+//     int size = static_cast<int>(heights.size());
+
+//     std::vector<int> result;
+//     result.reserve(size);
+
+//     for (int i = 0; i < size; i++) {
+//         int maxHeights     = 0;
+//         int senableHeights = 0;
+
+//         for (int j = i + 1; j < size; j++) {
+//             if (j < size && std::min(heights[i], heights[j]) > maxHeights) {
+//                 senableHeights++;
+//             }
+
+//             maxHeights = std::max(maxHeights, heights[j]);
+//         }
+
+//         result.push_back(senableHeights);
+//     }
+
+//     return result;
+// }
+
+// 👉 Optimized approach
 std::vector<int> findSenablePeoples(const std::vector<int>& heights) {
     int size = static_cast<int>(heights.size());
 
@@ -29,7 +55,7 @@ std::vector<int> findSenablePeoples(const std::vector<int>& heights) {
 }
 
 int main() {
-    std::vector<int> heights = {10, 6, 8, 5, 11, 9};
+    std::vector<int> heights = {5, 1, 2, 3, 10};
 
     std::cout << "Number of senable persons are: ";
     for (const int& persons : findSenablePeoples(heights)) {
