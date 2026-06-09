@@ -39,9 +39,9 @@ void using_minmax() {
 }
 
 // 👉 clamp: Keep the value between given range, used for clean boundary problems.
-// 👉 If value become greater than high then directly return max_high value instead of "given"
-// 👉 If value become smaller than low then directly return low_value instead of "given value"
-// 👉 If value is within the range then it will return "value".
+// 🔵 clamp(0, 55, 20); // 20 because it's within the range
+// 🔵 clamp(0, 55, -100); // 0 because it's become small than lower one
+// 🔵 clamp(0, 55, 200); // 55 because it's become greater than higher one
 void usingClamp() {
     std::cout << std::endl << "--> Using clamp: " << std::endl;
 

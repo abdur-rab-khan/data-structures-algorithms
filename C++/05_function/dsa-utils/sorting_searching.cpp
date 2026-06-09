@@ -21,26 +21,29 @@ void usingBinarySearch() {
               << std::endl;
 }
 
-// 👉 Upper bound: Return an iterator for first element greater than "value"
+// 👉 Upper bound: Return an iterator for first element ""first element > value"""
 void usingUpperBound() {
     std::cout << std::endl << "--> Upper Bound: " << std::endl;
 
+    // Using auto as a type
     auto upperBound1 = std::upper_bound(nums.begin(), nums.end(), 2);
+
+    // Using "vector iterator" as a type
     std::vector<int>::iterator upperBound2 = std::upper_bound(nums.begin(), nums.end(), 68);
 
-    std::cout << "First element greater than 68: " << *upperBound1 << std::endl;
-    std::cout << "First element greater than 2: " << *upperBound2 << std::endl;
+    std::cout << "First element greater than 68: " << *upperBound1 << std::endl;  // 6
+    std::cout << "First element greater than 2: " << *upperBound2 << std::endl;   // 190
 }
 
-// 👉 Lower bound: Return an iterator for first element lower than "value"
+// 👉 Lower bound: Return an iterator for first element ""first element >= value""
 void usingLowerBound() {
     std::cout << std::endl << "--> Lower Bound: " << std::endl;
 
-    auto lowerBound1 = std::lower_bound(nums.begin(), nums.end(), 7);
-    auto lowerBound2 = std::lower_bound(nums.begin(), nums.end(), 190);
+    auto lowerBound1 = std::lower_bound(nums.begin(), nums.end(), 3);
+    auto lowerBound2 = std::lower_bound(nums.begin(), nums.end(), 180);
 
-    std::cout << "First element greater than 7: " << *lowerBound1 << std::endl;
-    std::cout << "First element greater than 190: " << *lowerBound2 << std::endl;
+    std::cout << "First element lower than 7: " << *lowerBound1 << std::endl;    // 6
+    std::cout << "First element lower than 190: " << *lowerBound2 << std::endl;  // 190
 }
 
 int main() {
