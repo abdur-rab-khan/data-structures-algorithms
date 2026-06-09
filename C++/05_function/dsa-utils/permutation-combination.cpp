@@ -12,6 +12,12 @@ using std::vector;
 vector<int> nums = {1, 2, 3};
 
 // 👉 next_permutation: It's directly modify the origin "data-structure" and does all the possible permutation until it give false.
+// 1 2 3
+// 1 3 2
+// 2 1 3
+// 2 3 1
+// 3 1 2
+// 3 2 1
 void usingNextPermutation() {
     cout << "--> Using next permutation: " << endl;
 
