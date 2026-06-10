@@ -14,7 +14,7 @@
 //         int senableHeights = 0;
 
 //         for (int j = i + 1; j < size; j++) {
-//             if (j < size && std::min(heights[i], heights[j]) > maxHeights) {
+//             if (std::min(heights[i], heights[j]) > maxHeights) {
 //                 senableHeights++;
 //             }
 
