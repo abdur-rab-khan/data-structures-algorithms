@@ -93,6 +93,7 @@ std::vector<std::vector<std::string>> findGroupedAnagrams(
     std::unordered_map<std::string, std::vector<std::string>> commonAnagramsMap;
 
     for (const std::string& anagram : anagrams) {
+        // ❌ Wrong thinking: You are thinking how to build a key, that's solution instead of directly loop through each char, We'll have to first count all the character than build the key.
         std::vector<int> charCounts(26, 0);
 
         for (const char& ch : anagram) {
@@ -112,6 +113,8 @@ std::vector<std::vector<std::string>> findGroupedAnagrams(
         commonAnagramsMap[frequencyKey].push_back(anagram);  // then word is added.
     }
 
+    // --> ⭐ Good comment not tell's about ("what the code does"), but ("explain about they") like used some special thing
+    // Extract grouped value: Used "move" to avoid copying the inner vectors
     std::vector<std::vector<std::string>> anagramGroups;
     anagramGroups.reserve(commonAnagramsMap.size());
 
