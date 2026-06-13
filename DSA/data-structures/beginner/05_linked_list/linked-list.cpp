@@ -1,16 +1,14 @@
 #include <iostream>
 
-using namespace std;
-
 /*
- * 🟡 A linked list is a data structure that are form using chain of nodes, these nodes are nothing but an "object" which hold some kind of informations. Unlike array data structure where data stored into contiguous memory location.
+ * 🟡 A linked list is a data structure that are form using chain of nodes, these nodes are nothing but an "object" which hold some kind of informations. Unlike array data structure that where data is stored into contiguous memory location.
    🟡 In linked list each node have the ""reference of a memory block"" represents the next node. Means these nodes are scattered in memory but connected with there ""reference pointer"".
-
+   
    🔶 Information stored by node:
         1. "Actual Data"
         2. "Reference Pointer to next node"
         3. "Reference Pointer to previous node (Doubly Linked List)"
-
+   
    🔷 Types of Linked List:
         1. "Singly Linked List"
         2. "Doubly Linked List"
@@ -31,17 +29,17 @@ struct Node {
     int   value;
     Node* next;
 
-    explicit Node(const int val) : value(val), next(nullptr) {}
+    Node(int val) : value(val), next(nullptr) {}
 };
 
 namespace AbstractLinkedList {
     class SinglyLinkedList {
        public:
-        virtual int length() = 0;
+        virtual int            length()           = 0;
+        virtual void           search(int target) = 0;
+        virtual generator<int> traverse()         = 0;
 
-        virtual void search(int target)      = 0;
-        virtual void insertAtHead(int value) = 0;
-
+        virtual void insertAtHead(int value)           = 0;
         virtual void insertAtTail(int value)           = 0;
         virtual void insertAt(int position, int value) = 0;
 
@@ -56,14 +54,14 @@ namespace AbstractLinkedList {
 
 namespace LinkedListTypes {
     /*
-     * 1️⃣. Singly Linked List:
+     * 1️⃣. Singly Linked List:   
     */
     class SinglyLinkedList : public AbstractLinkedList::SinglyLinkedList {
         int   size;
         Node* head;
 
        public:
-        SinglyLinkedList() : size(0), head(nullptr) {}
+        SinglyLinkedList() : head(nullptr), size(0) {}
 
         ~SinglyLinkedList() {
             Node* currentNode = head;
@@ -77,6 +75,14 @@ namespace LinkedListTypes {
         }
 
         int length() override { return size; }
+
+        generator<int> traverse() override {
+            Node* currentNode = head;
+            while (currentNode->next != nullptr) {
+                co_yield currentNode->value;
+                currentNode = currentNode->next;
+            }
+        }
 
         void insertAtHead(int value) override {
             if (head == nullptr) {
@@ -118,9 +124,7 @@ namespace LinkedListTypes {
             currentNode->value = value;
         }
 
-        void search(int target) override {}
-
-        void print() override {
+        void print() {
             cout << "Linked List elements are: ";
             Node* currentNode = head;
             while (currentNode->next != nullptr) {
@@ -132,6 +136,4 @@ namespace LinkedListTypes {
     };
 }  // namespace LinkedListTypes
 
-int main() {
-    return 0;
-}
+int main() {}
