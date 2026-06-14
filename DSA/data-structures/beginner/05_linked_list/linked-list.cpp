@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 
 /*
  * 🟡 A linked list is a data structure that are form using chain of nodes, these nodes are nothing but an "object" which hold some kind of informations. Unlike array data structure that where data is stored into contiguous memory location.
@@ -24,116 +25,183 @@
         7. "nullptr / NULL"
 */
 
-// Node of singly linked, that will create a memory block where we have ""data"" and ""next node pointer""
-struct Node {
-    int   value;
-    Node* next;
-
-    Node(int val) : value(val), next(nullptr) {}
-};
-
-namespace AbstractLinkedList {
-    class SinglyLinkedList {
-       public:
-        virtual int            length()           = 0;
-        virtual void           search(int target) = 0;
-        virtual generator<int> traverse()         = 0;
-
-        virtual void insertAtHead(int value)           = 0;
-        virtual void insertAtTail(int value)           = 0;
-        virtual void insertAt(int position, int value) = 0;
-
-        virtual void deleteAtTail()           = 0;
-        virtual void deleteAtHead()           = 0;
-        virtual void deleteAt(int position)   = 0;
-        virtual void deleteByValue(int value) = 0;
-
-        virtual void print() = 0;
-    };
-}  // namespace AbstractLinkedList
-
 namespace LinkedListTypes {
     /*
-     * 1️⃣. Singly Linked List:   
+     * 🟡 Singly Linked List: In Singly Linked List, Nodes are only pointed to it's next element in the chain and every node has "actual value", "reference pointer to next node".
     */
-    class SinglyLinkedList : public AbstractLinkedList::SinglyLinkedList {
-        int   size;
-        Node* head;
+    class SinglyLinkedList {
+       private:
+        // Node of singly linked, that will create a memory block where we have ""data"" and ""next node pointer""
+        struct Node {
+            int   value;
+            Node* next;
+            explicit Node(const int val) : value(val), next(nullptr) {}
+        };
+
+        Node* head_;
+        int   size_;
 
        public:
-        SinglyLinkedList() : head(nullptr), size(0) {}
+        SinglyLinkedList() : head_(nullptr), size_(0) {}
+
+        SinglyLinkedList(const SinglyLinkedList&)            = delete;
+        SinglyLinkedList& operator=(const SinglyLinkedList&) = delete;
 
         ~SinglyLinkedList() {
-            Node* currentNode = head;
-            Node* nextNode    = nullptr;
-
-            while (currentNode->next != nullptr) {
-                nextNode = currentNode->next;
+            Node* currentNode = head_;
+            while (currentNode != nullptr) {
+                Node* nextNode = currentNode->next;
                 delete currentNode;
                 currentNode = nextNode;
             }
         }
 
-        int length() override { return size; }
+        bool isEmpty() const noexcept { return head_ == nullptr; }
 
-        generator<int> traverse() override {
-            Node* currentNode = head;
-            while (currentNode->next != nullptr) {
-                co_yield currentNode->value;
-                currentNode = currentNode->next;
-            }
-        }
+        int size() const noexcept { return size_; }
 
-        void insertAtHead(int value) override {
-            if (head == nullptr) {
-                Node* newNode = new Node(value);
-                head          = newNode;
-            } else {
-                head->value = value;
-            }
-        }
-
-        void insertAtTail(int value) override {
-            if (head == nullptr) {
-                throw overflow_error("Do not found any head!");
-            }
-
-            Node* currentNode = head;
-            while (currentNode->next != nullptr)
-                currentNode = currentNode->next;
-
-            currentNode->value = value;
-        }
-
-        void insertAt(int position, int value) override {
-            if (head == nullptr) {
-                throw overflow_error("Do not found any head!");
-            }
-
-            int   currentPosition = 0;
-            Node* currentNode     = head;
-
-            while (currentNode->next != nullptr && currentPosition != position) {
-                if (currentNode->next == nullptr && currentPosition != position) {
-                    throw overflow_error("No element found at that position");
+        // ❌ Did Wrong: "Ignoring the head" by using this condition "current->head != nullptr"
+        bool search(const int target) {
+            Node* currentNode = head_;
+            while (currentNode != nullptr) {
+                if (currentNode->value == target) {
+                    return true;
                 }
                 currentNode = currentNode->next;
-                currentPosition++;
-            };
-
-            currentNode->value = value;
+            }
+            return false;
         }
 
-        void print() {
-            cout << "Linked List elements are: ";
-            Node* currentNode = head;
-            while (currentNode->next != nullptr) {
-                cout << currentNode->value << " ";
+        void append(const int value) {
+            Node* newNode = new Node(value);
+
+            if (isEmpty()) {
+                head_ = newNode;
+            } else {
+                Node* currentNode = head_;
+
+                while (currentNode->next != nullptr) {
+                    currentNode = currentNode->next;
+                }
+                currentNode->next = newNode;
+            }
+        }
+
+        void insertAtHead(const int value) {
+            Node* newNode = new Node(value);
+            newNode->next = head_;
+            head_         = newNode;
+
+            ++size_;
+        }
+
+        void deleteAtHead() {
+            if (isEmpty()) {
+                throw std::runtime_error("deleteAtHead: list is empty");
+            }
+
+            Node* oldHead = head_;
+            head_         = head_->next;
+
+            delete oldHead;
+            --size_;
+        }
+        void deleteAtTail() {
+            if (isEmpty()) {
+                throw std::runtime_error("deleteAtTail: list is empty");
+            }
+
+            // Single node case
+            if (head_->next == nullptr) {
+                delete head_;
+                head_ = nullptr;
+                --size_;
+                return;
+            }
+
+            Node* currentNode = head_;
+            while (currentNode->next->next != nullptr) {
                 currentNode = currentNode->next;
             }
-            cout << endl;
+
+            delete currentNode->next;
+            currentNode->next = nullptr;
+            --size_;
+        }
+
+        void deleteByValue(const int target) {
+            if (isEmpty()) {
+                throw std::runtime_error("deleteByValue: list is empty");
+            }
+
+            // Head is the target
+            if (head_->value == target) {
+                deleteAtHead();
+                return;
+            }
+
+            Node* currentNode = head_;
+            while (currentNode->next != nullptr && currentNode->next->value != target) {
+                currentNode = currentNode->next;
+            }
+
+            if (currentNode->next != nullptr) {
+                Node* targetNode  = currentNode->next;
+                currentNode->next = currentNode->next->next;
+                delete targetNode;
+                --size_;
+            }
+        }
+
+        std::string toString() const {
+            std::string result;
+
+            Node* currentNode = head_;
+            while (currentNode != nullptr) {
+                result += std::to_string(currentNode->value) + " ";
+                currentNode = currentNode->next;
+            }
+
+            return result.empty() ? "(empty)" : result;
         }
     };
+
+    /*
+     * 🟡 Doubly Linked List: In Doubly Linked List, Nodes are pointer into both direction and every node in Doubly Linked List has three values, "actual value", "reference pointer to next node", "reference pointer to previous node".
+     */
+    class DoublyLinkedList {};
+
+    /*
+     * 🟡 Circular Linked List: Circular Linked List are similar to Singly Linked List but only difference it the "tail node", always point to "head" node instead of "nullptr".
+     */
+    class CircularLinkedList {};
+
+    void main() {
+        // 🟡 Singly LinkedList
+        std::unique_ptr<LinkedListTypes::SinglyLinkedList> singlyLinkedList =
+            std::make_unique<LinkedListTypes::SinglyLinkedList>();
+
+        std::cout << "Linked list elements are: " << singlyLinkedList->toString() << std::endl;
+
+        singlyLinkedList->append(1);
+        singlyLinkedList->append(2);
+        singlyLinkedList->append(5);
+
+        std::cout << "Linked list elements are: " << singlyLinkedList->toString() << std::endl;
+        singlyLinkedList->insertAtHead(55);
+        std::cout << "Linked list elements are: " << singlyLinkedList->toString() << std::endl;
+        singlyLinkedList->append(100);
+        std::cout << "Linked list elements are: " << singlyLinkedList->toString() << std::endl;
+        singlyLinkedList->deleteByValue(3);
+        std::cout << "Linked list elements are: " << singlyLinkedList->toString() << std::endl;
+        singlyLinkedList->deleteAtTail();
+        std::cout << "Linked list elements are: " << singlyLinkedList->toString() << std::endl;
+    }
+
 }  // namespace LinkedListTypes
 
-int main() {}
+int main() {
+    LinkedListTypes::main();
+
+    return 0;
+}

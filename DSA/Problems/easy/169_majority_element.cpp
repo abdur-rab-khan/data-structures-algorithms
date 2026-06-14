@@ -1,9 +1,11 @@
 #include <iostream>
 #include <vector>
 
-using std::cout;
-using std::endl;
-using std::vector;
+using namespace std;
+
+// using std::cout;
+// using std::endl;
+// using std::vector;
 
 /*
     * To solve this problem, We actually have three approach, let's see one by one.
@@ -20,24 +22,15 @@ using std::vector;
     *           3. If candidate become "0" means, Now it's not in majority than we update with current one.
 */
 int findMajorityElements(const vector<int>& nums) {
-    if (nums.empty()) {
-        return 0;
+    int candidateCount   = 0;
+    int currentCandidate = nums[0];
+
+    for (const int& num : nums) {
+        currentCandidate = candidateCount > 0 ? currentCandidate : num;
+        candidateCount += currentCandidate == num ? 1 : -1;
     }
 
-    int count     = 0;
-    int candidate = nums[0];
-
-    for (const int& n : nums) {
-        candidate = count == 0 ? n : candidate;
-
-        if (candidate == n) {
-            count++;
-        } else {
-            count--;
-        }
-    }
-
-    return candidate;
+    return currentCandidate;
 }
 
 int main() {

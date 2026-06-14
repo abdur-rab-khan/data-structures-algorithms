@@ -62,8 +62,7 @@ struct Colors {
 
     //  1. STRUCT CONSTRUCTOR
     // Colors(string code) : haxCode(code) {}
-
-    Colors(string code) {
+    explicit Colors(const string& code) {
         // Add directly if color is in hex format
         if (code[0] == '#') {
             haxCode = code;
@@ -91,8 +90,8 @@ struct Colors {
 };
 
 int main() {
-    Colors c2("RGB(34, 139, 34)");       // Static allocation --> Stack memory --> No need to delete
-    Colors* c1 = new Colors("#FF5733");  // Dynamic allocation
+    Colors c2("RGB(34, 139, 34)");  // Static allocation --> Stack memory --> No need to delete
+    const Colors* c1 = new Colors("#FF5733");  // Dynamic allocation
 
     cout << "RGB value of " << c1->haxCode << " is: " << c1->toRGB() << endl;
 
