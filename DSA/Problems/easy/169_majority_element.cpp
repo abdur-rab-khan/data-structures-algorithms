@@ -1,11 +1,9 @@
 #include <iostream>
 #include <vector>
 
-using namespace std;
-
-// using std::cout;
-// using std::endl;
-// using std::vector;
+using std::cout;
+using std::endl;
+using std::vector;
 
 /*
     * To solve this problem, We actually have three approach, let's see one by one.

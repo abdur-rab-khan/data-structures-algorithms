@@ -169,17 +169,109 @@ namespace LinkedListTypes {
     /*
      * 🟡 Doubly Linked List: In Doubly Linked List, Nodes are pointer into both direction and every node in Doubly Linked List has three values, "actual value", "reference pointer to next node", "reference pointer to previous node".
      */
-    class DoublyLinkedList {};
+    class DoublyLinkedList {
+       private:
+        struct Node {
+            int   value;
+            Node* next;
+            Node* previous;
+            explicit Node(const int value) : value(value), next(nullptr), previous(nullptr) {}
+        };
+        Node* head;
+
+       public:
+        DoublyLinkedList() : head(nullptr) {}
+        ~DoublyLinkedList() {
+            Node* currentNode = head;
+            while (currentNode != nullptr) {
+                Node* nextNode = currentNode->next;
+                delete currentNode;
+                currentNode = nextNode;
+            }
+        }
+
+        void append(const int value) {
+            Node* newNode = new Node(value);
+
+            if (head == nullptr) {
+                head = newNode;
+                return;
+            }
+
+            Node* currentNode = head;
+            while (currentNode->next != nullptr) {
+                currentNode = currentNode->next;
+            }
+
+            currentNode->next = newNode;
+
+            // It's the main difference between "Singly Linkedlist" and "Doubly LinkedList"
+            newNode->previous = currentNode;
+        }
+
+        void printForward() const {
+            const Node* currentNode = head;
+            while (currentNode != nullptr) {
+                std::cout << ((currentNode->previous != nullptr) ? currentNode->previous->value
+                                                                 : -1)
+                          << " <-> " << currentNode->value << " ";
+                currentNode = currentNode->next;
+            }
+            std::cout << std::endl << std::endl;
+        }
+    };
 
     /*
      * 🟡 Circular Linked List: Circular Linked List are similar to Singly Linked List but only difference it the "tail node", always point to "head" node instead of "nullptr".
      */
-    class CircularLinkedList {};
+    class CircularLinkedList {
+       private:
+        struct Node {
+            int   value;
+            Node* next;
+            explicit Node(const int value) : value(value), next(nullptr) {}
+        };
+        Node* head;
+
+       public:
+        CircularLinkedList() : head(nullptr) {}
+
+        void append(const int value) {
+            Node* newNode = new Node(value);
+
+            if (head == nullptr) {
+                head       = newNode;
+                head->next = head;
+                return;
+            }
+
+            Node* currentNode = head;
+            while (currentNode->next != head) {
+                currentNode = currentNode->next;
+            }
+
+            currentNode->next = newNode;
+            newNode->next     = head;
+        }
+
+        void print() {
+            if (head == nullptr)
+                return;
+
+            const Node* current = head;
+            do {
+                std::cout << current->value << " ";
+                current = current->next;
+            } while (current != head);
+
+            std::cout << "(back to head)" << std::endl;
+        }
+    };
 
     void main() {
         // 🟡 Singly LinkedList
-        std::unique_ptr<LinkedListTypes::SinglyLinkedList> singlyLinkedList =
-            std::make_unique<LinkedListTypes::SinglyLinkedList>();
+        const std::unique_ptr<SinglyLinkedList> singlyLinkedList =
+            std::make_unique<SinglyLinkedList>();
 
         std::cout << "Linked list elements are: " << singlyLinkedList->toString() << std::endl;
 
@@ -196,6 +288,31 @@ namespace LinkedListTypes {
         std::cout << "Linked list elements are: " << singlyLinkedList->toString() << std::endl;
         singlyLinkedList->deleteAtTail();
         std::cout << "Linked list elements are: " << singlyLinkedList->toString() << std::endl;
+
+        // 🟡 Doubly LinkedList
+        const std::unique_ptr<DoublyLinkedList> doublyLinkedList =
+            std::make_unique<DoublyLinkedList>();
+
+        doublyLinkedList->append(11);
+        doublyLinkedList->append(22);
+        doublyLinkedList->append(33);
+        doublyLinkedList->append(44);
+
+        std::cout << "Doubly linkedlist elements are: ";
+        doublyLinkedList->printForward();
+
+        // 🟡 Circular LinkedList
+        const std::unique_ptr<CircularLinkedList> circularLinkedList =
+            std::make_unique<CircularLinkedList>();
+
+        circularLinkedList->append(111);
+        circularLinkedList->append(222);
+        circularLinkedList->append(333);
+        circularLinkedList->append(444);
+        circularLinkedList->append(555);
+
+        std::cout << "Ciruclar LinkedList elements are: ";
+        circularLinkedList->print();
     }
 
 }  // namespace LinkedListTypes
