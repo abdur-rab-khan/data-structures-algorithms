@@ -35,10 +35,10 @@ class SinglyLinkedList {
         }
     }
 
-    string toString() {
+    string toString() const {
         string result = "";
 
-        Node* currentNode = head.get();
+        const Node* currentNode = head.get();
         while (currentNode != nullptr) {
             result += std::to_string(currentNode->value) + " ";
             currentNode = currentNode->next.get();
@@ -70,7 +70,7 @@ class SinglyLinkedList {
 };
 
 int main() {
-    auto singlyLinkedList = make_unique<SinglyLinkedList>();
+    const auto singlyLinkedList = make_unique<SinglyLinkedList>();
 
     singlyLinkedList->append(1);
     singlyLinkedList->append(2);

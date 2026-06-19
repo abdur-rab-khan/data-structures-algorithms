@@ -36,38 +36,38 @@ int countSubarrayWithKDistinct(const vector<int>& nums, const int k) {
     auto countSubarrays = [=](const int k) -> int {
         if (k <= 0) {
             return 0;
-        }
 
-        int totalSubarrays = 0;
+            int totalSubarrays = 0;
 
-        unordered_map<int, int> distinctNumsMap;
+            unordered_map<int, int> distinctNumsMap;
 
-        int leftIdx = 0;
-        for (int rightIdx = 0; rightIdx < size; rightIdx++) {
-            distinctNumsMap[nums[rightIdx]]++;
+            int leftIdx = 0;
+            for (int rightIdx = 0; rightIdx < size; rightIdx++) {
+                distinctNumsMap[nums[rightIdx]]++;
 
-            while (leftIdx < rightIdx && distinctNumsMap.size() > k) {
-                distinctNumsMap[nums[leftIdx]]--;
+                while (leftIdx < rightIdx && distinctNumsMap.size() > k) {
+                    distinctNumsMap[nums[leftIdx]]--;
 
-                if (distinctNumsMap[nums[leftIdx]] == 0) {
-                    distinctNumsMap.erase(nums[leftIdx]);
+                    if (distinctNumsMap[nums[leftIdx]] == 0) {
+                        distinctNumsMap.erase(nums[leftIdx]);
+                    }
+
+                    leftIdx++;
                 }
 
-                leftIdx++;
+                totalSubarrays += (rightIdx - leftIdx) + 1;
             }
 
-            totalSubarrays += (rightIdx - leftIdx) + 1;
-        }
+            return totalSubarrays;
+        };
 
-        return totalSubarrays;
-    };
+        return countSubarrays(k) - countSubarrays(k - 1);
+    }
 
-    return countSubarrays(k) - countSubarrays(k - 1);
-}
+    int
+    main() {
+        const vector<int> nums = {1, 2};
+        cout << "Total subarrays are: " << countSubarrayWithKDistinct(nums, 1) << endl;
 
-int main() {
-    const vector<int> nums = {1, 2};
-    cout << "Total subarrays are: " << countSubarrayWithKDistinct(nums, 1) << endl;
-
-    return 0;
-}
+        return 0;
+    }
