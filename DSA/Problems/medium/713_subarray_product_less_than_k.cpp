@@ -5,13 +5,12 @@ using std::cout;
 using std::endl;
 using std::vector;
 
-// 🟡 Brute force appraoch, ⌛ Complexity --> time compelxity = o(n^2), space complexity = o(1)
+// 🟡 Brute force approach, ⌛ Complexity --> time complexity = o(n^2), space complexity = o(1)
 int countSubarrayProductsBrute(const vector<int>& nums, const int k) {
     int subArrayCount = 0;
 
     for (int i = 0; i < nums.size(); i++) {
         int products = 1;
-
         for (int j = i; j < nums.size(); j++) {
             products *= nums[j];
             if (products < k) {
@@ -25,8 +24,8 @@ int countSubarrayProductsBrute(const vector<int>& nums, const int k) {
     return subArrayCount;
 }
 
-/* 🟡 Optimized Appraoch
- * 💡 The key idea behind this appraoch is by counting the total elements inside a window, as by doing this we can count the number of window's exists on it.
+/* 🟡 Optimized Approach
+ * 💡 The key idea behind this approach is by counting the total elements inside a window ""instead of count subarray"", by doing this we can count the number of window's exists on it.
  *
  * 🔶 { 10, 5, 2, 6 }
  *      🔸 { 10 }         ||    1
