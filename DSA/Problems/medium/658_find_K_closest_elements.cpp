@@ -20,7 +20,7 @@ vector<int> findKClosestElements(const vector<int>& nums, const int k, const int
     int rightIdx = static_cast<int>(nums.size()) - k;
 
     while (leftIdx < rightIdx) {
-        int midIdx = (leftIdx + rightIdx) / 2;
+        const int midIdx = (leftIdx + rightIdx) / 2;
 
         // There should be two conditions either "rightIdx" will update or "leftIdx", To check whether this window is good, We have to compare "midIdx" with "midIdx + k"
         // If midIdx is correct means, we have to shrink towards right by "midIdx", Otherwise shrink will happen towards left by "midIdx + 1"
@@ -32,6 +32,25 @@ vector<int> findKClosestElements(const vector<int>& nums, const int k, const int
     }
 
     return vector<int>(nums.begin() + leftIdx, nums.begin() + leftIdx + k);
+}
+
+vector<int> findKClosestElementTwoPointers(const vector<int>& nums, const int k, const int x) {
+    int leftIdx  = 0;
+    int rightIdx = static_cast<int>(nums.size()) - 1;
+
+    while (rightIdx - leftIdx >= k) {
+        if (x - nums[leftIdx] > nums[rightIdx] - x) {
+            leftIdx++;
+        } else {
+            rightIdx--;
+        }
+    }
+
+    vector<int> result;
+    for (int i = leftIdx; i <= rightIdx; i++) {
+        result.push_back(nums[i]);
+    }
+    return result;
 }
 
 int main() {
