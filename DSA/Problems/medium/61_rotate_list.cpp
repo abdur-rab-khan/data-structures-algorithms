@@ -46,7 +46,7 @@ class SinglyLinkedList {
         }
 
         // Step 1. Find the size and tail of the list
-        int   size = 1;  // head_ is non-null, So minimum size is 1
+        int   size = 1;  // head_ is non-null, mean at-least one element will be there.
         Node* tail = head_;
         while (tail->next != nullptr) {
             tail = tail->next;
