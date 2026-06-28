@@ -1,19 +1,19 @@
 // main.cpp
-#include "raylib/src/raylib.h"
+#include "raylib/raylib.h"
 
 /*
  * [ Learn Commands to Compile C++ Code ]:
  *                                         To compile this code, we are going to use "g++", let's see some options:
- * -I<path>
+ * -I<path (where is .h files)>
  *   Compiler first looks in current directory,
  *   then standard include paths (/usr/include/).
  *   -I adds extra path to search for .h files.
  *
- * -L<path>
+ * -L<path (where is .a or .so files)>
  *   Linker first looks in standard library paths (/usr/lib/).
  *   -L adds extra path to search for .a or .so files.
  *
- * -l<library>
+ * -l<library (which library to link)>
  *   Tells linker WHICH library to link.
  *   It is not a path — it is a name.
  *   Linker looks for lib+name+.a in all known paths.
