@@ -12,9 +12,10 @@ vector<int> findKClosestElements(const vector<int>& nums, const int k, const int
     /*
      * Suppose the array looks like this [1, 2, 3, 4, 5]
      * Because the subarrays size will have size "K" suppose K = 3
-     * 1. [1, 2, 3],
-     * 2. [2, 3, 4]
-     * 3. [3, 4, 5]
+     * 1. [1, 2, 3, 4, 5]
+     *     L  M   R
+     * 2. [1, 2, 3, 4, 5]
+     *
      * 👉 If we don't subtract the "K" from the size, It will lead an off bound error.
     */
     int rightIdx = static_cast<int>(nums.size()) - k;
