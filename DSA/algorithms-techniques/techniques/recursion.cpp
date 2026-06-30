@@ -1,6 +1,3 @@
-//
-// Created by abdur on 29-06-2026.
-//
 #include <iostream>
 #include <string>
 #include <vector>
@@ -30,6 +27,7 @@ namespace Recursion {
     int factorial(const int n) {
         if (n == 0)
             return 1;
+
         return n * factorial(n - 1);
     }
 
@@ -43,12 +41,7 @@ namespace Recursion {
         return fibonacci(n - 1) + fibonacci(n - 2);
     }
 
-    void main() {
-        cout << "Sum of 10 is: " << sum(4) << endl;
-        cout << "Reverse of 'HELLO' is: " << reverse("HELLO") << endl;
-        cout << "Factorial of 4 is: " << factorial(4) << endl;
-        cout << "Fibonacci of 4 is: " << fibonacci(10) << endl;
-    }
+    void main() {}
 }  // namespace Recursion
 
 int main() {
