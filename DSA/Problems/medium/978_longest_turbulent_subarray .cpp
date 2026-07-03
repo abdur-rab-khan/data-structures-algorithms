@@ -15,17 +15,18 @@ int longestTurbulentSubarray(const vector<int>& nums) {
 
         if (diff > 1) {
             if (nums[right - 1] == nums[right]) {
-                left = right;
+                left     = right;
+                prevSign = "";
             } else if (nums[right - 1] > nums[right] && prevSign == ">") {
-                left = right - 1;
+                left     = right - 1;
+                prevSign = ">";
             } else if (nums[right - 1] < nums[right] && prevSign == "<") {
-                left = right - 1;
+                left     = right - 1;
+                prevSign = "<";
             }
-
-            maxSubarray = max(maxSubarray, (right - left) + 1);
-            prevSign    = nums[right - 1] > nums[right] ? ">" : "<";
         }
 
+        maxSubarray = max(maxSubarray, (right - left) + 1);
         right++;
     }
 
