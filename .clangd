@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-# yaml-language-server: $schema=https://json.schemastore.org/clangd.json
 CompileFlags:
   Compiler: C:/msys64/ucrt64/bin/g++.exe
   Add:
@@ -9,8 +7,3 @@ CompileFlags:
 Diagnostics:
   UnusedIncludes: Strict
   MissingIncludes: Strict
-=======
-CompileFlags:
-  Add: [-std=c++20, -Wall]
-  Compiler: C:\msys64\ucrt64\bin\g++.exe
->>>>>>> ec25f6aa24fd76af2d16912cb48a10fea5d9d539
