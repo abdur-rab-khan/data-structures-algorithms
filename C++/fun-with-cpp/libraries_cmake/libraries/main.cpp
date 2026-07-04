@@ -1,5 +1,5 @@
 // main.cpp
-#include "raylib/raylib.h"
+#include "raylib.h"
 
 /*
  * [ Learn Commands to Compile C++ Code ]:
