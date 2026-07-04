@@ -101,7 +101,9 @@
         "typeindex": "cpp",
         "valarray": "cpp"
     },
-    "terminal.integrated.fontLigatures.enabled": true,
+    "editor.fontFamily": "'JetBrains Mono', 'Fira Code', Cascadia Code, 'Droid Sans Mono', monospace",
+    "editor.fontLigatures": true,
+    "terminal.integrated.fontLigatures": true,
     "editor.mouseWheelZoom": true,
     "cSpell.words": [
         "Abdur",
@@ -112,5 +114,6 @@
     ],
     "code-runner.executorMap": {
         "cpp": "cd $dir && g++ -std=c++23 $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
-    }
+    },
+    "editor.fontFamily": "'JetBrains Mono', 'Fira Code', Cascadia Code, 'Droid Sans Mono', monospace"
 }

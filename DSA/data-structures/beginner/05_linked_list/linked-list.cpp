@@ -1,8 +1,14 @@
 #include <iostream>
 #include <memory>
 
+using std::cout;
+using std::endl;
+using std::make_shared;
+using std::shared_ptr;
+using std::weak_ptr;
+
 /*
- * 🟡 A linked list is a data structure that are form using chain of nodes, these nodes are nothing but an "object" which hold some kind of informations. Unlike array data structure that where data is stored into contiguous memory location.
+ * 🟡 A linked list is a data structure that are form using chain of nodes, these nodes are nothing but an "object" which hold some kind of information. Unlike array data structure that where data is stored into contiguous memory location.
    🟡 In linked list each node have the ""reference of a memory block"" represents the next node. Means these nodes are scattered in memory but connected with there ""reference pointer"".
    
    🔶 Information stored by node:
@@ -172,52 +178,55 @@ namespace LinkedListTypes {
     class DoublyLinkedList {
        private:
         struct Node {
-            int   value;
-            Node* next;
-            Node* previous;
+            int              value;
+            shared_ptr<Node> next;
+            shared_ptr<Node> previous;
             explicit Node(const int value) : value(value), next(nullptr), previous(nullptr) {}
         };
-        Node* head;
+        shared_ptr<Node> head_;
+        shared_ptr<Node> tail_;
 
        public:
-        DoublyLinkedList() : head(nullptr) {}
-        ~DoublyLinkedList() {
-            Node* currentNode = head;
-            while (currentNode != nullptr) {
-                Node* nextNode = currentNode->next;
-                delete currentNode;
-                currentNode = nextNode;
-            }
-        }
+        DoublyLinkedList() : head_(nullptr) {}
+        // ~DoublyLinkedList() {
+        //     Node* currentNode = head;
+        //     while (currentNode != nullptr) {
+        //         Node* nextNode = currentNode->next;
+        //         delete currentNode;
+        //         currentNode = nextNode;
+        //     }
+        // }
 
         void append(const int value) {
-            Node* newNode = new Node(value);
+            auto newNode = make_shared<Node>(value);
 
-            if (head == nullptr) {
-                head = newNode;
-                return;
+            if (head_ == nullptr) {
+                head_ = std::move(newNode);
+                tail_ = newNode;
+            } else {
+                tail_->next       = std::move(newNode);
+                newNode->previous = tail_;
+                tail_             = newNode;
             }
-
-            Node* currentNode = head;
-            while (currentNode->next != nullptr) {
-                currentNode = currentNode->next;
-            }
-
-            currentNode->next = newNode;
-
-            // It's the main difference between "Singly Linkedlist" and "Doubly LinkedList"
-            newNode->previous = currentNode;
         }
 
-        void printForward() const {
-            const Node* currentNode = head;
+        std::string toString() const {
+            std::string nodeStr = "";
+
+            const auto currentNode = head_;
             while (currentNode != nullptr) {
-                std::cout << ((currentNode->previous != nullptr) ? currentNode->previous->value
-                                                                 : -1)
-                          << " <-> " << currentNode->value << " ";
-                currentNode = currentNode->next;
+                if (currentNode->previous != nullptr) {
+                    nodeStr += std::to_string(currentNode->previous->value) + " <-> ";
+                }
+
+                nodeStr += std::to_string(currentNode->value);
+
+                if (currentNode->next != nullptr) {
+                    nodeStr += " <-> ";
+                }
             }
-            std::cout << std::endl << std::endl;
+
+            return nodeStr.empty() ? "(EMPTY)" : nodeStr;
         }
     };
 
@@ -270,8 +279,9 @@ namespace LinkedListTypes {
 
     void main() {
         // 🟡 Singly LinkedList
-        const std::unique_ptr<SinglyLinkedList> singlyLinkedList =
-            std::make_unique<SinglyLinkedList>();
+        cout << "Singly LinkedList" << endl << endl;
+
+        const auto singlyLinkedList = std::make_unique<SinglyLinkedList>();
 
         std::cout << "Linked list elements are: " << singlyLinkedList->toString() << std::endl;
 
@@ -290,20 +300,21 @@ namespace LinkedListTypes {
         std::cout << "Linked list elements are: " << singlyLinkedList->toString() << std::endl;
 
         // 🟡 Doubly LinkedList
-        const std::unique_ptr<DoublyLinkedList> doublyLinkedList =
-            std::make_unique<DoublyLinkedList>();
+        cout << endl << "Doubly LinkedList" << endl;
+
+        const auto doublyLinkedList = std::make_unique<DoublyLinkedList>();
 
         doublyLinkedList->append(11);
         doublyLinkedList->append(22);
         doublyLinkedList->append(33);
         doublyLinkedList->append(44);
 
-        std::cout << "Doubly linkedlist elements are: ";
-        doublyLinkedList->printForward();
+        std::cout << "Doubly linked list elements are: " << doublyLinkedList->toString() << endl;
 
         // 🟡 Circular LinkedList
-        const std::unique_ptr<CircularLinkedList> circularLinkedList =
-            std::make_unique<CircularLinkedList>();
+        cout << endl << "Circular LinkedList" << endl;
+
+        const auto circularLinkedList = std::make_unique<CircularLinkedList>();
 
         circularLinkedList->append(111);
         circularLinkedList->append(222);
@@ -311,7 +322,7 @@ namespace LinkedListTypes {
         circularLinkedList->append(444);
         circularLinkedList->append(555);
 
-        std::cout << "Ciruclar LinkedList elements are: ";
+        std::cout << "Circular LinkedList elements are: ";
         circularLinkedList->print();
     }
 

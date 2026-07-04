@@ -10,7 +10,7 @@
 // Template function to print array elements
 // Usage: printArrayElements(arr, "Optional message")
 template <typename T>
-void printArrayElements(T&& elements, const std::string& msg = "") {
+inline void printArrayElements(T&& elements, const std::string& msg = "") {
     if (std::ranges::empty(elements))
         std::cout << "ARRAY IS EMPTY!!!" << std::endl;
 

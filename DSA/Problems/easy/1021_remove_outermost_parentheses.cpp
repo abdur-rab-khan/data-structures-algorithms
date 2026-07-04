@@ -28,15 +28,15 @@ std::string removeOuterParentheses(const std::string& str) {
 }
 
 int main() {
-    std::string parentheses1 = "(()())(())";
-    std::string parentheses2 = "(()())(())(()(()))";
-    std::string parentheses3 = "()()";
+    const std::string parentheses1 = "(()())(())";
+    const std::string parentheses2 = "(()())(())(()(()))";
+    const std::string parentheses3 = "()()";
 
-    std::cout << "After Removing outer most parentheses: " << removeOuterParentheses(parentheses1)
+    std::cout << "After Removing outermost parentheses: " << removeOuterParentheses(parentheses1)
               << std::endl;
-    std::cout << "After Removing outer most parentheses: " << removeOuterParentheses(parentheses2)
+    std::cout << "After Removing outermost parentheses: " << removeOuterParentheses(parentheses2)
               << std::endl;
-    std::cout << "After Removing outer most parentheses: " << removeOuterParentheses(parentheses3)
+    std::cout << "After Removing outermost parentheses: " << removeOuterParentheses(parentheses3)
               << std::endl;
 
     return 0;
