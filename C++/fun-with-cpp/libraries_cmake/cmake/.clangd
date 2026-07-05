@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://json.schemastore.org/clangd.json
+CompileFlags:
+  Compiler: C:/msys64/ucrt64/bin/g++.exe
+  CompilationDatabase: build
+  Add:
+    - -std=c++23
+    - -Wall
+    - -Wextra
+Diagnostics:
+  UnusedIncludes: Strict
+  MissingIncludes: Strict

@@ -9,7 +9,7 @@
  *   then standard include paths (/usr/include/).
  *   -I adds extra path to search for .h files.
  *
- * -L<path (where is .a or .so files)>
+ * -L<path (only tell where is .a or .so files)>
  *   Linker first looks in standard library paths (/usr/lib/).
  *   -L adds extra path to search for .a or .so files.
  *

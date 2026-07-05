@@ -1,0 +1,26 @@
+// Folder-specific settings
+//
+// For a full list of overridable settings, and general information on folder-specific settings,
+// see the documentation: https://zed.dev/docs/configuring-zed#settings-files
+{
+  "languages": {
+    "C++": {
+      "format_on_save": "on",
+      "soft_wrap": "editor_width",
+    },
+  },
+  "lsp": {
+    "clangd": {
+      "binary": {
+        "path": "C:\\Program Files\\LLVM\\bin\\clangd.exe",
+        "arguments": ["--query-driver=C:/msys64/ucrt64/bin/*.exe"],
+      },
+    },
+  },
+  "terminal": {
+    "env": {
+      "NAME": "Abdur Rab Khan",
+    },
+    "working_directory": "current_file_directory",
+  },
+}
