@@ -62,8 +62,7 @@ struct Colors {
 
     //  1. STRUCT CONSTRUCTOR
     // Colors(string code) : haxCode(code) {}
-
-    Colors(string code) {
+    explicit Colors(const string& code) {
         // Add directly if color is in hex format
         if (code[0] == '#') {
             haxCode = code;
@@ -81,22 +80,52 @@ struct Colors {
         throw invalid_argument("Unsupported color format");
     }
 
-    string toRGB() {
-        int r = stoi(haxCode.substr(1, 2), nullptr, 16);
-        int g = stoi(haxCode.substr(3, 2), nullptr, 16);
-        int b = stoi(haxCode.substr(5, 2), nullptr, 16);
+    string toRGB() const {
+        const int r = stoi(haxCode.substr(1, 2), nullptr, 16);
+        const int g = stoi(haxCode.substr(3, 2), nullptr, 16);
+        const int b = stoi(haxCode.substr(5, 2), nullptr, 16);
 
         return "RGB(" + to_string(r) + ", " + to_string(g) + ", " + to_string(b) + ")";
     }
 };
 
-int main() {
-    Colors c2("RGB(34, 139, 34)");       // Static allocation --> Stack memory --> No need to delete
-    Colors* c1 = new Colors("#FF5733");  // Dynamic allocation
+struct Student {
+    string name;
+    int    age;
+    string address;
+    // Student(const string name, const int age, const string address)
+    //     : name(name), age(age), address(address) {
+    //     cout << "Constructor is called" << endl;
+    // }
+    void print() const {
+        cout << "Student name is: " << name << endl;
+        cout << "Student age is: " << age << endl;
+        cout << "Student address is: " << address << endl;
+    }
+};
 
+int main() {
+    // Static allocation and store on Stack, and automatically got remove after main remove from the stack.
+    Colors c2("#FF5733");
+
+    // Dynamic allocation and store on heap memory and automatically got removed after it gone out of scope
+    const auto c1 = make_unique<Colors>("#FF5733");
     cout << "RGB value of " << c1->haxCode << " is: " << c1->toRGB() << endl;
 
-    delete c1;
+    // 🟡 Different ways, To create an object via "Struct (blue print). See struct as just a blue print for creating an object.
+    // 👉 On struct it's possible to add constructor, but sometime it's not required we can initilize the value of struct in a very easy way.
+
+    // 1. Using "{}" it's the quickest way to create an object, and we can put value based on position on struct, but in modern C++ we can directly assign value via there .names like { .name = "Khan", .age = 21};
+    // 👉 The good thing about this appraoch is it won't automatically convert the type like using () C++ will automatically convert sometypes like "float" -> "int".
+    const Student s1 {"Abdur Rab Khan", 21, "Indira Nagar"};
+    s1.print();
+
+    // 2. Zero initilizing: Nothing will going to pass while creating an object to it will give default value, if it's not there will be no value
+    const Student s2 {};
+    s2.print();
+
+    const Age ag(52);
+    ag.print();
 
     return 0;
 }

@@ -1,3 +1,4 @@
+#include <bitset>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -24,6 +25,33 @@ int findLongestSubstringWithoutRepeating(const std::string& str) {
     }
 
     return maxSubstringSize;
+}
+
+/**
+ * I've solved this problem using bit manipulation.
+ */
+int findLongestSubstringWithoutRepeatingBit(const std::string& str) {
+    std::bitset<128> charBits;
+    int              longestSubstring = 0;
+
+    auto isCharPresent = [&](const char& ch) -> bool { return charBits.test(ch); };
+    auto toggleCharBit = [&](const char& ch) -> void { charBits.flip(ch); };
+
+    int leftIdx = 0;
+    for (int rightIdx = 0; rightIdx < static_cast<int>(str.size()); rightIdx++) {
+        // Shrink from left until the duplicate is removed
+        while (isCharPresent(str[rightIdx])) {
+            toggleCharBit(str[leftIdx]);
+            leftIdx++;
+        }
+
+        // Mark current char as seen in the window.
+        toggleCharBit(str[rightIdx]);
+
+        longestSubstring = std::max(longestSubstring, (rightIdx - leftIdx + 1));
+    }
+
+    return longestSubstring;
 }
 
 int main() {
