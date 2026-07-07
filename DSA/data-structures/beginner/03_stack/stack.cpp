@@ -1,351 +1,368 @@
 #include <deque>
 #include <iostream>
 #include <list>
-#include <queue>
 #include <stack>
 #include <vector>
 using namespace std;
 
 // 🟡 Stack implementation using different methods.
 namespace StackDS {
-    class IStack {
-       public:
-        // virtual IStack(int size) = 0; ❌ Wrong because, IStack  is called with object is created but for "ABSTRACT CLASS" no object will created.
-        // 1️⃣. Member function can be a virtual function
-        // 2️⃣. Destructure can be a virtual
-        // 3️⃣. Constructor ❌
-        // 4️⃣. Member variables ❌
+class IStack {
+public:
+  // virtual IStack(int size) = 0; ❌ Wrong because, IStack  is called with
+  // object is created but for "ABSTRACT CLASS" no object will created. 1️⃣.
+  // Member function can be a virtual function 2️⃣. Destructure can be a virtual
+  // 3️⃣. Constructor ❌
+  // 4️⃣. Member variables ❌
 
-        // 👉 To understand why, Because abstract class is for creating a blueprint, like what member function will be there. There we only add things which are required in the main class.
+  // 👉 To understand why, Because abstract class is for creating a blueprint,
+  // like what member function will be there. There we only add things which are
+  // required in the main class.
 
-        virtual ~IStack() = 0;
+  virtual ~IStack() = 0;
 
-        // 👉 "Virtual: " Actually "virtual" keyword in C++, that tell C++ compiler don't decide that will run instead decide on run time.
-        virtual void push(int n) = 0;
-        virtual int pop() = 0;
-        virtual int peek() = 0;
-        virtual bool isEmpty() = 0;
-        // 👉 Enforce "= 0", We should have to implement this on "main" class, but it's not a case with "DESTRUCTURE" because even if you aren't define, C++ compiler will automatically create this.
-        // 👉 Which is bad sometimes, Like suppose we are creating dynamic object, 100% will going to need a ""DESTRUCTURE"" for cleaning things.
-    };
+  // 👉 "Virtual: " Actually "virtual" keyword in C++, that tell C++ compiler
+  // don't decide that will run instead decide on run time.
+  virtual void push(int n) = 0;
+  virtual int pop() = 0;
+  virtual int peek() = 0;
+  virtual bool isEmpty() = 0;
+  // 👉 Enforce "= 0", We should have to implement this on "main" class, but
+  // it's not a case with "DESTRUCTURE" because even if you aren't define, C++
+  // compiler will automatically create this. 👉 Which is bad sometimes, Like
+  // suppose we are creating dynamic object, 100% will going to need a
+  // ""DESTRUCTURE"" for cleaning things.
+};
 
-    // Pure virtual destructors still need a definition for the linker.
-    IStack::~IStack() = default;
+// Pure virtual destructors still need a definition for the linker.
+IStack::~IStack() = default;
 
-    // 1️⃣. Let's implement "stack" using array DATA STRUCTURE.
-    class ArrayStack : public IStack {
-        int* stack;
-        int top;
-        int size;
+// 1️⃣. Let's implement "stack" using array DATA STRUCTURE.
+class ArrayStack : public IStack {
+  int *stack;
+  int top;
+  int size;
 
-       public:
-        ArrayStack(int s) {
-            stack = new int[s];
-            top = -1;
-            size = s;
-        }
+public:
+  ArrayStack(int s) {
+    stack = new int[s];
+    top = -1;
+    size = s;
+  }
 
-        ~ArrayStack() { delete[] stack; }
+  ~ArrayStack() { delete[] stack; }
 
-        void push(int n) override {
-            if (isFull()) {
-                cout << "Stack Overflow\n";
-                return;
-            }
-
-            stack[++top] = n;
-        }
-
-        int pop() override {
-            if (top == -1) {
-                cout << "Stack Underflow\n";
-                return -1;
-            }
-
-            return stack[top--];
-        }
-
-        int peek() override {
-            if (top == -1) {
-                cout << "Stack is empty\n";
-                return -1;
-            }
-
-            return stack[top];
-        }
-
-        bool isEmpty() override { return top < 0; }
-        bool isFull() { return top >= size - 1; }
-    };
-
-    // 2️⃣. Let's implement "stack" using VECTOR.
-    class VectorStack : public IStack {
-        vector<int> stack;
-
-       public:
-        void push(int n) { stack.push_back(n); }
-
-        int pop() {
-            if (isEmpty()) {
-                cout << "Stack is empty\n";
-                return -1;
-            }
-
-            int val = stack.back();
-            stack.pop_back();
-            return val;
-        }
-
-        int peek() {
-            if (isEmpty()) {
-                cout << "Stack is empty\n";
-                return -1;
-            }
-
-            return stack.back();
-        }
-
-        bool isEmpty() { return stack.empty(); }
-    };
-
-    // 3️⃣. "main" function
-    void main() {
-        StackDS::ArrayStack s1(4);
-        StackDS::VectorStack s2;
-
-        s1.push(5);
-        s1.push(4);
-        s1.push(8);
-        s1.push(12);
-        // s1.push(12); ❌ Error: STACK OVERFLOW
-
-        cout << "Peek element is: " << s1.peek() << endl;  // 12
-
-        // 3️⃣. Let's use build-in "Stack" from stl
-        std::stack<int> st;
-
-        st.push(5);                  // "Push" is used to add element at the top
-        cout << st.empty() << endl;  // Tell's whether stack is empty or not.
-        cout << st.size() << endl;   // Gives the size of stack.
-        cout << st.top() << endl;    // Gives the top element of the stack.
-        st.pop();                    // Remove top element from the top
-
-        // Stack supports two types of "underlying container" where they actually store the data.
-        // And we can change them manually, First element of "STACK CONSTRUCTOR" is the "underlying container".
-        // By default, ""UNDERLYING CONTAINER IS DEQUEUE"".
-        std::deque<int> d(1, 8);
-        std::stack<int> s(d);
-
-        // Let's use list as a underlying container
-        std::list<int> l(1, 12);
-        std::stack<int, std::list<int>> sl(l);
-
-        // Let's use vector as a underlying container
-        std::vector<int> vec(1, 8);
-        std::stack<int, std::vector<int>> sv(vec);
-
-        cout << "LL: " << s.top() << endl;
+  void push(int n) override {
+    if (isFull()) {
+      cout << "Stack Overflow\n";
+      return;
     }
 
-}  // namespace StackDS
+    stack[++top] = n;
+  }
+
+  int pop() override {
+    if (top == -1) {
+      cout << "Stack Underflow\n";
+      return -1;
+    }
+
+    return stack[top--];
+  }
+
+  int peek() override {
+    if (top == -1) {
+      cout << "Stack is empty\n";
+      return -1;
+    }
+
+    return stack[top];
+  }
+
+  bool isEmpty() override { return top < 0; }
+  bool isFull() { return top >= size - 1; }
+};
+
+// 2️⃣. Let's implement "stack" using VECTOR.
+class VectorStack : public IStack {
+  vector<int> stack;
+
+public:
+  void push(int n) { stack.push_back(n); }
+
+  int pop() {
+    if (isEmpty()) {
+      cout << "Stack is empty\n";
+      return -1;
+    }
+
+    int val = stack.back();
+    stack.pop_back();
+    return val;
+  }
+
+  int peek() {
+    if (isEmpty()) {
+      cout << "Stack is empty\n";
+      return -1;
+    }
+
+    return stack.back();
+  }
+
+  bool isEmpty() { return stack.empty(); }
+};
+
+// 3️⃣. "main" function
+void main() {
+  StackDS::ArrayStack s1(4);
+  StackDS::VectorStack s2;
+
+  s1.push(5);
+  s1.push(4);
+  s1.push(8);
+  s1.push(12);
+  // s1.push(12); ❌ Error: STACK OVERFLOW
+
+  cout << "Peek element is: " << s1.peek() << endl; // 12
+
+  // 3️⃣. Let's use build-in "Stack" from stl
+  std::stack<int> st;
+
+  st.push(5);                 // "Push" is used to add element at the top
+  cout << st.empty() << endl; // Tell's whether stack is empty or not.
+  cout << st.size() << endl;  // Gives the size of stack.
+  cout << st.top() << endl;   // Gives the top element of the stack.
+  st.pop();                   // Remove top element from the top
+
+  // Stack supports two types of "underlying container" where they actually
+  // store the data. And we can change them manually, First element of "STACK
+  // CONSTRUCTOR" is the "underlying container". By default, ""UNDERLYING
+  // CONTAINER IS DEQUEUE"".
+  std::deque<int> d(1, 8);
+  std::stack<int> s(d);
+
+  // Let's use list as a underlying container
+  std::list<int> l(1, 12);
+  std::stack<int, std::list<int>> sl(l);
+
+  // Let's use vector as a underlying container
+  std::vector<int> vec(1, 8);
+  std::stack<int, std::vector<int>> sv(vec);
+
+  cout << "LL: " << s.top() << endl;
+}
+
+} // namespace StackDS
 
 // 🟡 Different types of Stacks
 namespace TypesOfStack {
-    /* 2️⃣. Monotonic Stack
-        * In normal stack, there is no rule while pushing the element into the stack, but in monotonic stack there is a rule for pushing onto the stack.
-        * 🟡 Types of Monotonic Stack
-        *    1️⃣. Increasing Stack: In this case, If current element is greater than elements inside stack then we'll remove every elements smaller than current one, but if current element is smaller we push like in normal stack.
-        *    2️⃣. Decreasing Stack: In this case, If current element is smaller than elements inside stack than we'll remove every elements greater than current one, but if current element is greater than we push like in normal stack.
-    */
-    class MonotonicInc : public StackDS::IStack {
-        std::stack<int> st;
+/* 2️⃣. Monotonic Stack
+ * In normal stack, there is no rule while pushing the element into the stack,
+ * but in monotonic stack there is a rule for pushing onto the stack. 🟡 Types
+ * of Monotonic Stack 1️⃣. Increasing Stack: In this case, If current element is
+ * greater than elements inside stack then we'll remove every elements smaller
+ * than current one, but if current element is smaller we push like in normal
+ * stack. 2️⃣. Decreasing Stack: In this case, If current element is smaller than
+ * elements inside stack than we'll remove every elements greater than current
+ * one, but if current element is greater than we push like in normal stack.
+ */
+class MonotonicInc : public StackDS::IStack {
+  std::stack<int> st;
 
-       public:
-        void push(int v) override {
-            // Remove smaller from top
-            if (!st.empty()) {
-                int top = st.top();
-                while (!st.empty() && st.top() < v) {
-                    st.pop();
-                }
-            }
-
-            st.push(v);
-        }
-
-        int pop() override {
-            int top = st.top();
-            st.pop();
-            return top;
-        }
-
-        int peek() override { return st.top(); }
-
-        bool isEmpty() override { return st.empty(); }
-
-        int size() { return st.size(); }
-    };
-
-    class MonotonicDec : public StackDS::IStack {
-        std::stack<int> st;
-
-       public:
-        void push(int v) override {
-            // Remove smaller from top
-            if (!st.empty()) {
-                int top = st.top();
-                while (!st.empty() && v < st.top()) {
-                    st.pop();
-                }
-            }
-
-            st.push(v);
-        }
-
-        int pop() override {
-            int top = st.top();
-            st.pop();
-            return top;
-        }
-
-        int peek() override { return st.top(); }
-
-        bool isEmpty() override { return st.empty(); }
-
-        int size() { return st.size(); }
-    };
-
-    /* 3️⃣. Min/Max Stack
-        * In normal stack, there is no rule while pushing the element into the stack, but in min/max stack there is a rule for pushing onto the stack.
-        * 🟡 Types of min/max Stack
-        *    1️⃣. min Stack: In this case, If current element is greater than top elements inside stack, than instead of pushing current element we push ""current top element"", but if current one is smaller than we push like in normal stack.
-        *    2️⃣. max Stack: In this case, If current element is smaller than top elements inside stack, than instead of pushing current element we push ""current top element"", but if current one is greater than we push like in normal stack.
-    */
-    class MinStack : public StackDS::IStack {
-        std::stack<int> val;
-        std::stack<int> min;
-
-       public:
-        void push(int v) override {
-            val.push(v);
-
-            if (min.empty())
-                min.push(v);
-            else
-                min.push(std::min(v, min.top()));
-        }
-
-        int pop() override {
-            int top = val.top();
-            val.pop();
-            min.pop();
-            return top;
-        }
-
-        int peek() override { return val.top(); }
-
-        int getMin() { return min.top(); }
-
-        bool isEmpty() override { return val.empty(); }
-    };
-
-    class MaxStack : public StackDS::IStack {
-        std::stack<int> val;
-        std::stack<int> max;
-
-       public:
-        void push(int v) override {
-            val.push(v);
-
-            if (max.empty())
-                max.push(v);
-            else
-                max.push(std::min(v, max.top()));
-        }
-
-        int pop() override {
-            int top = val.top();
-            val.pop();
-            max.pop();
-            return top;
-        }
-
-        int peek() override { return val.top(); }
-
-        int getMax() { return max.top(); }
-
-        bool isEmpty() override { return val.empty(); }
-    };
-
-    // 4️⃣. Two Stacks
-    class TwoStack : public StackDS::IStack {
-        std::stack<int> inbox;
-        std::stack<int> outbox;
-
-       public:
-        TwoStack() {}
-
-        void push(int x) override { inbox.push(x); }
-
-        int pop() override {
-            if (outbox.empty()) {
-                while (!inbox.empty()) {
-                    int top = inbox.top();
-                    outbox.push(top);
-                    inbox.pop();
-                }
-            }
-
-            int top = outbox.top();
-            outbox.pop();
-            return top;
-        }
-
-        int peek() override {
-            if (outbox.empty()) {
-                while (!inbox.empty()) {
-                    int top = inbox.top();
-                    outbox.push(top);
-                    inbox.pop();
-                }
-            }
-
-            return outbox.top();
-        }
-
-        bool isEmpty() override { return outbox.empty() && inbox.empty(); }
-    };
-
-    void main() {
-        // 2️⃣. Monotonic Stack
-        MonotonicInc mst;
-
-        mst.push(5);
-        mst.push(1);
-        mst.push(2);
-
-        std::cout << "Top element is: " << mst.peek() << " -- Size is: " << mst.size() << std::endl;
-
-        mst.push(15);  // Now all the previous small elements will be removed.
-
-        std::cout << "Top element is: " << mst.peek() << " -- Size is: " << mst.size() << std::endl;
-
-        // 4️⃣. Two Stacks
-        TwoStack st;
-
-        st.push(1);
-        st.push(2);
-        st.push(3);
-        st.push(4);
-        st.push(5);
-
-        std::cout << "Top element is: " << st.peek() << std::endl;
+public:
+  void push(int v) override {
+    // Remove smaller from top
+    if (!st.empty()) {
+      int top = st.top();
+      while (!st.empty() && st.top() < v) {
+        st.pop();
+      }
     }
-};  // namespace TypesOfStack
+
+    st.push(v);
+  }
+
+  int pop() override {
+    int top = st.top();
+    st.pop();
+    return top;
+  }
+
+  int peek() override { return st.top(); }
+
+  bool isEmpty() override { return st.empty(); }
+
+  int size() { return st.size(); }
+};
+
+class MonotonicDec : public StackDS::IStack {
+  std::stack<int> st;
+
+public:
+  void push(int v) override {
+    // Remove smaller from top
+    if (!st.empty()) {
+      int top = st.top();
+      while (!st.empty() && v < st.top()) {
+        st.pop();
+      }
+    }
+
+    st.push(v);
+  }
+
+  int pop() override {
+    int top = st.top();
+    st.pop();
+    return top;
+  }
+
+  int peek() override { return st.top(); }
+
+  bool isEmpty() override { return st.empty(); }
+
+  int size() { return st.size(); }
+};
+
+/* 3️⃣. Min/Max Stack
+ * In normal stack, there is no rule while pushing the element into the stack,
+ * but in min/max stack there is a rule for pushing onto the stack. 🟡 Types of
+ * min/max Stack 1️⃣. min Stack: In this case, If current element is greater than
+ * top elements inside stack, than instead of pushing current element we push
+ * ""current top element"", but if current one is smaller than we push like in
+ * normal stack. 2️⃣. max Stack: In this case, If current element is smaller than
+ * top elements inside stack, than instead of pushing current element we push
+ * ""current top element"", but if current one is greater than we push like in
+ * normal stack.
+ */
+class MinStack : public StackDS::IStack {
+  std::stack<int> val;
+  std::stack<int> min;
+
+public:
+  void push(int v) override {
+    val.push(v);
+
+    if (min.empty())
+      min.push(v);
+    else
+      min.push(std::min(v, min.top()));
+  }
+
+  int pop() override {
+    int top = val.top();
+    val.pop();
+    min.pop();
+    return top;
+  }
+
+  int peek() override { return val.top(); }
+
+  int getMin() { return min.top(); }
+
+  bool isEmpty() override { return val.empty(); }
+};
+
+class MaxStack : public StackDS::IStack {
+  std::stack<int> val;
+  std::stack<int> max;
+
+public:
+  void push(int v) override {
+    val.push(v);
+
+    if (max.empty())
+      max.push(v);
+    else
+      max.push(std::min(v, max.top()));
+  }
+
+  int pop() override {
+    int top = val.top();
+    val.pop();
+    max.pop();
+    return top;
+  }
+
+  int peek() override { return val.top(); }
+
+  int getMax() { return max.top(); }
+
+  bool isEmpty() override { return val.empty(); }
+};
+
+// 4️⃣. Two Stacks
+class TwoStack : public StackDS::IStack {
+  std::stack<int> inbox;
+  std::stack<int> outbox;
+
+public:
+  TwoStack() {}
+
+  void push(int x) override { inbox.push(x); }
+
+  int pop() override {
+    if (outbox.empty()) {
+      while (!inbox.empty()) {
+        int top = inbox.top();
+        outbox.push(top);
+        inbox.pop();
+      }
+    }
+
+    int top = outbox.top();
+    outbox.pop();
+    return top;
+  }
+
+  int peek() override {
+    if (outbox.empty()) {
+      while (!inbox.empty()) {
+        int top = inbox.top();
+        outbox.push(top);
+        inbox.pop();
+      }
+    }
+
+    return outbox.top();
+  }
+
+  bool isEmpty() override { return outbox.empty() && inbox.empty(); }
+};
+
+void main() {
+  // 2️⃣. Monotonic Stack
+  MonotonicInc mst;
+
+  mst.push(5);
+  mst.push(1);
+  mst.push(2);
+
+  std::cout << "Top element is: " << mst.peek() << " -- Size is: " << mst.size()
+            << std::endl;
+
+  mst.push(15); // Now all the previous small elements will be removed.
+
+  std::cout << "Top element is: " << mst.peek() << " -- Size is: " << mst.size()
+            << std::endl;
+
+  // 4️⃣. Two Stacks
+  TwoStack st;
+
+  st.push(1);
+  st.push(2);
+  st.push(3);
+  st.push(4);
+  st.push(5);
+
+  std::cout << "Top element is: " << st.peek() << std::endl;
+}
+}; // namespace TypesOfStack
 
 int main() {
-    // StackDS::main();
-    TypesOfStack::main();
+  // StackDS::main();
+  TypesOfStack::main();
 
-    return 0;
+  return 0;
 }

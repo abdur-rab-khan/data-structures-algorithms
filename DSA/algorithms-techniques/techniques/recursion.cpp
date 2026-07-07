@@ -21,7 +21,7 @@ namespace Recursion {
             return str;
         }
 
-        return string(1, str.back()) + reverse(str.substr(0, str.size() - 1));
+        return reverse(str.substr(1)) + str[0];
     }
 
     int factorial(const int n) {
@@ -41,7 +41,12 @@ namespace Recursion {
         return fibonacci(n - 1) + fibonacci(n - 2);
     }
 
-    void main() {}
+    void main() {
+        cout << "Sum from 1 to 10 is: " << sum(10) << endl;
+        cout << "Reverse of 'HELLO' is: " << reverse("HELLO") << endl;
+        cout << "Factorial of 5 is: " << factorial(5) << endl;
+        cout << "Fibonacci of 8 is: " << fibonacci(8) << endl;
+    }
 }  // namespace Recursion
 
 int main() {

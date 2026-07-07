@@ -12,7 +12,7 @@
   "lsp": {
     "clangd": {
       "binary": {
-        "path": "C:\\Program Files\\LLVM\\bin\\clangd.exe",
+        "path": "C:\\msys64\\ucrt64\\bin\\clangd.exe",
         "arguments": ["--query-driver=C:/msys64/ucrt64/bin/*.exe"],
       },
     },
