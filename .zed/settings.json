@@ -3,6 +3,7 @@
 // For a full list of overridable settings, and general information on folder-specific settings,
 // see the documentation: https://zed.dev/docs/configuring-zed#settings-files
 {
+  "show_edit_predictions": false,
   "languages": {
     "C++": {
       "format_on_save": "on",
@@ -12,7 +13,7 @@
   "lsp": {
     "clangd": {
       "binary": {
-        "path": "C:\\msys64\\ucrt64\\bin\\clangd.exe",
+        "path": "C:\\Program Files\\LLVM\\bin\\clangd",
         "arguments": ["--query-driver=C:/msys64/ucrt64/bin/*.exe"],
       },
     },

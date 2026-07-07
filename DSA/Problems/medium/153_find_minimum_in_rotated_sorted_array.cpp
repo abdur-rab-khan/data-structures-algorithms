@@ -6,7 +6,6 @@
 
 using std::cout;
 using std::endl;
-using std::min;
 using std::vector;
 
 int findMinOnRotatedSortedArray(const vector<int>& nums) {
@@ -19,14 +18,11 @@ int findMinOnRotatedSortedArray(const vector<int>& nums) {
     while (leftIdx < rightIdx) {
         const int midIdx = leftIdx + (rightIdx - leftIdx) / 2;
 
-        /*
-                If nums[midIdx] > nums[rightIdx]
-                * Mean I can say min can never be smaller, So that I can directly increase by """"midIdx + 1""""
-            */
         if (nums[midIdx] > nums[rightIdx]) {
             leftIdx = midIdx + 1;
         } else {
-            // Here we aren't decreasing by """midIdx - 1""", because may there is a chance that nums[midIdx] can be a smaller one.
+            // We aren't doing "mid - 1", because maybe mid will be smaller among all of them.
+            // Look at this case: [3, 1, 2], mid is smaller than 2 right but if do "right = mid - 1", than will going to miss 1 right?? think about that
             rightIdx = midIdx;
         }
     }

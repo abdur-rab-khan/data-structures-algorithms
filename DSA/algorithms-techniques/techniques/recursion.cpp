@@ -1,10 +1,14 @@
 #include <iostream>
 #include <string>
+#include <utility>
 #include <vector>
+
+#include "../../dsa_utils.h"
 
 using std::cout;
 using std::endl;
 using std::string;
+using std::swap;
 using std::vector;
 
 namespace Recursion {
@@ -41,11 +45,29 @@ namespace Recursion {
         return fibonacci(n - 1) + fibonacci(n - 2);
     }
 
+    int runningSum(vector<int> arr, int left = 0, int sum = 0) {
+        if (left >= static_cast<int>(arr.size())) {
+            return sum;
+        }
+        return runningSum(arr, left + 1, sum + arr[left]);
+    }
+
+    vector<string> reverseString(vector<string> str, int left, int right) {
+        if (left > right) {
+            return str;
+        }
+        swap(str[left], str[right]);
+        return reverseString(str, left + 1, right - 1);
+    }
+
     void main() {
         cout << "Sum from 1 to 10 is: " << sum(10) << endl;
         cout << "Reverse of 'HELLO' is: " << reverse("HELLO") << endl;
         cout << "Factorial of 5 is: " << factorial(5) << endl;
         cout << "Fibonacci of 8 is: " << fibonacci(8) << endl;
+        cout << "Sum of {1, 2, 3, 4, 5} is: " << runningSum({1, 2, 3, 4, 5}) << endl;
+
+        printArrayElements(reverseString({"H", "E", "L", "L", "O"}, 0, 4));
     }
 }  // namespace Recursion
 
