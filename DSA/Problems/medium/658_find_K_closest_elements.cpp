@@ -5,36 +5,29 @@ using std::cout;
 using std::endl;
 using std::vector;
 
-// 🟡 Most Optimized approach --> Time Complexity o(n log n + k), Space Complexity o(1)
+// Optimized appraoch to solve this problem with-in "⌛ o(log n)" and "🗃 o(1)"
 vector<int> findKClosestElements(const vector<int>& nums, const int k, const int x) {
-    int leftIdx = 0;
+    int left = 0;
 
-    /*
-     * Suppose the array looks like this [1, 2, 3, 4, 5]
-     * Because the subarrays size will have size "K" suppose K = 3
-     * 1. [1, 2, 3, 4, 5]
-     *     L  M   R
-     * 2. [1, 2, 3, 4, 5]
-     *
-     * 👉 If we don't subtract the "K" from the size, It will lead an off bound error.
-    */
-    int rightIdx = static_cast<int>(nums.size()) - k;
+    // 1. Doing "arr.size() - k", because we'll going to create imaginary window To check whether imaginary window is closer than current on.
+    // 1. By substracting with "k" make window smaller enough to create window without any overflow.
+    int right = static_cast<int>(arr.size()) - k;
 
-    while (leftIdx < rightIdx) {
-        const int midIdx = (leftIdx + rightIdx) / 2;
+    while(left < right){
+        int mid = left + (right - left) / 2;
 
-        // There should be two conditions either "rightIdx" will update or "leftIdx", To check whether this window is good, We have to compare "midIdx" with "midIdx + k"
-        // If midIdx is correct means, we have to shrink towards right by "midIdx", Otherwise shrink will happen towards left by "midIdx + 1"
-        if (x - nums[midIdx] > nums[midIdx + k] - x) {
-            leftIdx = midIdx + 1;
-        } else {
-            rightIdx = midIdx;
+        if(x - arr[mid] > arr[mid + k] - x){
+            // If arr[mid+k] is closer to x than arr[mid], we've proven the answer is strictly to the right of mid. So left = mid + 1 is a confident move, not a guess.
+            left = mid + 1;
+        }else {
+            //  mid is still a possible answer (not proven worse), so keep it in range → right = mid
+            right = mid;
         }
     }
 
-    return vector<int>(nums.begin() + leftIdx, nums.begin() + leftIdx + k);
-}
+    return vector(arr.begin() + left, arr.begin() + left + k);}
 
+// Optimized appraoch but the time-complexity is "⌛ o(n)" and "🗃 o(1)"
 vector<int> findKClosestElementTwoPointers(const vector<int>& nums, const int k, const int x) {
     int leftIdx  = 0;
     int rightIdx = static_cast<int>(nums.size()) - 1;
