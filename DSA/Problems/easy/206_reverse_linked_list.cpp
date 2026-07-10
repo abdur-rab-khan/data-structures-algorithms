@@ -8,47 +8,50 @@ using std::make_unique;
 using std::string;
 using std::unique_ptr;
 
+struct ListNode {
+    int                  value;
+    unique_ptr<ListNode> next;
+};
+
 class SinglyLinkedList {
    private:
-    struct Node {
-        int              value;
-        unique_ptr<Node> next;
-    };
+    unique_ptr<ListNode> head;
 
    public:
-    unique_ptr<Node> head;
-    SinglyLinkedList() : head(nullptr) {}
+    SinglyLinkedList() : head(nullptr) {};
 
     void append(int value) {
-        auto newNode = make_unique<Node>(value);
+        auto newListNode = make_unique<ListNode>(value);
 
         if (head == nullptr) {
-            head = std::move(newNode);
+            head = std::move(newListNode);
             return;
         } else {
-            auto currentNode = head.get();
-            while (currentNode->next != nullptr) {
-                currentNode = (currentNode->next).get();
+            auto currentListNode = head.get();
+            while (currentListNode->next != nullptr) {
+                currentListNode = (currentListNode->next).get();
             }
 
-            currentNode->next = std::move(newNode);
+            currentListNode->next = std::move(newListNode);
         }
     }
 
     string toString() const {
         string result = "";
 
-        const Node* currentNode = head.get();
-        while (currentNode != nullptr) {
-            result += std::to_string(currentNode->value) + " ";
-            currentNode = currentNode->next.get();
+        const ListNode* currentListNode = head.get();
+        while (currentListNode != nullptr) {
+            result += std::to_string(currentListNode->value) + " ";
+            currentListNode = currentListNode->next.get();
         }
 
         return result.empty() ? "(EMPTY)" : result;
     }
 
-    /* 
-      🟡 Iterative Approach to solve this problem, To reverse a linkedlist we'll start from head and gradually changing the pointers that pointing the next node.
+    auto getHead() { return std::move(head); }
+
+    /*
+      🟡 Iterative Approach to solve this problem, To reverse a linkedlist we'll start from head and gradually changing the pointers that pointing the next ListNode.
       👉 Let's see an example: 1 --> 2 --> 3 --> 4 --> 5
               1 --> nullptr, head = 2 // Head will going to be tail
               2 --> 1, head = 3
@@ -57,17 +60,40 @@ class SinglyLinkedList {
               5 --> 4 --> 3 --> 2 --> 1 // Now we fully reverse the linkedlist
     */
     void reverseLinkedList() {
-        unique_ptr<Node> previous = nullptr;
+        unique_ptr<ListNode> previous = nullptr;
 
         while (head != nullptr) {
-            unique_ptr<Node> next = std::move(head->next);
-            head->next            = std::move(previous);
-            previous              = std::move(head);
-            head                  = std::move(next);
+            unique_ptr<ListNode> next = std::move(head->next);
+            head->next                = std::move(previous);
+            previous                  = std::move(head);
+            head                      = std::move(next);
         }
         head = std::move(previous);
     }
 };
+
+/*
+ * 👉 We're trying to solve this problem via "recursive" approach, where we using "divide and conquer" approach, let's see how it's working
+ * Example: 1 ➡️ 2 ➡️ 3
+ *
+ * Step 1: When list = 1 ➡️ 3, Calling fn for (2 ➡️ 3) --> Updating 2 ➡️ next ➡️ next = head (2), Now it become 2 ⬅️ 3 ⬅️ 4 -- Return 3 tail/newHead
+ * Step 2: When list = 2 ➡️ 3, Calling fn for (3) ➡️ Updating 3 ➡️ next ➡️ next = head (3), Now it become 3 ⬅️ 4 -- Return 3 tail/newHead
+ * Step 3: Now the basecase hit ➡️ Return 3 tail/newHead
+ *
+*/
+unique_ptr<ListNode> reverseListRec(unique_ptr<ListNode> head) {
+    if (head == nullptr || head->next == nullptr) {
+        return head;
+    }
+
+    // 👉 Everything time this going to return the last node which is oldTail/newHead, once we reaches to end of the node.
+    auto reversedHead = reverseListRec(std::move(head->next));
+
+    head->next->next = std::move(head);
+    head->next       = nullptr;
+
+    return reversedHead;
+}
 
 int main() {
     const auto singlyLinkedList = make_unique<SinglyLinkedList>();
@@ -78,11 +104,13 @@ int main() {
     singlyLinkedList->append(4);
     singlyLinkedList->append(5);
 
-    cout << "Node are: " << singlyLinkedList->toString() << endl;
+    auto reversedList = reverseListRec(singlyLinkedList->getHead());
 
-    singlyLinkedList->reverseLinkedList();
-
-    cout << "Node are: " << singlyLinkedList->toString() << endl;
+    cout << "Reversed List elements are: ";
+    while (reversedList != nullptr) {
+        cout << reversedList->value << " ";
+        reversedList = std::move(reversedList->next);
+    }
 
     return 0;
 }
