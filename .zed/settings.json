@@ -8,6 +8,42 @@
       "format_on_save": "on",
       "soft_wrap": "editor_width",
     },
+    "HTML": {
+      "enable_language_server": false
+    },
+    "Prisma": {
+      "enable_language_server": false
+    },
+    "YAML": {
+      "enable_language_server": false
+    },
+    "TypeScript": {
+      "enable_language_server": false
+    },
+    "TSX": {
+      "enable_language_server": false
+    },
+    "Rust": {
+      "enable_language_server": false
+    },
+    "Python": {
+      "enable_language_server": false
+    },
+    "JavaScript": {
+      "enable_language_server": false
+    },
+    "Go": {
+      "enable_language_server": false
+    },
+    "CSS": {
+      "enable_language_server": false
+    },
+    "Go Mod": {
+      "enable_language_server": false
+    },
+    "Go Work": {
+      "enable_language_server": false
+    },
   },
   "lsp": {
     "clangd": {
