@@ -21,8 +21,6 @@ class SinglyLinkedList {
     Node* head_;
 
     SinglyLinkedList() : tail_(nullptr), head_(nullptr) {}
-    explicit SinglyLinkedList(Node* head = nullptr, Node* tail = nullptr)
-        : tail_(tail), head_(head) {}
 
     ~SinglyLinkedList() {
         const Node* currentNode = head_;
@@ -50,11 +48,21 @@ class SinglyLinkedList {
         Node* head2 = list2.head_;
 
         if (head1 == nullptr) {
-            return SinglyLinkedList(head2, list2.tail_);
+            SinglyLinkedList newList;
+
+            newList.head_ = head2;
+            newList.tail_ = list2.tail_;
+
+            return newList;
         }
 
         if (head2 == nullptr) {
-            return SinglyLinkedList(head1, tail_);
+            SinglyLinkedList newList;
+
+            newList.head_ = head1;
+            newList.tail_ = tail_;
+
+            return newList;
         }
 
         Node* ptr   = head1;
@@ -86,7 +94,12 @@ class SinglyLinkedList {
             tail_->next = head2;
         }
 
-        return SinglyLinkedList(ptr, tail_);
+        SinglyLinkedList list;
+
+        list.head_ = ptr;
+        list.tail_ = tail_;
+
+        return list;
     }
 
     string toString() {
@@ -104,46 +117,24 @@ class SinglyLinkedList {
 
 typedef Node* List;
 
-// List mergeTwoList(List list1, List list2) {
-//     if (list1 == nullptr) {
-//         return list2;
-//     }
-//
-//     if (list2 == nullptr) {
-//         return list1;
-//     }
-//
-//     List ptr   = list1;
-//     List tail_ = list1;
-//
-//     if (list1->value > list2->value) {
-//         ptr   = list2;
-//         tail_ = list2;
-//         list2 = list2->next;
-//     } else {
-//         list1 = list1->next;
-//     }
-//
-//     while (list1 && list2) {
-//         if (list1->value > list2->value) {
-//             tail_->next = list2;
-//             tail_       = tail_->next;
-//             list2       = list2->next;
-//         } else {
-//             tail_->next = list1;
-//             tail_       = tail_->next;
-//             list1       = list1->next;
-//         }
-//     }
-//
-//     if (list1 != nullptr) {
-//         tail_->next = list1;
-//     } else {
-//         tail_->next = list2;
-//     }
-//
-//     return ptr;
-// }
+// Recursive version for "merging two list"
+List mergeTwoList(List list1, List list2) {
+    if (list1 == nullptr) {
+        return list2;
+    }
+
+    if (list2 == nullptr) {
+        return list1;
+    }
+
+    if (list1->value <= list2->value) {
+        list1->next = mergeTwoList(list1->next, list2);
+        return list1;
+    } else {
+        list2->next = mergeTwoList(list1, list2->next);
+        return list2;
+    }
+}
 
 int main() {
     const auto list1 = new SinglyLinkedList();
@@ -166,6 +157,7 @@ int main() {
         cout << mergedList->value << " ";
         mergedList = mergedList->next;
     }
+    cout << endl;
 
     delete list1;
     delete list2;

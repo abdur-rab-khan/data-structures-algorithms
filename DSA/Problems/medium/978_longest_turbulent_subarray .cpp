@@ -3,46 +3,43 @@
 
 using namespace std;
 
-int longestTurbulentSubarray(const vector<int>& nums) {
-    int left        = 0;
-    int right       = 0;
-    int maxSubarray = 0;
+int findLongestTurbulentSubarray(vector<int> nums) {
+    int    maxSubarray  = 1;
+    string previousSign = "";
 
-    string prevSign = "";
+    int leftIdx = 0, rightIdx = 1;
+    while (rightIdx < static_cast<int>(nums.size())) {
+        if (!(nums[rightIdx] == nums[rightIdx - 1])) {
+            const auto invalidSign = (nums[rightIdx - 1] > nums[rightIdx] && previousSign == ">") ||
+                                     (nums[rightIdx - 1] < nums[rightIdx] && previousSign == "<");
 
-    while (right < nums.size()) {
-        const int diff = right - left + 1;
-
-        if (diff > 1) {
-            if (nums[right - 1] == nums[right]) {
-                left     = right;
-                prevSign = "";
-            } else if (nums[right - 1] > nums[right] && prevSign == ">") {
-                left     = right - 1;
-                prevSign = ">";
-            } else if (nums[right - 1] < nums[right] && prevSign == "<") {
-                left     = right - 1;
-                prevSign = "<";
+            if (invalidSign) {
+                // Why we are doing like this??
+                // Once it become invalid, means the sign is invalid, but we know that "right - 1" will be valid.
+                // It's because there will be only two elements, we there's no way to be a wrong substring
+                leftIdx = rightIdx - 1;
             }
+
+            previousSign = nums[rightIdx - 1] > nums[rightIdx] ? ">" : "<";
+        } else {
+            previousSign = "";
+
+            // Why we aren't just doing "right - 1", because both are same, we can't say it will be turbulent subarray.
+            // It's because of turbulent subarray are a subarray where either ">" or "<" not "==", that's why "right - 1" will never be a valid subarray.
+            leftIdx = rightIdx;
         }
 
-        maxSubarray = max(maxSubarray, (right - left) + 1);
-        right++;
+        maxSubarray = max(maxSubarray, (rightIdx - leftIdx) + 1);
+        rightIdx++;
     }
 
     return maxSubarray;
 }
 
 int main() {
-    const vector<int> num1 = {100};
-    const vector<int> num2 = {4, 8, 12, 16};
-    const vector<int> num3 = {9, 4, 2, 10, 7, 8, 8, 1, 9};
-    const vector<int> num4 = {9, 4, 8, 4, 2};
-
-    cout << "Longest turbulent subarray is: " << longestTurbulentSubarray(num1) << endl;
-    cout << "Longest turbulent subarray is: " << longestTurbulentSubarray(num2) << endl;
-    cout << "Longest turbulent subarray is: " << longestTurbulentSubarray(num3) << endl;
-    cout << "Longest turbulent subarray is: " << longestTurbulentSubarray(num4) << endl;
-
+    cout << "Longest subarray is: " << findLongestTurbulentSubarray({9, 4, 2, 10, 7, 8, 8, 1, 9})
+         << endl;
+    cout << "Longest subarray is: " << findLongestTurbulentSubarray({4, 8, 12, 16}) << endl;
+    cout << "Longest subarray is: " << findLongestTurbulentSubarray({100}) << endl;
     return 0;
 }

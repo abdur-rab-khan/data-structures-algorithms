@@ -53,7 +53,6 @@
 */
 
 #include <iostream>
-#include <iterator>
 #include <string>
 #include <unordered_map>
 
@@ -86,11 +85,11 @@ int main() {
     // 2. ELEMENT LOOKUP
     std::unordered_map<std::string, std::string>::const_iterator banana = fruits.find("Banana");
     if (banana != fruits.end()) {
-        std::cout << "Banana is: " << (*banana).second << std::endl;
+        std::cout << "Banana is: " << banana->second << std::endl;
     }
 
     // Return an iterator for the element, If not found it will return iterator what match with map.end();
-    std::unordered_map<std::string, std::string>::const_iterator cherry = fruits.find("Cherry");
+    auto cherry = fruits.find("Cherry");
     std::cout << "Cherry is: " << (cherry != fruits.end() ? (*(cherry)).second : "Not found")
               << std::endl;
 
