@@ -54,50 +54,51 @@
 */
 
 #include <bits/stdc++.h>
-#include<variant>   
+
+#include <variant>
 using namespace std;
 
 // Define an enum
 enum Type {
     INT,
     FLOAT,
-    STRING
+    STRING,
 };
 
 // Define a union
 union Data {
-    int i;
+    int   i;
     float f;
-    char str[20];
+    char  str[20];
 };
 
 struct Entry {
     std::string key;
-    Data value;
-    Type type;
+    Data        value;
+    Type        type;
 };
 
-void processEntry(Entry* e){
-    if(e->type == INT){
+void processEntry(Entry* e) {
+    if (e->type == INT) {
         cout << "Integer: " << e->value.i << endl;
-    } else if(e->type == FLOAT){
- } else if(e->type == STRING){
+    } else if (e->type == FLOAT) {
+    } else if (e->type == STRING) {
         cout << "String: " << e->value.str << endl;
     }
 }
 
 // Let's use variant from C++17 for better type safety and management
 struct EntryVariant {
-    std::string key;
+    std::string                           key;
     std::variant<int, float, std::string> value;
 };
 
 void processEntryVariant(EntryVariant* e) {
-    if(std::holds_alternative<int>(e->value)) {
+    if (std::holds_alternative<int>(e->value)) {
         cout << "Integer: " << std::get<int>(e->value) << endl;
-    } else if(std::holds_alternative<float>(e->value)) {
+    } else if (std::holds_alternative<float>(e->value)) {
         cout << "Float: " << std::get<float>(e->value) << endl;
-    } else if(std::holds_alternative<std::string>(e->value)) {
+    } else if (std::holds_alternative<std::string>(e->value)) {
         cout << "String: " << std::get<std::string>(e->value) << endl;
     }
 }
@@ -105,17 +106,16 @@ void processEntryVariant(EntryVariant* e) {
 int main() {
     Entry e1;
 
-    e1.key = "example_int";
-    e1.type = INT;
+    e1.key     = "example_int";
+    e1.type    = INT;
     e1.value.i = 42;
 
     processEntry(&e1);
 
     EntryVariant ev1;
-    ev1.key = "example_string";
+    ev1.key   = "example_string";
     ev1.value = std::string("Hello, World!");
     processEntryVariant(&ev1);
-
 
     return 0;
 }

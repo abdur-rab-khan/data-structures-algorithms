@@ -2,59 +2,60 @@
 +--------------------------------------------------------------------+ STRUCT IN C++ +---------------------------------------------------------------------+
 |                                                                                                                                                          |
 | 🟡 Structs in C++ are user-defined data types that allow grouping of variables of different types in a single unit. They are similar to classes but      |
-|     they are usually used for simpler data structures.                                                                                                   |                                               
+|     they are usually used for simpler data structures.                                                                                                   |
 | 🟡 By default, all members of a struct are public. Structs are commonly used for simple data structures.                                                 |
 |                                                                                                                                                          |
 | 🟡 There are two ways to define structs in C++:                                                                                                          |
-|     1️⃣. Static Structs: Defined at compile time with a fixed size. --> Members are accessed directly using the dot (.) operator.                         |
-|     2️⃣. Dynamic Structs: Created at runtime using pointers and dynamic memory allocation.  --> Members are accessed using the arrow (->) operator.       |
+|     1️⃣. Static Structs: Defined at compile time with a fixed size. --> Members are accessed directly using the dot (.) operator.                          |
+|     2️⃣. Dynamic Structs: Created at runtime using pointers and dynamic memory allocation.  --> Members are accessed using the arrow (->) operator.        |
 |                                                                                                                                                          |
-| 🟡 There are two ways to access members from an object.                                                                                                  |                                   
-|    1️⃣. Static object: dot (.): used when you have a regular object.                                                                                      |
-|    2️⃣. Dynamic object: arrow (->): used when you have a pointer to an object.                                                                            |
+| 🟡 There are two ways to access members from an object.                                                                                                  |
+|    1️⃣. Static object: dot (.): used when you have a regular object.                                                                                       |
+|    2️⃣. Dynamic object: arrow (->): used when you have a pointer to an object.                                                                             |
 |                                                                                                                                                          |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                          STRUCT                                                                          |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                          |
-| struct StructName {                                                                                                                                      | 
+| struct StructName {                                                                                                                                      |
 |     dataType1 member1;                                                                                                                                   |
 |     dataType2 member2;                                                                                                                                   |
 |     // ... more members                                                                                                                                  |
-|                                                                                                                                                          | 
-|     // Constructor (optional)                                                                                                                            | 
-|     StructName(parameters) {                                                                                                                             | 
-|         // Initialization code --> this is used to refer to the current instance of the struct                                                           | 
-|     }                                                                                                                                                    |
-|                                                                                                                                                          | 
-|     // Member function (optional)                                                                                                                        | 
-|     returnType functionName(parameters) {                                                                                                                | 
-|         // Function code                                                                                                                                 | 
+|                                                                                                                                                          |
+|     // Constructor (optional)                                                                                                                            |
+|     StructName(parameters) {                                                                                                                             |
+|         // Initialization code --> this is used to refer to the current instance of the struct                                                           |
 |     }                                                                                                                                                    |
 |                                                                                                                                                          |
-|   };                                                                                                                                                     | 
+|     // Member function (optional)                                                                                                                        |
+|     returnType functionName(parameters) {                                                                                                                |
+|         // Function code                                                                                                                                 |
+|     }                                                                                                                                                    |
+|                                                                                                                                                          |
+|   };                                                                                                                                                     |
 | }                                                                                                                                                        |
 |                                                                                                                                                          |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                           OOPS                                                                           |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                                                                                          |    
+|                                                                                                                                                          |
 | 🟡 Structs can have constructors, member functions, and access specifiers (public, private, protected) just like classes.                                |
 | 🟡 The main difference between structs and classes in C++ is the default access level: structs are public by default, while classes are private          |
 |   by default.                                                                                                                                            |
 |                                                                                                                                                          |
-|  struct Parent {                                                                                                                                         |                                                         
+|  struct Parent {                                                                                                                                         |
 |      int x; // public by default                                                                                                                         |
 |  };                                                                                                                                                      |
-|                                                                                                                                                          |                                                       
+|                                                                                                                                                          |
 |  struct Child: [public, private, protected] Parent { // Inheritance                                                                                      |
 |      // Child struct members                                                                                                                             |
 |  };                                                                                                                                                      |
-|                                                                                                                                                          |    
+|                                                                                                                                                          |
 +-------------------------------------------------------------------------+ END +--------------------------------------------------------------------------+
 */
 
 #include <bits/stdc++.h>
+
 using namespace std;
 
 struct Colors {
@@ -124,8 +125,9 @@ int main() {
     const Student s2 {};
     s2.print();
 
-    const Age ag(52);
-    ag.print();
+    const Student s3 {.name = "Abdur Rab Khan", .age = 21, .address = "Indira Nagar"};
+    cout << "Using named initialization: " << endl;
+    s3.print();
 
     return 0;
 }
