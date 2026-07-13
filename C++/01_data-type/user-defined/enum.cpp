@@ -26,17 +26,17 @@ enum Color { red, blue };
 int main() {
     HTTPStatus status = HTTPStatus::Ok;
 
-    if(status == HTTPStatus::Ok){
+    if (status == HTTPStatus::Ok) {
         cout << "Status is OK" << endl;
-    }else{
+    } else {
         cout << "Error found" << endl;
     }
 
     cout << "Code is: " << static_cast<int>(status) << endl;
 
     // Color enum
-    Color col = Color::red;
-    Color colSimple = red; // It works because enum do'nt have any "scope".
+    Color col       = Color::red;
+    Color colSimple = red;  // It works because enum do'nt have any "scope".
 
     cout << col << endl;
 
