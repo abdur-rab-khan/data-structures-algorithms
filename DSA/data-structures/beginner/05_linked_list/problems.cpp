@@ -1,8 +1,10 @@
 #include <iostream>
+#include <list>
 #include <memory>
 
 using std::cout;
 using std::endl;
+using std::list;
 using std::make_unique;
 using std::unique_ptr;
 
@@ -173,7 +175,44 @@ namespace DataStructureUsingLinkedList {
     }
 }  // namespace DataStructureUsingLinkedList
 
+namespace Problems {
+    list<int> addTwoNumber(const list<int>& a, const list<int>& b) {
+        list<int> result;
+        int       carry = 0;
+
+        auto ptrA = a.begin(), ptrB = b.begin();
+        while (ptrA != a.end() || ptrB != b.end() || carry != 0) {
+            int valA = ptrA != a.end() ? *ptrA : 0;
+            int valB = ptrB != b.end() ? *ptrB : 0;
+
+            int totalSum = valA + valB + carry;
+            result.push_back((totalSum % 10));
+
+            carry = totalSum / 10;
+
+            if (ptrA != a.end()) {
+                ++ptrA;
+            }
+
+            if (ptrB != b.end()) {
+                ++ptrB;
+            }
+        }
+
+        return result;
+    }
+}  // namespace Problems
+
 int main() {
     DataStructureUsingLinkedList::main();
+
+    cout << "Result is: ";
+    for (
+        const int& n :
+        Problems::addTwoNumber(list<int>({9, 9, 9, 9, 9, 9, 9}), list<int>({9, 9, 9, 9}))) {
+        cout << n << " ";
+    }
+    cout << endl;
+
     return 0;
 }
