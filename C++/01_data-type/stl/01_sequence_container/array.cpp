@@ -37,8 +37,8 @@ using namespace std;
 int main() {
     array<int, 5> arr = {1, 2, 3, 4, 5};
 
-    cout << "Get element from arr at 0th idx: " << std::get<0>(arr) << endl;
     cout << "The size of the array is: " << arr.size() << endl;
+    cout << "Get element from arr at 0th idx: " << std::get<0>(arr) << endl;
 
     printArrayElements(arr, "Array elements are: ");
 }
