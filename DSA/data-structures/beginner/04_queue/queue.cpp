@@ -11,20 +11,21 @@ using namespace std;
 | 🔶 Time complexity:                                                                                                                                                           |
 |                                                                                                                                                                               |
 |                    🔹 Insertion of an element: o(1)                                                                                                                           |
-|                    🔹 Removing of an element: o(n or 1)                                                                                                                            |
+|                    🔹 Removing of an element: o(n or 1)                                                                                                                       |
 |                                                                                                                                                                               |
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
+
 namespace SimpleQueue {
     class SimpleQueue {
-        int size;
-        int capacity;
+        int  size;
+        int  capacity;
         int* arr = nullptr;
 
        public:
         SimpleQueue(int capacity) {
             size = 0;
-            arr = new int[capacity];
+            arr  = new int[capacity];
         }
 
         ~SimpleQueue() { delete[] arr; }
@@ -42,10 +43,10 @@ namespace SimpleQueue {
                 return;
             }
 
-            cout << value << " is added" << endl;
-
             arr[size] = value;
             size++;
+
+            cout << value << " is added" << endl;
         }
 
         // Remove an element at the front of the query
@@ -125,19 +126,20 @@ namespace SimpleQueue {
 |                                                                                                                                                                               |
 +-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
+
 namespace CircularQueue {
     class CircularQueue {
-        int size;
-        int front;
-        int capacity;
+        int  size;
+        int  front;
+        int  capacity;
         int* arr = nullptr;
 
        public:
         CircularQueue(int cap) {
             capacity = cap;
-            arr = new int[capacity];
-            front = 0;
-            size = 0;
+            arr      = new int[capacity];
+            front    = 0;
+            size     = 0;
         }
 
         // Destructor
@@ -156,7 +158,7 @@ namespace CircularQueue {
                 return -1;
             }
 
-            int rear = (front + size) % capacity;
+            int rear  = (front + size) % capacity;
             arr[rear] = value;
             size++;
             return value;
@@ -170,7 +172,7 @@ namespace CircularQueue {
             }
 
             int res = arr[front];
-            front = (front + 1) % capacity;
+            front   = (front + 1) % capacity;
             size--;
             return res;
         }
@@ -242,12 +244,12 @@ namespace CircularQueue {
 namespace Deque {
     class Deque {
         int* arr = nullptr;
-        int size;
-        int front, rear, count;
+        int  size;
+        int  front, rear, count;
 
        public:
         Deque(int n) {
-            size = n;
+            size  = n;
             front = 0, rear = 0, count = 0;
             arr = new int[size];
         }
@@ -264,7 +266,7 @@ namespace Deque {
             }
 
             arr[rear] = value;
-            rear = (rear + 1) % size;
+            rear      = (rear + 1) % size;
 
             cout << value << " is added at the rear of the queue." << endl;
 
@@ -276,7 +278,7 @@ namespace Deque {
                 return;
             }
 
-            front = (front - 1 + size) % size;
+            front      = (front - 1 + size) % size;
             arr[front] = value;
 
             cout << value << " is added at the front of the queue." << endl;
