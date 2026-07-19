@@ -40,36 +40,28 @@ class SinglyLinkedList {
         }
     }
 
-    void rotate(const int k) {
-        if (head_ == nullptr) {
+    void rotateRight(int k) {
+        if (head_ == nullptr || head_->next == nullptr) {
             return;
         }
 
-        // Step 1. Find the size and tail of the list
-        int   size = 1;  // head_ is non-null, mean at-least one element will be there.
-        Node* tail = head_;
-        while (tail->next != nullptr) {
-            tail = tail->next;
+        int   size = 1;
+        Node* last = head_;
+        while (last->next != nullptr) {
+            last = last->next;
             ++size;
         }
 
-        // Step 2. Compute effective rotation and find the new tail
-        const int effectiveRotation = ((k % size) + size) % size;
-        if (effectiveRotation == 0) {
-            return;
-        }
+        last->next = head_;
 
-        const int stepsToNewTail = size - effectiveRotation - 1;
-        Node*     newTail        = head_;
-        for (int i = 0; i < stepsToNewTail; i++) {
+        int   stepsToNewTail = size - (k % size);
+        Node* newTail        = head_;
+        for (int i = 1; i < stepsToNewTail; i++) {
             newTail = newTail->next;
         }
 
-        // Step 3. Rewrite pointers -- attach old tail to old head, update new head
-        Node* newHead = newTail->next;
-        newTail->next = nullptr;  // Breaking the chain
-        tail->next    = head_;
-        head_         = newHead;
+        head_         = newTail->next;
+        newTail->next = nullptr;
     }
 
     string toString() const {
@@ -96,7 +88,7 @@ int main() {
 
     cout << "Elements are: " << singlyLinkedList->toString() << endl;
 
-    singlyLinkedList->rotate(2);
+    singlyLinkedList->rotateRight(2);
 
     cout << "Elements are: " << singlyLinkedList->toString() << endl;
 

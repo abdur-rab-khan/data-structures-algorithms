@@ -11,7 +11,7 @@ using std::vector;
     * We can think like that, after/before the mid pointer "there will be atleast one sorted array".
     * Like if mid point is "7" then the there will be two parts
     *   [7, 5, 6]
-    *   [0, 1, 2] 
+    *   [0, 1, 2]
     * So the idea is try to find thing on sorted side and the make condition for either going towards left or right side.
 */
 int searchInRotatedSortedArray(const vector<int>& nums, int target) {
@@ -32,6 +32,9 @@ int searchInRotatedSortedArray(const vector<int>& nums, int target) {
         if (nums[leftIdx] <= nums[midIdx]) {
             // Left half [leftIdx, midIdx] is sorted.
             // We have to take two decisions either say towards left, or go towards right.
+
+            // 👉 Second condition "(nums[midIdx] > target)" is mainly use for when number will be in sorter order
+            // If number is in sorted order [1, 2, 3, 4] and want to find 4, using only this logic "nums[midIdx] > target" will shrink from right which is wrong.
             if (nums[leftIdx] <= target && nums[midIdx] > target) {
                 rightIdx = midIdx - 1;
             } else {

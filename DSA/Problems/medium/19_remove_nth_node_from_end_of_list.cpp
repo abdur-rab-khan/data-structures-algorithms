@@ -4,6 +4,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
+#include <utility>
 
 using std::cout;
 using std::endl;
@@ -65,26 +66,27 @@ class SinglyLinkedList {
             return;
         }
 
-        // Make the "fastNode" to "targetFrom + k" from the start
+        // Shift n times to make a space between left and right
         auto fastNode = head_.get();
         for (int i = 0; i < targetFromEnd && fastNode != nullptr; i++) {
             fastNode = fastNode->next.get();
         }
 
-        // Make the slow and fast to correct position.
+        // Once, "rightNode" or "rightNode->next" become "nullptr" than that we be the correct spot we needed to remove the "n" element
         Node* slowNode = head_.get();
         while (fastNode != nullptr && fastNode->next != nullptr) {
             slowNode = slowNode->next.get();
             fastNode = fastNode->next.get();
         }
 
-        // Check whether slowNode is head or not
+        // Removing, the head if rightNode become nullptr because we are running till n
         if (fastNode == nullptr) {
             head_ = std::move(head_->next);
-        } else {
-            const auto removeNode = std::move(slowNode->next);
-            slowNode->next        = std::move(removeNode->next);
+            return;
         }
+
+        const auto removeNode = std::move(slowNode->next);
+        slowNode->next        = std::move(removeNode->next);
     }
 
     // append value into list

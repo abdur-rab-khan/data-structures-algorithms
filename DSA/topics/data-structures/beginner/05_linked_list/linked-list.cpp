@@ -1,21 +1,22 @@
 #include <iostream>
 #include <memory>
+#include <stdexcept>
+#include <string>
 
 using std::cout;
 using std::endl;
 using std::make_shared;
 using std::shared_ptr;
-using std::weak_ptr;
 
 /*
  * 🟡 A linked list is a data structure that are form using chain of nodes, these nodes are nothing but an "object" which hold some kind of information. Unlike array data structure that where data is stored into contiguous memory location.
    🟡 In linked list each node have the ""reference of a memory block"" represents the next node. Means these nodes are scattered in memory but connected with there ""reference pointer"".
-   
+
    🔶 Information stored by node:
         1. "Actual Data"
         2. "Reference Pointer to next node"
         3. "Reference Pointer to previous node (Doubly Linked List)"
-   
+
    🔷 Types of Linked List:
         1. "Singly Linked List"
         2. "Doubly Linked List"
@@ -53,6 +54,7 @@ namespace LinkedListTypes {
         SinglyLinkedList(const SinglyLinkedList&)            = delete;
         SinglyLinkedList& operator=(const SinglyLinkedList&) = delete;
 
+        // Removing once linked list goes out of scope
         ~SinglyLinkedList() {
             Node* currentNode = head_;
             while (currentNode != nullptr) {
@@ -330,6 +332,5 @@ namespace LinkedListTypes {
 
 int main() {
     LinkedListTypes::main();
-
     return 0;
 }
