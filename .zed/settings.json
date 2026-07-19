@@ -11,9 +11,6 @@
     "HTML": {
       "enable_language_server": false
     },
-    "Prisma": {
-      "enable_language_server": false
-    },
     "YAML": {
       "enable_language_server": false
     },
