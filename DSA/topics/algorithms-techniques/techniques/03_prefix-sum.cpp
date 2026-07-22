@@ -1,6 +1,6 @@
 /*
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                         ➕ PREFIX SUM                                                                                    | 
+|                                                                                         ➕ PREFIX SUM                                                                                    |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                                          |
 | 🟡 Prefix Sum of an Array is a sum of element from **start** till **end** it is also called as **Cumulative Sum**.                                                                       |
@@ -10,7 +10,7 @@
 | 🟡 It's often used to **pre-calculate** array element so that in future we don't need to calculate again and again.                                                                      |
 |                                                                                                                                                                                          |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                        ➕ EXAMPLE                                                                                        | 
+|                                                                                        ➕ EXAMPLE                                                                                        |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                                          |
 | originalArray = [3, 7, 2, 5, 8];                                                                                                                                                         |
@@ -56,11 +56,11 @@ namespace easy {
         vector<int> diffArray(numbers.size());
 
         int totalSum = accumulate(numbers.begin(), numbers.end(), 0);
-        int leftSum = 0;
+        int leftSum  = 0;
 
         for (int i = 0; i < numbers.size(); i++) {
             int rightSum = totalSum - (leftSum + numbers[i]);
-            int diff = abs(rightSum - leftSum);
+            int diff     = abs(rightSum - leftSum);
 
             diffArray[i] = diff;
             leftSum += numbers[i];
@@ -71,22 +71,22 @@ namespace easy {
 
     void main() {
         // Question 1: Sum Query Range.
-        vector<int> nums = {3, 7, 2, 5, 8};
-        auto sumQuery = sumQueryRange(nums);
+        vector<int> nums     = {3, 7, 2, 5, 8};
+        auto        sumQuery = sumQueryRange(nums);
 
         cout << "Sum of nums from 0 to 2 is: " << sumQuery(0, 2) << endl;
         cout << "Sum of nums from 2 to 4 is: " << sumQuery(2, 4) << endl;
 
         // Question 2: Left Right Difference.
         std::vector<int> numbers = {10, 4, 8, 3};
-        printArrayElements(leftRightDifference(numbers), "Array Difference are: ");
+        print(leftRightDifference(numbers), "Array Difference are: ");
     }
 }  // namespace easy
 
 // Medium Prefix Sum Problems
 namespace medium {
     int subarraySum(vector<int>& nums, int k) {
-        int sum = 0;
+        int sum         = 0;
         int prefixCount = 0;
 
         unordered_map<int, int> prefixFreq;
@@ -136,10 +136,10 @@ namespace medium {
         cout << "Total subArrays are: " << subarraySum(numbers, 2) << endl;
 
         // Question 2. Product Except Self
-        std::vector<int> nums = {1, 2, 3, 4};
+        std::vector<int> nums   = {1, 2, 3, 4};
         std::vector<int> result = productExceptSelf(nums);
 
-        printArrayElements(result, "Expected product self is: ");
+        print(result, "Expected product self is: ");
     }
 
 }  // namespace medium

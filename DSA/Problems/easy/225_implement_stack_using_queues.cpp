@@ -1,29 +1,37 @@
 //
 // Created by abdur on 02-07-2026.
 //
-#include <deque>
+#include <cstdint>
 #include <iostream>
+#include <queue>
 
 using std::cout;
-using std::deque;
 using std::endl;
+using std::queue;
 
 class MyStack {
-   private:
-    deque<int> deq;
+    queue<int> q;
 
    public:
-    void push(const int x) { deq.push_back(x); }
+    void push(int x) {
+        int size = static_cast<int>(q.size());
+
+        q.push(x);
+        while (size--) {
+            q.push(q.front());
+            q.pop();
+        }
+    }
 
     int pop() {
-        const int top = deq.back();
-        deq.pop_back();
+        int top = q.front();
+        q.pop();
         return top;
     }
 
-    int top() const { return deq.back(); }
+    int top() { return q.front(); }
 
-    bool empty() const { return deq.empty(); }
+    bool empty() { return q.empty(); }
 };
 
 int main() {

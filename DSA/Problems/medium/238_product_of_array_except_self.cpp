@@ -30,7 +30,7 @@ std::vector<int> productExceptSelf(std::vector<int>& nums) {
 
 // More Efficient
 std::vector<int> calculateProductExceptSelf(std::vector<int>& nums) {
-    const int numCount = static_cast<int>(nums.size());
+    const int        numCount = static_cast<int>(nums.size());
     std::vector<int> products(nums.size(), 1);
 
     int runningProduct = 1;
@@ -49,12 +49,12 @@ std::vector<int> calculateProductExceptSelf(std::vector<int>& nums) {
 }
 
 int main() {
-    std::vector<int> nums = {1, 2, 3, 4};
-    std::vector<int> result = productExceptSelf(nums);
+    std::vector<int> nums    = {1, 2, 3, 4};
+    std::vector<int> result  = productExceptSelf(nums);
     std::vector<int> result2 = calculateProductExceptSelf(nums);
 
-    printArrayElements(result, "Expected product self is: ");
-    printArrayElements(result2, "Expected product self is: ");
+    print(result, "Expected product self is: ");
+    print(result2, "Expected product self is: ");
 
     return 0;
 }

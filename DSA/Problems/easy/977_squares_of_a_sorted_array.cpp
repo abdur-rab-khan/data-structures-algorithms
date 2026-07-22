@@ -71,5 +71,5 @@ vector<int> sortedSquaresOpt(vector<int>& nums) {
 int main() {
     vector<int> nums       = {-4, -1, 0, 3, 10};
     vector<int> sortedSqrt = sortedSquaresOpt(nums);
-    printArrayElements(sortedSqrt);
+    print(sortedSqrt);
 }

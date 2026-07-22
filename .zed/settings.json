@@ -45,9 +45,6 @@
       },
     },
   },
-  "terminal": {
-    "working_directory": "current_file_directory",
-  },
   "format_on_save": "on",
   "show_edit_predictions": false,
 }

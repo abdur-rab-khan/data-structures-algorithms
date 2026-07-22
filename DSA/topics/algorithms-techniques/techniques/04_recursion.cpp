@@ -67,7 +67,7 @@ namespace Recursion {
         cout << "Fibonacci of 8 is: " << fibonacci(8) << endl;
         cout << "Sum of {1, 2, 3, 4, 5} is: " << runningSum({1, 2, 3, 4, 5}) << endl;
 
-        printArrayElements(reverseString({"H", "E", "L", "L", "O"}, 0, 4));
+        print(reverseString({"H", "E", "L", "L", "O"}, 0, 4));
     }
 }  // namespace Recursion
 
