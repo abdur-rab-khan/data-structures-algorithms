@@ -1,12 +1,16 @@
+#include <forward_list>
 #include <iostream>
 #include <list>
 #include <memory>
 
 using std::cout;
 using std::endl;
+using std::forward_list;
 using std::list;
 using std::make_unique;
 using std::unique_ptr;
+
+#include "../../../../dsa_utils.h"
 
 namespace DataStructureUsingLinkedList {
     class StackLinkedList {
@@ -201,18 +205,59 @@ namespace Problems {
 
         return result;
     }
+
+    forward_list<int> mergeSortedLists(const forward_list<int>& listA,
+                                       const forward_list<int>& listB) {
+        forward_list<int> result;
+
+        auto currentA   = listA.begin();
+        auto currentB   = listB.begin();
+        auto resultTail = result.before_begin();
+
+        while (currentA != listA.end() && currentB != listB.end()) {
+            if (*currentA > *currentB) {
+                result.insert_after(resultTail, *currentB);
+                ++currentB;
+            } else {
+                result.insert_after(resultTail, *currentA);
+                ++currentA;
+            }
+
+            ++resultTail;
+        }
+
+#if defined(__cpp_lib_containers_ranges)
+        if (currentA != listA.end()) {
+            result.insert_range_after(resultTail, forward_list<int>(currentA, listA.end()));
+        }
+
+        if (currentB != listB.end()) {
+            result.insert_range_after(resultTail, forward_list<int>(currentB, listB.end()));
+        }
+#else
+        while (currentA != listA.end()) {
+            resultTail = result.insert_after(resultTail, *currentA);
+            ++currentA;
+        }
+
+        while (currentB != listB.end()) {
+            resultTail = result.insert_after(resultTail, *currentB);
+            ++currentB;
+        }
+#endif
+
+        return result;
+    }
+
+    void main() {
+        print(addTwoNumber({1, 2, 3, 4, 5}, {1, 2, 3, 4, 4}), "Sum of two list is: ");
+        print(mergeSortedLists({1, 2, 4}, {1, 3, 4}), "After merging two sorted lists: ");
+    }
 }  // namespace Problems
 
 int main() {
-    DataStructureUsingLinkedList::main();
-
-    cout << "Result is: ";
-    for (
-        const int& n :
-        Problems::addTwoNumber(list<int>({9, 9, 9, 9, 9, 9, 9}), list<int>({9, 9, 9, 9}))) {
-        cout << n << " ";
-    }
-    cout << endl;
+    // DataStructureUsingLinkedList::main();
+    Problems::main();
 
     return 0;
 }

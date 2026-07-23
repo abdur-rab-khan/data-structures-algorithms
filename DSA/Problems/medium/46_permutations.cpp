@@ -3,7 +3,19 @@
 
 using namespace std;
 
+#include "../../dsa_utils.h"
+
+/*
+ * Permutation is rearrangment of all the elements of an array, in such a way to that all the array are distinct and unique.
+ * To solve this problem the easiest way is using "backTracking" technique where where we solve quickly as much as possible.
+*/
 class Solution {
+   public:
+    vector<vector<int>> findPermutations(const vector<int>& nums) {
+        backTracking(nums);
+        return result;
+    }
+
    private:
     vector<int>         tempList;
     vector<vector<int>> result;
@@ -15,27 +27,21 @@ class Solution {
         }
 
         for (const int& num : nums) {
-            if (find(tempList.begin(), tempList.end(), num) != tempList.end()) {
+            if (ranges::find(tempList, num) != tempList.end()) {
                 continue;
             }
 
-            // CHOOSE: Push into the tempList
-            tempList.push_back(num);
-
-            // BACKTRACK: "backTracking" to call the function
-            backTracking(nums);
-
-            // UNCHOOSE: Pop from tempList mainly to skip and create permutation
-            tempList.pop_back();
+            tempList.push_back(num);  // CHOOSE: Push into the tempList
+            backTracking(nums);       // BACKTRACK: "backTracking" to call the function
+            tempList
+                .pop_back();  // UNCHOOSE: Pop from tempList mainly to skip and create permutation
         }
-    }
-
-    vector<vector<int>> findPermutations(const vector<int>& nums) {
-        backTracking(nums);
-        return result;
     }
 };
 
 int main() {
+    Solution sol;
+    print(sol.findPermutations({1, 2, 3}), "Permutations of 123 are: ");
+
     return 0;
 }
