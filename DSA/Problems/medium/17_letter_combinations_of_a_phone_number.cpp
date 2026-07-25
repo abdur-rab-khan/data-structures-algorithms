@@ -12,34 +12,29 @@ using namespace std;
 */
 class Solution {
    public:
-    Solution() : DIGIT_MAPPING({"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"}) {};
-
     vector<string> findLetterCombination(string digits) {
         backTracking(digits, 0);
         return result;
     }
 
    private:
-    array<string, 10> DIGIT_MAPPING;
+    array<string, 8> DIGIT_MAPPED = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
 
+    string         current;
     vector<string> result;
-    string         currentCombination;
 
     void backTracking(string digits, int digitIdx) {
-        if (digitIdx > static_cast<int>(digits.size()) - 1) {
-            result.push_back(currentCombination);
+        if (digitIdx == static_cast<int>(digits.size())) {
+            result.push_back(current);
             return;
         }
 
-        const auto currentDigit = DIGIT_MAPPING[digitIdx];
+        string currentString = DIGIT_MAPPED[digits[digitIdx] - '2'];
 
-        for (int i = 0; i < static_cast<int>(currentDigit.size()); i++) {
-            const auto currentChar = currentDigit[i];
-
-            currentCombination.push_back(currentChar);
+        for (const char& ch : currentString) {
+            current.push_back(ch);
             backTracking(digits, digitIdx + 1);
-
-            currentCombination.pop_back();
+            current.pop_back();
         }
     }
 };
