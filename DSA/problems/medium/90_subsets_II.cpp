@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <vector>
 
 #include "../../dsa_utils.h"
@@ -7,7 +8,9 @@ using namespace std;
 class Solution {
    public:
     vector<vector<int>> subsetsWithDup(const vector<int>& nums) {
-        backTracking(nums, 0);
+        vector<int> sortedNums = nums;
+        std::ranges::sort(sortedNums);
+        backTracking(sortedNums, 0);
         return result;
     }
 
@@ -19,6 +22,9 @@ class Solution {
         result.push_back(current);
 
         for (int i = index; i < static_cast<int>(nums.size()); i++) {
+            if (i > index && nums[i] == nums[i - 1]) {
+                continue;
+            }
             current.push_back(nums[i]);
             backTracking(nums, i + 1);
             current.pop_back();
