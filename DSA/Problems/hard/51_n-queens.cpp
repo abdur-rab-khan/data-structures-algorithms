@@ -6,6 +6,15 @@
 
 using namespace std;
 
+/*
+ * Before looking at the code, you need to understand the rules to place the "queen" on the board.
+ * To place the "queen" we usually have three rules:
+ *  1. Only one queen per row.
+ *  2. Only one queen per column.
+ *  3. No multiple queens on the same diagonal.
+ *
+ * So the solution is go for each combination, mean go deeper and deeper to pick the correct solution.
+*/
 class Solution {
    public:
     vector<vector<string>> solveNQueens(int n) {
