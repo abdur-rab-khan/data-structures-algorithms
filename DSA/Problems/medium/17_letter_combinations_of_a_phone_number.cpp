@@ -41,7 +41,7 @@ class Solution {
 
 int main() {
     Solution sol;
-    print(sol.findLetterCombination("23"));
+    print(sol.findLetterCombination("234"));
 
     return 0;
 }
