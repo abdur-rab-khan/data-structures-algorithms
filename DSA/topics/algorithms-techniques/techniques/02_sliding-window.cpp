@@ -164,10 +164,10 @@ namespace easy_problems {
         if (numbers.size() == target)
             return 0;
 
-        size_t leftWindow = 0;
+        size_t leftWindow  = 0;
         size_t rightWindow = 0;
 
-        int maxSum = 0;
+        int maxSum   = 0;
         int totalSum = 0;
 
         while (rightWindow < numbers.size()) {
@@ -210,7 +210,7 @@ namespace easy_problems {
 
         vector<float> sumOfAverage = {};
 
-        size_t leftWindow = 0;
+        size_t leftWindow  = 0;
         size_t rightWindow = 0;
 
         int totalSum = 0;
@@ -253,10 +253,10 @@ namespace easy_problems {
         if (str.size() == target)
             return 0;
 
-        int leftWindow = 0;
+        int leftWindow  = 0;
         int rightWindow = 0;
 
-        int vowelCount = 0;
+        int vowelCount    = 0;
         int maxVowelCount = 0;
 
         while (rightWindow < str.size()) {
@@ -302,7 +302,7 @@ namespace easy_problems {
         if (numbers.size() < target)
             return false;
 
-        size_t leftWindow = 0;
+        size_t leftWindow  = 0;
         size_t rightWindow = 0;
 
         unordered_map<int, bool> window;
@@ -343,7 +343,7 @@ namespace easy_problems {
     int findUniqueLongestSubstring(string str) {
         size_t size = str.size();
 
-        size_t leftIndex = 0;
+        size_t leftIndex  = 0;
         size_t rightIndex = 0;
 
         unordered_map<char, int> lastSeen;
@@ -362,7 +362,7 @@ namespace easy_problems {
         }
 
         int remainingWindowLength = rightIndex - leftIndex;
-        longestSubstring = max(longestSubstring, remainingWindowLength);
+        longestSubstring          = max(longestSubstring, remainingWindowLength);
 
         return longestSubstring;
     }
@@ -379,8 +379,8 @@ namespace easy_problems {
         // AVERAGE OF A SUBARRAY SIZE K
         vector<int> averageSumNumbers = {1, 3, 2, 6, -1, 4, 1, 8, 2};
 
-        printArrayElements<float>(computeAverageSumWithTarget(averageSumNumbers, 5),
-                                  "Average Sums with target 5 are: ");
+        print<float>(computeAverageSumWithTarget(averageSumNumbers, 5),
+                     "Average Sums with target 5 are: ");
 
         // MAX VOWEL COUNT OF A SUBSTRING
         string str = "abciiidef";
@@ -430,10 +430,10 @@ namespace medium_problems {
     * @return Length of the longest valid substring
      */
     int findLongestRepeatingSubstring(string str, int minLength) {
-        int leftIndex = 0;
+        int leftIndex  = 0;
         int rightIndex = 0;
 
-        int maxFrequency = 0;
+        int maxFrequency       = 0;
         int maxSubstringLength = 0;
 
         vector<int> charFrequencyCount(26, 0);
@@ -476,7 +476,7 @@ namespace medium_problems {
     * @return Maximum window length that satisfies the constraint
      */
     int findMaximumNumberOfFruits(const vector<int>& fruits, int maximumAllowedType) {
-        int leftIndex = 0;
+        int leftIndex      = 0;
         int maxFruitsCount = 0;
 
         unordered_map<int, int> bucketsWithLastSeen;
@@ -520,7 +520,7 @@ namespace medium_problems {
     int findMinimumSizeSubarraySum(const vector<int>& numbers, int target) {
         int leftIndex = 0;
 
-        int totalSum = 0;
+        int totalSum      = 0;
         int minTargetSize = INT_MAX;
 
         for (int rightIndex = 0; rightIndex < numbers.size(); rightIndex++) {
@@ -564,7 +564,7 @@ namespace medium_problems {
     int findMaximumSumOfDistinctArray(const vector<int>& numbers, int k) {
         int leftIndex = 0;
 
-        int maxSum = 0;
+        int maxSum   = 0;
         int totalSum = 0;
 
         unordered_map<int, int> freq;
@@ -612,7 +612,7 @@ namespace medium_problems {
     int findLongestOnesAfterKFlips(const vector<int>& numbers, int k) {
         int leftIndex = 0;
 
-        int maximumSize = 0;
+        int maximumSize     = 0;
         int windowZeroCount = 0;
 
         for (int rightIndex = 0; rightIndex < numbers.size(); rightIndex++) {
@@ -636,8 +636,8 @@ namespace medium_problems {
         cout << "Sliding Window Medium Problems: " << endl;
 
         // FINDING LONGEST REPEATING SUBSTRINGS
-        string str = "ABBCBKK";
-        int minLength = 1;
+        string str       = "ABBCBKK";
+        int    minLength = 1;
 
         cout << "Maximum possible substring is: " << findLongestRepeatingSubstring(str, minLength);
         cout << endl << endl;
@@ -689,10 +689,10 @@ namespace hard_problems {
     string findMinimumWindowSubstring(string str, string pattern) {
         int leftIndex = 0;
 
-        int formedCount = 0;
+        int formedCount   = 0;
         int requiredCount = pattern.size();
 
-        int startIndex = -1;
+        int startIndex       = -1;
         int minSubstringSize = INT_MAX;
 
         unordered_map<char, int> freq;
@@ -716,7 +716,7 @@ namespace hard_problems {
                 int windowSize = rightIndex - leftIndex + 1;
                 if (windowSize < minSubstringSize) {
                     minSubstringSize = windowSize;
-                    startIndex = leftIndex;
+                    startIndex       = leftIndex;
                 }
 
                 if (freq.count(str[rightIndex])) {
@@ -753,7 +753,7 @@ namespace hard_problems {
     vector<int> findMaximumWindow(const vector<int>& numbers, int k) {
         int leftIndex = 0;
 
-        deque<int> deq;
+        deque<int>  deq;
         vector<int> maximumValues = {};
 
         for (int rightIndex = 0; rightIndex < numbers.size(); rightIndex++) {

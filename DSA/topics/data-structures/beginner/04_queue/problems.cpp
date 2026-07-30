@@ -4,16 +4,16 @@ using namespace std;
 namespace queues {
     class CircularQueue {
         int* arr;
-        int front;
-        int count;
-        int capacity;
+        int  front;
+        int  count;
+        int  capacity;
 
        public:
         CircularQueue(int size) {
-            front = 0;
-            count = 0;
+            front    = 0;
+            count    = 0;
             capacity = size;
-            arr = new int[capacity];
+            arr      = new int[capacity];
         }
 
         ~CircularQueue() { delete[] arr; }
@@ -30,7 +30,7 @@ namespace queues {
                 return;
             }
 
-            int position = (front + count) % capacity;
+            int position  = (front + count) % capacity;
             arr[position] = value;
             count++;
         }
@@ -181,7 +181,7 @@ namespace hard_problems {
     vector<int> findMinimumWindow(const vector<int>& numbers, int k) {
         int leftIndex = 0;
 
-        deque<int> deq;
+        deque<int>  deq;
         vector<int> minimumValues = {};
 
         for (int rightIndex = 0; rightIndex < numbers.size(); rightIndex++) {
@@ -210,7 +210,7 @@ namespace hard_problems {
     void main() {
         cout << "Hard Problems: " << endl;
         vector<int> numbers = {2, 3, 4, 2, 6, 2};
-        printArrayElements(findMinimumWindow(numbers, 3), "Minimum values are: ");
+        print(findMinimumWindow(numbers, 3), "Minimum values are: ");
     }
 }  // namespace hard_problems
 

@@ -40,5 +40,5 @@ int main() {
     cout << "The size of the array is: " << arr.size() << endl;
     cout << "Get element from arr at 0th idx: " << std::get<0>(arr) << endl;
 
-    printArrayElements(arr, "Array elements are: ");
+    print(arr, "Array elements are: ");
 }

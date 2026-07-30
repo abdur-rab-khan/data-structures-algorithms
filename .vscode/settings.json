@@ -115,5 +115,6 @@
     "code-runner.executorMap": {
         "cpp": "cd $dir && g++ -std=c++23 $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
     },
-    "editor.fontFamily": "'JetBrains Mono', 'Fira Code', Cascadia Code, 'Droid Sans Mono', monospace"
+    "editor.fontFamily": "'JetBrains Mono', 'Fira Code', Cascadia Code, 'Droid Sans Mono', monospace",
+    "C_Cpp.errorSquiggles": "disabled"
 }
