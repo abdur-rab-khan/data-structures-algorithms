@@ -16,7 +16,7 @@ void rangeSort() {
     std::ranges::sort(nums);
     print(nums, "After default sorting (accending order): ");
 
-    // Using custom comp function to sort in a decending order
+    // Using custom comp function to sort in a decending order, "first > last" mean it will sort in an decending order
     std::ranges::sort(nums, [](const int& first, const int& last) { return first > last; });
     print(nums, "After decending sorting (using comp): ");
 }
@@ -32,7 +32,7 @@ void rangeTransformerFilter() {
     auto x = nums | std::ranges::views::filter([](const int& n) { return n % 2 == 0; }) |
              std::ranges::views::transform([](const int& n) { return n * n; });
 
-    print(x);
+    print(x, "Square of even numbers: ");
 }
 
 void rangeEnumerate() {
@@ -80,10 +80,8 @@ int main() {
     forEach();
     rangeTransformerFilter();
 
-    // We can easily generate index number using "iota" function and by using
-    // "reverse" we can also easily reverse them
-    print((std::ranges::views::iota(0, 10) | std::ranges::views::reverse),
-          "Generate numbers between 0 to 9: ");
+    // "iota", It's similar to pythons "range" function that generates sequence of elements and returns an iterator.
+    print((std::views::iota(11, 21) | std::views::reverse), "Generate numbers between 20 to 11: ");
 
     std::stack<char> nameStack = to();
     std::cout << "Top Char is: " << nameStack.top() << std::endl;
