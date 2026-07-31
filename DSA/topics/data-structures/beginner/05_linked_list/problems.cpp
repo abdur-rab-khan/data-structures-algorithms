@@ -1,5 +1,6 @@
 #include <forward_list>
 #include <iostream>
+#include <iterator>
 #include <list>
 #include <memory>
 
@@ -249,9 +250,40 @@ namespace Problems {
         return result;
     }
 
+    std::forward_list<int> removeNthFromEnd(std::forward_list<int> head, int n) {
+        if (head.empty() || n <= 0) {
+            return head;
+        }
+
+        // Move right ptr to n
+        auto rightPtr = head.begin();
+        for (int step = 0; step < n - 1; ++step) {
+            if (rightPtr == head.end()) {
+                return head;
+            }
+            ++rightPtr;
+        }
+
+        // Move rightPtr to end
+        auto leftPtr = head.before_begin();
+        while (std::next(rightPtr) != head.end()) {
+            ++rightPtr;
+            ++leftPtr;
+        }
+
+        head.erase_after(leftPtr);
+        return head;
+    }
+
     void main() {
         print(addTwoNumber({1, 2, 3, 4, 5}, {1, 2, 3, 4, 4}), "Sum of two list is: ");
         print(mergeSortedLists({1, 2, 4}, {1, 3, 4}), "After merging two sorted lists: ");
+
+        std::cout << std::endl << "Removing nth node from the list: " << std::endl;
+        print(removeNthFromEnd({}, 1), "After Removing: ");
+        print(removeNthFromEnd({1}, 1), "After Removing 1: ");
+        print(removeNthFromEnd({1, 2}, 1), "After Removing 2: ");
+        print(removeNthFromEnd({1, 2, 3, 4, 5}, 2), "After Removing 4: ");
     }
 }  // namespace Problems
 
