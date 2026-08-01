@@ -288,7 +288,7 @@ namespace Problems {
 }  // namespace Problems
 
 int main() {
-    // DataStructureUsingLinkedList::main();
+    DataStructureUsingLinkedList::main();
     Problems::main();
 
     return 0;

@@ -8,71 +8,76 @@ using namespace std;
 class Solution {
    public:
     void solveSudoku(vector<vector<char>>& board) {
-        for (int r = 0; r < 9; r++) {
-            for (int c = 0; c < 9; c++) {
-                if (board[r][c] != '.') {
-                    int digit = board[r][c] - '0';
-                    placeNumber(digit, r, c);
-                }
-            }
-        }
+        initilizeBoard(board);
         backTracking(board, 0, 0);
     }
 
    private:
-    array<array<bool, 10>, 9> rowUsed {};
-    array<array<bool, 10>, 9> colUsed {};
-    array<array<bool, 10>, 9> boxUsed {};
+    array<array<bool, 9>, 9> colUsed {};
+    array<array<bool, 9>, 9> rowUsed {};
+    array<array<bool, 9>, 9> boxUsed {};
 
-    int getBoxIndex(int row, int col) { return (row / 3) * 3 + (col / 3); }
+    void initilizeBoard(vector<vector<char>>& board) {
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                if (board[row][col] != '.') {
+                    int digit = board[row][col] - '0';
+                    placeNumber(digit, row, col);
+                }
+            }
+        }
+    }
+
+    int getBoxIdx(int row, int col) { return (row / 3) * 3 + (col / 3); }
 
     bool isSafe(int digit, int row, int col) {
-        int boxIdx = getBoxIndex(row, col);
-        return !rowUsed[row][digit] && !colUsed[col][digit] && !boxUsed[boxIdx][digit];
+        return !colUsed[col][digit - 1] && !rowUsed[row][digit - 1] &&
+               !boxUsed[getBoxIdx(row, col)][digit - 1];
     }
 
     void placeNumber(int digit, int row, int col) {
-        rowUsed[row][digit]                   = true;
-        colUsed[col][digit]                   = true;
-        boxUsed[getBoxIndex(row, col)][digit] = true;
+        colUsed[col][digit - 1]                 = true;
+        rowUsed[row][digit - 1]                 = true;
+        boxUsed[getBoxIdx(row, col)][digit - 1] = true;
     }
 
     void removeNumber(int digit, int row, int col) {
-        rowUsed[row][digit]                   = false;
-        colUsed[col][digit]                   = false;
-        boxUsed[getBoxIndex(row, col)][digit] = false;
+        colUsed[col][digit - 1]                 = false;
+        rowUsed[row][digit - 1]                 = false;
+        boxUsed[getBoxIdx(row, col)][digit - 1] = false;
     }
 
     bool backTracking(vector<vector<char>>& board, int row, int col) {
-        // basecase if row or col become 9
-        if (row == 9) {
+        // End further backTracking, if row become greater than 9
+        if (row > 8) {
             return true;
         }
 
-        if (col == 9) {
+        // Start for next row, if col become greater than 9
+        if (col > 8) {
             return backTracking(board, row + 1, 0);
         }
 
-        // skip, for already placed number
-        if ((board[row][col]) != '.') {
+        // Skip, if col already have digit.
+        if (board[row][col] != '.') {
             return backTracking(board, row, col + 1);
         }
 
-        for (int num = 1; num < 10; num++) {
-            char charNum = static_cast<char>('0' + num);
-
-            // skip current num, if isn't safe
-            if (!isSafe(num, row, col)) {
+        for (int digit = 1; digit < 10; digit++) {
+            if (!isSafe(digit, row, col)) {
                 continue;
             }
 
-            board[row][col] = charNum;
-            placeNumber(num, row, col);
-            bool found = backTracking(board, row, col + 1);
-            if (found)
+            placeNumber(digit, row, col);
+            board[row][col] = static_cast<char>('0' + digit);
+
+            const bool isFound = backTracking(board, row, col + 1);
+            if (!isFound) {
+                removeNumber(digit, row, col);
+                board[row][col] = '.';
+            } else {
                 return true;
-            board[row][col] = '.';
-            removeNumber(num, row, col);
+            }
         }
 
         return false;
@@ -91,7 +96,7 @@ int main() {
                                   {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
                                   {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
     sol.solveSudoku(board);
-    print(board, "Completed Sudoku board");
+    print(board, "Final Completed Sudoku Board: ");
 
     return 0;
 }
