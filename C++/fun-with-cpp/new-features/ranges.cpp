@@ -53,6 +53,9 @@ void forEach() {
 
     // It's similar to "JavaScript" "forEach" function
     std::for_each(nums.begin(), nums.end(), [](const int x) { std::cout << x << " "; });
+
+    std::cout << "Providing nums without specifying begin/end iteator: " << std::endl;
+    std::ranges::for_each(nums, [](const int x) { std::cout << x << " "; });
     std::cout << std::endl << std::endl;
 }
 

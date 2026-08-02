@@ -36,7 +36,6 @@
 #include <algorithm>
 #include <forward_list>
 #include <iostream>
-#include <list>
 #include <vector>
 
 using namespace std;
