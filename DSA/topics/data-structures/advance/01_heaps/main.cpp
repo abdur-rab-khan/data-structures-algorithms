@@ -1,3 +1,44 @@
+/*
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                       HEAP DATA STRUCTURE                                                                      |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                |
+| 🟡 A heap is a tree-shaped structure, stored as a plain array, that always keeps the smallest (min-heap) or biggest (max-heap) element on top for              |
+|    instant access.                                                                                                                                             |
+|                                                                                                                                                                |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                               OPERATIONS OF HEAP DATA STRUCTURE                                                                |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                |
+| 🔶 Insert on Heap o(log n):                                                                                                                                    |
+|                   Insert a new value into the heap.                                                                                                            |
+|                        1: add val at the end of the array                                                                                                      |
+|                        2: compare it with its parent                                                                                                           |
+|                        3: if heap rule is broken (parent > new value), swap and move up                                                                        |
+|                        4: repeat until parent holds, or we reach the root                                                                                      |
+|                                                                                                                                                                |
+|                        This is "bubble up" — the new element floats toward the top if it's too small.                                                          ||                                                                                                                                                                |
+|                                                                                                                                                                |
+| 🔶 Remove on Heap o(log n):                                                                                                                                    |
+|                    Remove the top element (smallest) from the heap.                                                                                            |
+|                           1: move the last element to the top, shrink the array                                                                                |
+|                           2: compare the new top with its smaller child                                                                                        |
+|                           3: if heap rule is broken (parent > smaller child), swap and move down                                                               |
+|                           4: repeat until rule holds, or we run out of children                                                                                |
+|                                                                                                                                                                |
+|                       This is "bubble down" — the replacement element sinks toward the leaves if too big.                                                      |
+|                                                                                                                                                                |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                FORMULAS OF HEAP DATA STRUCTURE                                                                 |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|                                                                                                                                                                |
+| 🔶 Get Parent of a child: (n - 1) / 2;                                                                                                                         |
+| 🔶 Get Left Child: (n * 2) + 1;                                                                                                                                |
+| 🔶 Get Right Child: (n * 2) + 2;                                                                                                                               |
+|                                                                                                                                                                |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+*/
+
 #include <format>
 #include <stdexcept>
 #include <utility>
