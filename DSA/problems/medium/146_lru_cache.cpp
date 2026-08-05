@@ -1,3 +1,4 @@
+#include <cassert>
 #include <iostream>
 #include <iterator>
 #include <list>
@@ -6,51 +7,57 @@
 
 #include "../../dsa_utils.h"
 
+// A fixed-capacity Least Recently Used (LRU) cache.
+//
+// Get and Put both run in O(1) time.
+// We keep items in a doubly linked list ordered by use:
+// the front holds the least recently used item,
+// the back holds the most recently used item.
+// The hash map lets us jump straight to any item's position in the list.
 class LRUCache {
    public:
-    int capacity;
-
-    std::list<std::pair<int, int>>                                    cacheList;
-    std::unordered_map<int, std::list<std::pair<int, int>>::iterator> cacheMap;
-
-    LRUCache(int capacity) : capacity(capacity) {}
+    explicit LRUCache(int capacity) : capacity_(capacity) {
+        // True && True = True, Won't run on truthy condition
+        assert(capacity_ > 0 && "Capacity must be a positive number");
+    }
 
     int get(int key) {
-        // If key empty, mean no element there
-        if (cacheList.empty()) {
+        auto it = cacheMap_.find(key);
+        if (it == cacheMap_.end()) {
             return -1;
         }
 
-        auto it = cacheMap.find(key);
-        if (it != cacheMap.end()) {
-            cacheList.splice(cacheList.end(), cacheList, it->second);
-            return cacheList.back().second;
-        }
-        return -1;
+        // Mark this item as most recently used by moving it to the back.
+        cacheList_.splice(cacheList_.end(), cacheList_, it->second);
+        return it->second->second;
     }
 
     void put(int key, int value) {
-        auto it = cacheMap.find(key);
+        auto it = cacheMap_.find(key);
 
-        // Remove the last element, if capacity exeeds the cacheList size
-        if (capacity == static_cast<int>(cacheList.size())) {
-            auto frontList = cacheList.begin();
-            if (it == cacheMap.end() || it->second->first != key) {
-                cacheMap.erase(frontList->first);
-                cacheList.erase(frontList);
-            }
-        }
-
-        if (it == cacheMap.end()) {
-            cacheList.push_back({key, value});
-            cacheMap.insert({key, std::prev(cacheList.end(), 1)});
-        } else {
+        if (it != cacheMap_.end()) {
+            // Key already exists: update value and mark as most recently used.
             it->second->second = value;
-            cacheList.splice(cacheList.end(), cacheList, it->second);
+            cacheList_.splice(cacheList_.end(), cacheList_, it->second);
+            return;
         }
-    }
-};
 
+        // Key is new. Evict the least recently used item if we are full
+        if (capacity_ == static_cast<int>(cacheList_.size())) {
+            const int lruKey = cacheList_.front().first;
+            cacheMap_.erase(lruKey);
+            cacheList_.pop_front();
+        }
+
+        cacheList_.push_back({key, value});
+        cacheMap_[key] = std::prev(cacheList_.end());
+    }
+
+   private:
+    int                                                               capacity_;
+    std::list<std::pair<int, int>>                                    cacheList_;
+    std::unordered_map<int, std::list<std::pair<int, int>>::iterator> cacheMap_;
+};
 int main() {
     std::cout << std::endl << "Test Case 1" << std::endl;
     {
