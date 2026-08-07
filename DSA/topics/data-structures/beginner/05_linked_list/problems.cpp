@@ -3,6 +3,7 @@
 #include <iterator>
 #include <list>
 #include <memory>
+#include <vector>
 
 using std::cout;
 using std::endl;
@@ -39,15 +40,23 @@ namespace DataStructureUsingLinkedList {
                 throw std::runtime_error("Invalid pop: Cannot pop on empty list");
             }
 
-            // 👉 ".get keyword": It's gives the "raw pointer" of the current object, which is the exactly point into the memory address where the actual object is stored without any ownership sharing.
-            // 👉 "Node* headPointer = head_.get()": Now "headPointer" is pointing to the same memory address where "head_" is actually stored, Now we can perform any operation like update (next, value) etc.
+            // 👉 ".get keyword": It's gives the "raw pointer" of the current object,
+            // which is the exactly point into the memory address where the actual
+            // object is stored without any ownership sharing. 👉 "Node* headPointer =
+            // head_.get()": Now "headPointer" is pointing to the same memory address
+            // where "head_" is actually stored, Now we can perform any operation like
+            // update (next, value) etc.
             const auto nodeToDiscard = std::move(head_);
             head_                    = std::move(nodeToDiscard->next);
             --size_;
         }
 
-        // 👉 "const keyword": Using a const keyword with a function means, you aren't going to modify any object within the function, key effect are: (read only pointers,data protection,function call restriction (only const function can call within const function).
-        // 👉 "mutable": This behaviour can be modify by using "mutable [Type] [Variable Name] = obj", So even if a function has "const" it will bypass the "const".
+        // 👉 "const keyword": Using a const keyword with a function means, you aren't
+        // going to modify any object within the function, key effect are: (read only
+        // pointers,data protection,function call restriction (only const function can
+        // call within const function). 👉 "mutable": This behaviour can be modify by
+        // using "mutable [Type] [Variable Name] = obj", So even if a function has
+        // "const" it will bypass the "const".
         int peek() const {
             if (isEmpty()) {
                 throw std::runtime_error("Invalid peek: Cannot peek on empty list");
@@ -97,7 +106,8 @@ namespace DataStructureUsingLinkedList {
             head_              = std::move(oldHead->next);
             --size_;
 
-            // tail_ is raw observer, once the last node removed. It will become dangling pointer it we should have to explicitly reset them.
+            // tail_ is raw observer, once the last node removed. It will become
+            // dangling pointer it we should have to explicitly reset them.
             if (head_ == nullptr) {
                 tail_ = nullptr;
             }
@@ -246,7 +256,6 @@ namespace Problems {
             ++currentB;
         }
 #endif
-
         return result;
     }
 
@@ -275,6 +284,31 @@ namespace Problems {
         return head;
     }
 
+    std::forward_list<int> mergeTwoList(std::forward_list<int> list1,
+                                        std::forward_list<int> list2) {
+        if (list1.empty() || list2.empty()) {
+            return list1.empty() ? list2 : list1;
+        }
+
+        if (list1 < list2) {
+            int value = list1.front();
+            list1.pop_front();
+
+            auto merged = mergeTwoList(list1, list2);
+            merged.push_front(value);
+
+            return merged;
+        } else {
+            int value = list2.front();
+            list2.pop_front();
+
+            auto merged = mergeTwoList(list1, list2);
+            merged.push_front(value);
+
+            return merged;
+        }
+    }
+
     void main() {
         print(addTwoNumber({1, 2, 3, 4, 5}, {1, 2, 3, 4, 4}), "Sum of two list is: ");
         print(mergeSortedLists({1, 2, 4}, {1, 3, 4}), "After merging two sorted lists: ");
@@ -284,6 +318,9 @@ namespace Problems {
         print(removeNthFromEnd({1}, 1), "After Removing 1: ");
         print(removeNthFromEnd({1, 2}, 1), "After Removing 2: ");
         print(removeNthFromEnd({1, 2, 3, 4, 5}, 2), "After Removing 4: ");
+
+        std::cout << std::endl << "Merge two lists " << std::endl;
+        print(mergeTwoList({1, 2, 4}, {1, 3, 4}));
     }
 }  // namespace Problems
 
