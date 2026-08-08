@@ -12,36 +12,34 @@ using namespace std;
 */
 class Solution {
    public:
-    vector<string> findLetterCombination(string digits) {
-        backTracking(digits, 0);
+    std::vector<std::string> letterCombinations(std::string digits) {
+        std::vector<std::string> result;
+        backTracking(digits, result, "", 0);
         return result;
     }
 
    private:
-    array<string, 8> DIGIT_MAPPED = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    std::array<std::string, 8> DIGIT_MAPPING = {"abc", "def",  "ghi", "jkl",
+                                                "mno", "pqrs", "tuv", "wxyz"};
 
-    string         current;
-    vector<string> result;
-
-    void backTracking(string digits, int digitIdx) {
-        if (digitIdx == static_cast<int>(digits.size())) {
+    void backTracking(std::string digits, std::vector<std::string>& result, std::string current,
+                      int index) {
+        if (index >= static_cast<int>(digits.size())) {
             result.push_back(current);
             return;
         }
 
-        string currentString = DIGIT_MAPPED[digits[digitIdx] - '2'];
-
-        for (const char& ch : currentString) {
-            current.push_back(ch);
-            backTracking(digits, digitIdx + 1);
-            current.pop_back();
+        std::string letters = DIGIT_MAPPING[digits[index] - '2'];
+        for (const char& ch : letters) {
+            backTracking(digits, result, current + ch, index + 1);
         }
     }
 };
 
 int main() {
     Solution sol;
-    print(sol.findLetterCombination("234"));
+    print(sol.letterCombinations("234"));
+    print(sol.letterCombinations("2"));
 
     return 0;
 }
