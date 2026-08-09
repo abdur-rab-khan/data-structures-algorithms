@@ -178,58 +178,61 @@ namespace LinkedListTypes {
      * 🟡 Doubly Linked List: In Doubly Linked List, Nodes are pointer into both direction and every node in Doubly Linked List has three values, "actual value", "reference pointer to next node", "reference pointer to previous node".
      */
     class DoublyLinkedList {
-       private:
-        struct Node {
-            int              value;
-            shared_ptr<Node> next;
-            shared_ptr<Node> previous;
-            explicit Node(const int value) : value(value), next(nullptr), previous(nullptr) {}
-        };
-        shared_ptr<Node> head_;
-        shared_ptr<Node> tail_;
-
        public:
-        DoublyLinkedList() : head_(nullptr) {}
-        // ~DoublyLinkedList() {
-        //     Node* currentNode = head;
-        //     while (currentNode != nullptr) {
-        //         Node* nextNode = currentNode->next;
-        //         delete currentNode;
-        //         currentNode = nextNode;
-        //     }
-        // }
+        DoublyLinkedList() = default;
 
-        void append(const int value) {
+        void push(const int value) {
             auto newNode = make_shared<Node>(value);
 
-            if (head_ == nullptr) {
-                head_ = std::move(newNode);
+            if ((head_ == nullptr)) {
+                head_ = newNode;
                 tail_ = newNode;
-            } else {
-                tail_->next       = std::move(newNode);
-                newNode->previous = tail_;
-                tail_             = newNode;
+                return;
             }
+
+            newNode->previous = tail_;
+            tail_->next       = newNode;
+            tail_             = newNode;
+        }
+
+        void pop() {
+            if ((head_ == nullptr)) {
+                throw std::runtime_error("Trying in a pop on empty list");
+            }
+
+            auto secondLastNode = tail_->previous.lock();
+            if (secondLastNode == nullptr) {
+                head_ = nullptr;
+                tail_ = nullptr;
+                return;
+            }
+
+            secondLastNode->next = nullptr;
+            tail_                = secondLastNode;
         }
 
         std::string toString() const {
-            std::string nodeStr = "";
-
-            const auto currentNode = head_;
-            while (currentNode != nullptr) {
-                if (currentNode->previous != nullptr) {
-                    nodeStr += std::to_string(currentNode->previous->value) + " <-> ";
-                }
-
-                nodeStr += std::to_string(currentNode->value);
-
-                if (currentNode->next != nullptr) {
-                    nodeStr += " <-> ";
-                }
+            if (head_ == nullptr) {
+                return "(EMPTY)";
             }
 
-            return nodeStr.empty() ? "(EMPTY)" : nodeStr;
+            std::string result = std::to_string(head_->value);
+            for (auto node = head_->next; node != nullptr; node = node->next) {
+                result += " <-> " + std::to_string(node->value);
+            }
+
+            return result;
         }
+
+       private:
+        struct Node {
+            int                 value;
+            shared_ptr<Node>    next;
+            std::weak_ptr<Node> previous;
+            explicit Node(const int value) : value(value) {}
+        };
+        shared_ptr<Node> head_;
+        shared_ptr<Node> tail_;
     };
 
     /*
@@ -306,14 +309,15 @@ namespace LinkedListTypes {
 
         const auto doublyLinkedList = std::make_unique<DoublyLinkedList>();
 
-        doublyLinkedList->append(11);
-        doublyLinkedList->append(22);
-        doublyLinkedList->append(33);
-        doublyLinkedList->append(44);
+        doublyLinkedList->push(11);
+        doublyLinkedList->push(22);
+        doublyLinkedList->pop();
+        doublyLinkedList->push(33);
+        doublyLinkedList->push(44);
 
         std::cout << "Doubly linked list elements are: " << doublyLinkedList->toString() << endl;
 
-        // 🟡 Circular LinkedList
+        // // 🟡 Circular LinkedList
         cout << endl << "Circular LinkedList" << endl;
 
         const auto circularLinkedList = std::make_unique<CircularLinkedList>();

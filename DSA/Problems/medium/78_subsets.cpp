@@ -1,5 +1,6 @@
-#include <iostream>
 #include <vector>
+
+#include "../../dsa_utils.h"
 
 using namespace std;
 
@@ -38,13 +39,7 @@ class Solution {
 
 int main() {
     Solution sol;
-
-    for (auto& subset : sol.findSubsets({1, 2, 3})) {
-        cout << "[ ";
-        for (int n : subset)
-            cout << n << " ";
-        cout << "]\n";
-    }
+    print(sol.findSubsets({1, 2, 3}));
 
     return 0;
 }

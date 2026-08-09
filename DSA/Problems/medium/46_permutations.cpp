@@ -11,37 +11,41 @@ using namespace std;
 */
 class Solution {
    public:
-    vector<vector<int>> findPermutations(const vector<int>& nums) {
-        backTracking(nums);
-        return result;
+    vector<vector<int>> permute(const vector<int>& nums) {
+        vector<int>         currentPermute;
+        vector<vector<int>> finalPermutations;
+        vector<bool>        visited(nums.size(), false);
+
+        backTracking(nums, currentPermute, visited, finalPermutations);
+        return finalPermutations;
     }
 
    private:
-    vector<int>         tempList;
-    vector<vector<int>> result;
-
-    void backTracking(const vector<int>& nums) {
-        if (tempList.size() == nums.size()) {
-            result.push_back(tempList);
+    void backTracking(const vector<int>& nums, vector<int>& currentPermute, vector<bool>& visited,
+                      vector<vector<int>>& finalPermutations) {
+        if (currentPermute.size() == nums.size()) {
+            finalPermutations.push_back(currentPermute);
             return;
         }
 
-        for (const int& num : nums) {
-            if (ranges::find(tempList, num) != tempList.end()) {
+        for (int i = 0; i < static_cast<int>(nums.size()); i++) {
+            if (visited[i]) {
                 continue;
             }
 
-            tempList.push_back(num);  // CHOOSE: Push into the tempList
-            backTracking(nums);       // BACKTRACK: "backTracking" to call the function
-            tempList
-                .pop_back();  // UNCHOOSE: Pop from tempList mainly to skip and create permutation
+            visited[i] = true;
+            currentPermute.push_back(nums[i]);
+            backTracking(nums, currentPermute, visited, finalPermutations);
+
+            visited[i] = false;
+            currentPermute.pop_back();
         }
     }
 };
 
 int main() {
     Solution sol;
-    print(sol.findPermutations({1, 2, 3}), "Permutations of 123 are: ");
+    print(sol.permute({1, 2, 3}), "Permutations of 123 are: ");
 
     return 0;
 }

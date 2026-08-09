@@ -20,9 +20,10 @@
  | * Modifiers:                                                                                                                                                    |
  |   1. insert(iterator, element): Insert element before the iterator                                                                                              |
  |   2. insert_range(iterator, container_compatible_range): Insert list of elements                                                                                |
+ |   3. .splice("pos before the content will be inserted", "another container where it will be transfered", "element to be transfer"): all will be iterator        |
  |                                                                                                                                                                 |
  |   1. clear(): Remove all the elements from the list                                                                                                             |
- |   2. erase(element): Remove particular elements                                                                                                                 |
+ |   2. erase(iterator): Remove particular elements by giving the iterator                                                                                         |
  |                                                                                                                                                                 |
  |   1. push_back():                                                                                                                                               |
  |   2. push_front():                                                                                                                                              |
@@ -63,6 +64,17 @@ int main() {
     // Insert 50, after 22
     auto findIt = find(doublyLinkedList.begin(), doublyLinkedList.end(), 22);
     doublyLinkedList.insert(std::next(findIt, 1), 50);
+
+    // Removing the 2th element which is 22
+    doublyLinkedList.erase(std::next(doublyLinkedList.begin(), 2));
+
+    // Updating the place of first element (4) at the end of the list
+    //                      "place to insert"       "container to insert"   "element to insert"
+    doublyLinkedList.splice(doublyLinkedList.end(), doublyLinkedList, doublyLinkedList.begin());
+
+    // Moving the 10 directly from second last to the start
+    doublyLinkedList.splice(doublyLinkedList.begin(), doublyLinkedList,
+                            std::prev(doublyLinkedList.end(), 2));
 
     // Converting list to vector
     cout << "Elements are: ";
