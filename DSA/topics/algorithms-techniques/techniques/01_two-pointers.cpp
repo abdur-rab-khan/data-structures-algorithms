@@ -53,59 +53,31 @@
 */
 
 #include <bits/stdc++.h>
+
+#include "../../../dsa_utils.h"
+
 using namespace std;
-
-/**
- * Prints all values of an integer list with an optional label.
- *
- * Given a list of integers and an optional message, print the message first
- * and then print all elements in order.
- *
- * Example:
- * Input: vec = {1, 2, 3}, msg = "Values: "
- * Output: Values: 1 2 3
- *
- * Time Complexity: O(n) where n is the number of elements
- * Space Complexity: O(1) auxiliary space
- *
- * @param vec The vector of integers to print
- * @param msg Optional prefix message printed before the elements
- */
-void traverse(const vector<int>& vec, string msg = "") {
-    if (vec.size() == 0)
-        return;
-
-    if (msg.empty())
-        cout << "Elements of a vector are: ";
-    else
-        cout << msg;
-
-    for (const int& el : vec) {
-        cout << el << " ";
-    }
-    cout << endl;
-}
 
 /*
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                              🔺 TWO POINTERS INTRO PROBLEMS                                                                                         |
+|                                                                                             🔺 TWO POINTERS EASY PROBLEMS                                                                                           |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
-namespace intro {
+namespace easy {
     /**
-        * Reverses an array.
-        *
-        * Given an array of integers, return the same array in reverse order.
-     *
-     * Example:
-     * Input: vec = {1, 2, 3, 4}
-    * Output: {4, 3, 2, 1}
-     *
-     * Time Complexity: O(n) where n is the size of the vector
-     * Space Complexity: O(1) in-place
-     *
-    * @param vec Input array to be reversed
-     */
+    * Reverses an array.
+    *
+    * Given an array of integers, return the same array in reverse order.
+ *
+ * Example:
+ * Input: vec = {1, 2, 3, 4}
+* Output: {4, 3, 2, 1}
+ *
+ * Time Complexity: O(n) where n is the size of the vector
+ * Space Complexity: O(1) in-place
+ *
+* @param vec Input array to be reversed
+ */
     void reverse(vector<int>& vec) {
         int i = 0;
         int j = vec.size() - 1;
@@ -119,20 +91,20 @@ namespace intro {
     }
 
     /**
-        * Removes duplicate values from a sorted array and prints unique values.
-        *
-        * Given a sorted array, keep one occurrence of each value and print the
-        * resulting unique list.
-     *
-     * Example:
-     * Input: vec = {1, 1, 2, 3, 3}
-     * Output: 1 2 3
-     *
-    * Time Complexity: O(n) where n is the array size
-     * Space Complexity: O(n) due to constructing a new unique vector for output
-     *
-    * @param vec Sorted input array that may contain duplicates
-     */
+    * Removes duplicate values from a sorted array and prints unique values.
+    *
+    * Given a sorted array, keep one occurrence of each value and print the
+    * resulting unique list.
+ *
+ * Example:
+ * Input: vec = {1, 1, 2, 3, 3}
+ * Output: 1 2 3
+ *
+* Time Complexity: O(n) where n is the array size
+ * Space Complexity: O(n) due to constructing a new unique vector for output
+ *
+* @param vec Sorted input array that may contain duplicates
+ */
     void removeDuplicates(vector<int> vec) {
         int i = 0, j = 1;
 
@@ -147,44 +119,9 @@ namespace intro {
 
         vector<int> duplicateFreeVec(vec.begin(), vec.begin() + i + 1);
 
-        traverse(duplicateFreeVec);  // Printing all unique elements
+        print(duplicateFreeVec);  // Printing all unique elements
     }
 
-    /**
-        * Runs introductory two-pointer questions.
-        *
-        * This runner executes sample inputs for:
-        * 1) reverse array,
-        * 2) remove duplicates from sorted array.
-        *
-        * Example:
-        * Input: predefined sample arrays
-        * Output: printed answers for both questions
-     *
-     * Time Complexity: O(n) per demonstration call
-     * Space Complexity: O(1) to O(n) depending on the called helper
-     */
-    void main() {
-        cout << "Two Pointers intro: " << endl;
-
-        // Reversing and printing arr
-        vector<int> arr = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        reverse(arr), traverse(arr);
-
-        // Removing duplicates
-        vector<int> arr2 = {1, 1, 1, 2, 2, 3, 4, 5, 5, 5, 5};
-        removeDuplicates(arr2);
-
-        cout << endl << endl;
-    }
-}  // namespace intro
-
-/*
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                             🔺 TWO POINTERS EASY PROBLEMS                                                                                           |
-+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-*/
-namespace easy {
     /**
         * Finds all pairs in a sorted array whose sum equals a target.
         *
@@ -204,7 +141,7 @@ namespace easy {
     void computeTwoSum(vector<int> numbers, int k) {
         vector<vector<int>> pairs = {};
 
-        size_t leftIndex = 0;
+        size_t leftIndex  = 0;
         size_t rightIndex = numbers.size() - 1;
 
         while (leftIndex < rightIndex) {
@@ -249,7 +186,7 @@ namespace easy {
      * @param str Input string to validate as palindrome
      */
     void isPalindrome(string str) {
-        int leftIndex = 0;
+        int leftIndex  = 0;
         int rightIndex = str.length() - 1;
 
         // Lambda function: use "auto" or given type or directly use "isalnum"  ==> Learned LAMBDA
@@ -262,7 +199,7 @@ namespace easy {
         // Find whether "str" is palindrome or not by look both side.
         while (leftIndex < rightIndex) {
             bool isRightCharValid = isValidChar(str[rightIndex]);
-            bool isLeftCharValid = isValidChar(str[leftIndex]);
+            bool isLeftCharValid  = isValidChar(str[leftIndex]);
 
             if (!isRightCharValid) {
                 leftIndex++;
@@ -306,7 +243,7 @@ namespace easy {
         if (numbers.empty())
             return {};
 
-        size_t leftIndex = 0;
+        size_t leftIndex  = 0;
         size_t rightIndex = 1;
 
         while (rightIndex < numbers.size()) {
@@ -358,7 +295,7 @@ namespace easy {
         // Technique 2;
         size_t size = numbers.size();
 
-        size_t leftIndex = 0;
+        size_t leftIndex  = 0;
         size_t rightIndex = 1;
 
         while (rightIndex < size) {
@@ -465,14 +402,14 @@ namespace easy {
 
             So the capcity will be min(2, 6) * (width), width = j - i = 4 - 0 = 4;
         */
-        int leftIndex = 0;
+        int leftIndex  = 0;
         int rightIndex = heights.size() - 1;
 
         int maxArea = 0;
 
         while (leftIndex < rightIndex) {
             int actualHeight = std::min(heights[leftIndex], heights[rightIndex]);
-            int area = actualHeight * (rightIndex - leftIndex);
+            int area         = actualHeight * (rightIndex - leftIndex);
 
             maxArea = std::max(maxArea, area);
 
@@ -521,7 +458,7 @@ namespace easy {
 
         // Step 2: Merge negative and positive parts
         while (negativeIndex >= 0 && positiveIndex < size) {
-            int leftValue = numbers[negativeIndex];
+            int leftValue  = numbers[negativeIndex];
             int rightValue = numbers[positiveIndex];
 
             if (abs(leftValue) < rightValue) {
@@ -546,7 +483,7 @@ namespace easy {
             positiveIndex++;
         }
 
-        traverse(squaredValues, "Printing all sorted array: ");
+        print(squaredValues, "Printing all sorted array: ");
     }
 
     /**
@@ -575,16 +512,16 @@ namespace easy {
 
         // Removing duplicates in place
         vector<int> duplicateNumbers = {1, 1, 1, 2, 3, 4, 5, 5, 5};
-        traverse(removeDuplicates(duplicateNumbers), "Unique numbers are: ");
+        print(removeDuplicates(duplicateNumbers), "Unique numbers are: ");
 
         // Moving zero elements towards right
         vector<int> numbers = {0, 1, 0, 3, 12};
-        traverse(moveZeros(numbers), "Zero free numbers are: ");
+        print(moveZeros(numbers), "Zero free numbers are: ");
 
         // Merge sorted array
         vector<int> sortedNumberF = {1, 3, 5, 7};
         vector<int> sortedNumberS = {2, 4, 6};
-        traverse(mergeSort(sortedNumberF, sortedNumberS), "After merging: ");
+        print(mergeSort(sortedNumberF, sortedNumberS), "After merging: ");
 
         // Container with most water
         vector<int> heights = {1, 8, 6, 2, 5, 4, 8, 3, 7};
@@ -629,7 +566,7 @@ namespace medium {
         sort(numbers.begin(), numbers.end());
 
         for (int outerIndex = 0; outerIndex < size - 2; outerIndex++) {
-            int leftIndex = outerIndex + 1;
+            int leftIndex  = outerIndex + 1;
             int rightIndex = size - 1;
 
             while (leftIndex < rightIndex) {
@@ -703,7 +640,7 @@ namespace medium {
                 if (j > i + 1 && nums[j] == nums[j - 1])
                     continue;
 
-                int leftIndex = j + 1;
+                int leftIndex  = j + 1;
                 int rightIndex = size - 1;
 
                 // 3.
@@ -755,8 +692,8 @@ namespace medium {
     int computeMinimumSubarraySum(vector<int> nums, int target) {
         int size = nums.size();
 
-        int totalSum = 0;
-        int leftIdx = 0;
+        int totalSum    = 0;
+        int leftIdx     = 0;
         int minSubarray = INT_MAX;
 
         for (int rightIdx = 0; rightIdx < size; rightIdx++) {
@@ -799,17 +736,17 @@ namespace medium {
                     * Water will trap between vertical lines so we have to evaluate the thing.
         */
 
-        int leftIndex = 1;
+        int leftIndex  = 1;
         int rightIndex = heights.size() - 2;
 
-        int maxLeftHeight = heights[0];
+        int maxLeftHeight  = heights[0];
         int maxRightHeight = heights[heights.size() - 1];
 
         int totalTrappedWater = 0;
 
         // You alway do wrong here please consider this "leftIndex <= rightIndex"
         while (leftIndex <= rightIndex) {
-            int leftHeight = heights[leftIndex];
+            int leftHeight  = heights[leftIndex];
             int rightHeight = heights[rightIndex];
 
             int minHeight = std::min(maxLeftHeight, maxRightHeight);
@@ -852,7 +789,7 @@ namespace medium {
     void solveDutchFlag(vector<int>& nums) {
         size_t size = nums.size();
 
-        int leftIdx = 0;
+        int leftIdx  = 0;
         int rightIdx = size - 1;
 
         // Moving 0 towards front
@@ -968,7 +905,7 @@ namespace medium {
         int fast = 0;
 
         int totalProducts = 1;
-        int totalCounts = 0;
+        int totalCounts   = 0;
 
         while (fast < size) {
             totalProducts *= nums[fast++];
@@ -1003,7 +940,7 @@ namespace medium {
         cout << "Medium Problems: " << endl;
 
         // find three sum
-        vector<int> threeSumNums = {-1, 0, 1, 2, -1, -4};
+        vector<int>         threeSumNums  = {-1, 0, 1, 2, -1, -4};
         vector<vector<int>> possiblePairs = computeThreeSumProblem(threeSumNums, 0);
 
         cout << "Possible pairs for three sum are: " << endl;
@@ -1015,7 +952,7 @@ namespace medium {
         }
 
         // find four sum
-        vector<int> fourSumNums = {-1, 0, 1, 2, -1, -4};
+        vector<int>         fourSumNums          = {-1, 0, 1, 2, -1, -4};
         vector<vector<int>> possiblePairsFourSum = findFourSum(fourSumNums, 0);
 
         cout << "Possible pairs for four sum are: " << endl;
@@ -1089,7 +1026,6 @@ namespace hard {
 }  // namespace hard
 
 int main() {
-    intro::main();
     easy::main();
     medium::main();
     hard::main();

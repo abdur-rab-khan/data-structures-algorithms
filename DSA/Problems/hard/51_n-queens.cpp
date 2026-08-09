@@ -27,17 +27,22 @@ class Solution {
     vector<int>            queenCol;
     vector<vector<string>> result;
 
+    // So, the idea is I know that there will be "n" queens that will going to place into the board to make checking more easier.
+    // To make checking easier, we'll create an extra array size n, where we only store the queen once we got it means for row 0
+    // I'll push the position of "row 0" queen, by using this we can easily check whether it's safe to place or not.
     bool isSafe(int row, int col) {
         for (int prevRow = 0; prevRow < row; prevRow++) {
             int prevCol = queenCol[prevRow];
 
-            // check 1: same column?
-            if (prevCol == col)
+            // check 1: same column, it will tell us because "prevCol" tells about the column where queen is placed.
+            if (prevCol == col) {
                 return false;
+            }
 
             // check 2: same diagonal
-            if (abs(prevRow - row) == abs(prevCol - col))
+            if (abs(prevRow - row) == abs(prevCol - col)) {
                 return false;
+            }
         }
         return true;
     }

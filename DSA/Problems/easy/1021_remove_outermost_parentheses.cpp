@@ -5,22 +5,19 @@
     * In this approach with are using with counter variable called depth, the problem in me is we can’t feature it out we can use depth in this approach for tracking outer parentheses and inner parentheses.
     * So next time when we are going to solve the problem "please please please", break down the question into separate chunks. Then feature out what things are needed to solve this problem.
 */
-std::string removeOuterParentheses(const std::string& str) {
-    if (str.empty()) {
-        return "";
-    }
+std::string removeOuterParentheses(std::string s) {
+    std::string result;
+    result.reserve(s.size());
 
     int depth = 0;
+    for (const char& ch : s) {
+        depth += (ch == '(') ? 1 : -1;
 
-    std::string result = "";
+        const bool isInnerOpenParen  = (ch == '(' && depth > 1);
+        const bool isInnerCloseParen = (ch == ')' && depth >= 1);
 
-    for (const char& ch : str) {
-        depth += ch == '(' ? 1 : -1;
-
-        if (ch == '(' && depth > 1) {
-            result += ch;
-        } else if (ch == ')' && depth >= 1) {
-            result += ch;
+        if (isInnerOpenParen || isInnerCloseParen) {
+            result.push_back(ch);
         }
     }
 

@@ -1,13 +1,11 @@
-#include <algorithm>
 #include <deque>
 #include <iostream>
-#include <iterator>
 #include <vector>
 
 std::vector<int> maximumSlidingWindow(std::vector<int> nums, int k) {
-    int leftIdx = 0;
+    int              leftIdx = 0;
     std::vector<int> maximumValues;
-    std::deque<int> q;
+    std::deque<int>  q;
 
     for (int rightIdx = 0; rightIdx < nums.size(); rightIdx++) {
         int currentNum = nums[rightIdx];

@@ -1,0 +1,27 @@
+{
+  "Main Snippet": {
+    "prefix": "main",
+    "body": [
+      "#include <iostream>",
+      "#include <vector>",
+      "",
+      "#include \"../../dsa_utils.h\"",
+      "",
+      "using namespace std;",
+      "",
+      "class Solution {",
+      "public:",
+      "    $2 subsetsWithDup$1(vector<int>& nums) {",
+      "        $0",
+      "    }",
+      "};",
+      "",
+      "int main() {",
+      "    Solution sol;",
+      "    print(sol.subsetsWithDup$3({}));",
+      "    return 0;",
+      "}",
+    ],
+    "description": "Main function",
+  },
+}

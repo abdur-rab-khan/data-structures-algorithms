@@ -20,7 +20,7 @@
  |   2. insert_range_after(iterator, container_compatible_range): Insert list of elements                                                                          |
  |                                                                                                                                                                 |
  |   1. clear(): Remove all the elements from the list                                                                                                             |
- |   2. erase_after(element): Remove particular elements                                                                                                           |
+ |   2. erase_after(element): Remove particular elements after a particular iterator                                                                               |
  |                                                                                                                                                                 |
  |   2. push_front():                                                                                                                                              |
  |   2. pop_front():                                                                                                                                               |
@@ -35,19 +35,11 @@
 
 #include <algorithm>
 #include <forward_list>
-#include <iostream>
-#include <list>
 #include <vector>
 
-using namespace std;
+#include "../../../../DSA/dsa_utils.h"
 
-void printElements(const forward_list<int>& nums) {
-    cout << "Elements are: ";
-    for (const int& num : nums) {
-        cout << num << " ";
-    }
-    cout << endl;
-}
+using namespace std;
 
 int main() {
     forward_list<int> singlyLinkedList;
@@ -58,19 +50,19 @@ int main() {
     singlyLinkedList.push_front(2);
     singlyLinkedList.push_front(1);
 
-    printElements(singlyLinkedList);
+    print(singlyLinkedList);
 
     // Random push via given iterator
     auto it = find(singlyLinkedList.begin(), singlyLinkedList.end(), 3);
     singlyLinkedList.insert_after(it, 33);
 
-    printElements(singlyLinkedList);
+    print(singlyLinkedList);
 
     vector<int> nums    = {11, 22, 33, 44, 55};
     auto        startIt = singlyLinkedList.before_begin();
     singlyLinkedList.insert_range_after(startIt, nums);
 
-    printElements(singlyLinkedList);
+    print(singlyLinkedList);
 
     return 0;
 }

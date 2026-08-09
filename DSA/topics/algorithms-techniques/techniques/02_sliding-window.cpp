@@ -106,7 +106,9 @@
 
 #include <bits/stdc++.h>
 
-#include "../../dsa_utils.hpp"
+#include <format>
+
+#include "../../../dsa_utils.h"
 
 using namespace std;
 
@@ -161,7 +163,7 @@ namespace easy_problems {
      * @return Maximum sum of any subarray of size k
      */
     int computeMaximumSumWithTarget(const vector<int>& numbers, int target) {
-        if (numbers.size() == target)
+        if (target == static_cast<int>(numbers.size()))
             return 0;
 
         size_t leftWindow  = 0;
@@ -372,34 +374,25 @@ namespace easy_problems {
 
         // FINDING MAXIMUM SUM WITH TARGET
         vector<int> maximumSumNumbers = {2, 1, 5, 1, 3, 2};
-
-        cout << "Maximum sum with target " << 3
-             << " is: " << computeMaximumSumWithTarget(maximumSumNumbers, 3) << endl;
+        print(computeMaximumSumWithTarget(maximumSumNumbers, 3),
+              std::format("Maximum sum with target {} is: ", 3));
 
         // AVERAGE OF A SUBARRAY SIZE K
         vector<int> averageSumNumbers = {1, 3, 2, 6, -1, 4, 1, 8, 2};
-
-        print<float>(computeAverageSumWithTarget(averageSumNumbers, 5),
-                     "Average Sums with target 5 are: ");
+        print(computeAverageSumWithTarget(averageSumNumbers, 5),
+              "Average Sums with target 5 are: ");
 
         // MAX VOWEL COUNT OF A SUBSTRING
-        string str = "abciiidef";
-
-        cout << "Maximum vowel count of a substring size 3 is: "
-             << countMaximumVowelInSubstring(str, 3) << endl;
-
-        cout << endl << endl;
+        print(countMaximumVowelInSubstring("abciiidef", 3),
+              "Maximum vowel count of a substring size 3 is: ");
 
         // CHECKING DUPLICATE WITH TARGET K
         vector<int> duplicateNumbers = {1, 2, 1, 3, 6, 8};
-
-        cout << "Is numbers has duplicate number: "
-             << checkContainsTwoDuplicates(duplicateNumbers, 3) << endl;
+        print(checkContainsTwoDuplicates(duplicateNumbers, 3), "Is numbers has duplicate number: ");
 
         // LONGEST UNIQUE SUBSTRING
         string duplicateStr = "abcabcbbieouvx";
-
-        cout << "Longest Unique Substring is: " << findUniqueLongestSubstring(duplicateStr) << endl;
+        print(findUniqueLongestSubstring(duplicateStr), "Longest Unique Substring is: ");
     }
 }  // namespace easy_problems
 
@@ -639,27 +632,23 @@ namespace medium_problems {
         string str       = "ABBCBKK";
         int    minLength = 1;
 
-        cout << "Maximum possible substring is: " << findLongestRepeatingSubstring(str, minLength);
-        cout << endl << endl;
+        print(findLongestRepeatingSubstring(str, minLength), "Maximum possible substring is: ");
 
         // FINDING MAXIMUM NUMBER OF FRUIT A BUCKET HAS
         vector<int> fruits = {1, 2, 1, 2, 3};
-        cout << "Maximum fruit count is: " << findMaximumNumberOfFruits(fruits, 2) << endl;
-        ;
+        print(findMaximumNumberOfFruits(fruits, 2), "Maximum fruit count is: ");
 
         // FINDING SUM OF SUBARRAY BUT WITH MINIMUM SIZE
         vector<int> numbers = {2, 3, 1, 2, 4, 3};
-        cout << "Minimum size of a subarray is: " << findMinimumSizeSubarraySum(numbers, 7) << endl;
+        print(findMinimumSizeSubarraySum(numbers, 7), "Minimum size of a subarray is: ");
 
         // FINDING MAXIMUM SUM OF K DISTINCT ARRAY
         vector<int> numbers2 = {1, 5, 4, 2, 9, 9, 9};
-        cout << "Maximum sum of k distinct array is: " << findMaximumSumOfDistinctArray(numbers2, 3)
-             << endl;
+        print(findMaximumSumOfDistinctArray(numbers2, 3), "Maximum sum of k distinct array is: ");
 
         // Find longest subarray containing 1 by flipping 0 K times.
         vector<int> oneZero = {1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0};
-        cout << "Longest Subarray containing 1's is: " << findLongestOnesAfterKFlips(oneZero, 2)
-             << endl;
+        print(findLongestOnesAfterKFlips(oneZero, 2), "Longest Subarray containing 1's is: ");
     }
 }  // namespace medium_problems
 
@@ -862,9 +851,9 @@ namespace hard_problems {
 
 int main() {
     // Calling main functions
-    // easy_problems::main();
+    easy_problems::main();
     medium_problems::main();
-    // hard_problems::main();
+    hard_problems::main();
 
     return 0;
 }
