@@ -23,6 +23,8 @@ std::mutex mtx;
 //     mtx.unlock();
 // }
 
+// 🔷 "unique_lock" similar to "lock_guard" it's also lock one mutex, but it provides more controls like "manually lock/unlock".
+
 void perfectCounter(int& count) {
     std::lock_guard<std::mutex> lock(mtx);
     count++;
