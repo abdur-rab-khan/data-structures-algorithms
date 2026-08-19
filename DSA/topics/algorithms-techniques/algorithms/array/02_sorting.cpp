@@ -17,14 +17,12 @@ using namespace std;
 |                                                                                                                                                                                                                     |
 | 🔷 Time Complexity: O(n²) | Space Complexity: O(1)                                                                                                                                                                  |
 |                                                                                                                                                                                                                     |
-| 🔷 Example: "https://claude.ai/chat/c195e2ea-9977-4209-a456-53ffc54f8792"                                                                                                                                           |
-|                                                                                                                                                                                                                     |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 namespace bubbleSort {
     void bubbleSort(vector<int>& numbers) {
-        int size = numbers.size();
         bool isSwapped = false;
+        int  size      = numbers.size();
 
         for (int i = 0; i < size - 1; i++) {
             isSwapped = false;
@@ -126,7 +124,7 @@ namespace insertionSort {
         int size = numbers.size();
 
         for (int i = 1; i < size; i++) {
-            int j = i - 1;
+            int j    = i - 1;
             int elem = numbers[i];
 
             while (j >= 0 && numbers[j] > elem) {
@@ -175,7 +173,7 @@ namespace insertionSort {
 */
 namespace mergeSort {
     void merge(vector<int>& numbers, int left, int mid, int right) {
-        int firstTempSize = mid - left + 1;
+        int firstTempSize  = mid - left + 1;
         int secondTempSize = right - mid;
 
         // Step 1. Creating temp vectors.
