@@ -11,17 +11,17 @@
       "",
       "class Solution {",
       "public:",
-      "    $2 subsetsWithDup$1(vector<int>& nums) {",
+      "    $2 $1($3) {",
       "        $0",
       "    }",
       "};",
       "",
       "int main() {",
       "    Solution sol;",
-      "    print(sol.subsetsWithDup$3({}));",
+      "    print(sol.$4({}));",
       "    return 0;",
-      "}",
+      "}"
     ],
-    "description": "Main function",
-  },
+    "description": "Main function"
+  }
 }
