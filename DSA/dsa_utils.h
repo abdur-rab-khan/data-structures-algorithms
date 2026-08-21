@@ -9,16 +9,16 @@
 // Print function declartion for iterable containers like (vector, array, list)
 template <typename T>
     requires std::ranges::range<T> && (!std::is_convertible_v<T, std::string_view>)
-void print(const T& container, std::string_view msg = "", bool isRoot = true);
+void print(T&& container, std::string_view msg = "", bool isRoot = true);
 
 // Print function declaration for single elements like (number, float, bool)
 template <typename T>
     requires(!std::ranges::range<T> || std::is_convertible_v<T, std::string_view>)
-void print(const T& val, std::string_view msg = "", bool isRoot = true);
+void print(T&& val, std::string_view msg = "", bool isRoot = true);
 
 template <typename T>
     requires std::ranges::range<T> && (!std::is_convertible_v<T, std::string_view>)
-void print(const T& container, std::string_view msg, bool isRoot) {
+void print(T&& container, std::string_view msg, bool isRoot) {
     if (isRoot) {
         std::cout << (!msg.empty() ? msg : "Container elements are: ");
     }
@@ -36,7 +36,7 @@ void print(const T& container, std::string_view msg, bool isRoot) {
 
 template <typename T>
     requires(!std::ranges::range<T> || std::is_convertible_v<T, std::string_view>)
-void print(const T& val, std::string_view msg, bool isRoot) {
+void print(T&& val, std::string_view msg, bool isRoot) {
     if (isRoot) {
         std::cout << (!msg.empty() ? msg : "Container elements are");
         std::cout << ": ";
