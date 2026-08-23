@@ -33,10 +33,14 @@
 |                                                                                                                                                                                    |
 | 🔷 HOW TO CHOOSE NUMBER OF BITS                                                                                                                                                    |
 |                                                                                                                                                                                    |
+|    🔹 bool      -->  1 byte   -->   false/true (0/1)                                                                                                                               |
+|    🔹 int8_t    -->  1 byte   -->   -128    to    127                                                                                                                              |
+|    🔹 uint8_t   -->  1 byte   -->   0       to    255                                                                                                                              |
+|    🔹 int16_t   -->  2 bytes  -->   -32,768 to    32,768                                                                                                                           |
+|    🔹 int       -->  4 bytes  -->   -2.1B   to    2.1B                                                                                                                             |
+|    🔹 int64_t   -->  8 bytes  -->   Very Large                                                                                                                                     |
 |                                                                                                                                                                                    |
-|                                                                                                                                                                                    |
-|                                                                                                                                                                                    |
-|                                                                                                                                                                                    |
+| 🔶 1 byte = 8 bits                                                                                                                                                                 |
 |                                                                                                                                                                                    |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                 IMPORTANT CONCEPTS                                                                                 |
@@ -85,7 +89,7 @@
 |          <<  1                                                                                                                                                                     |
 |              8 = 1000     ==> Used to multiply by power of 2.     a << n = a x 2^n                                                                                                 |
 |                                                                                                                                                                                    |
-| ⭐ "RIGHT-SHIFT (>>)": Shift bits to right                                                                                                                                         | 
+| ⭐ "RIGHT-SHIFT (>>)": Shift bits to right                                                                                                                                         |
 |                                                                                                                                                                                    |
 |              4 = 0100                                                                                                                                                              |
 |          >>  1                                                                                                                                                                     |
@@ -233,7 +237,7 @@ namespace basic {
                 continue;
 
             int xorValue = query ^ numbers[i];
-            maxXOR = max(maxXOR, xorValue);
+            maxXOR       = max(maxXOR, xorValue);
         }
 
         return maxXOR;
@@ -300,8 +304,8 @@ namespace dsa_problems {
     }
 
     void findMissingAndRepeated(vector<int>& numbers) {
-        size_t size = numbers.size();
-        int xOrAll = 0;
+        size_t size   = numbers.size();
+        int    xOrAll = 0;
 
         // Step 1. Using XOR Operation We'll get "unique" and "duplicate" at end, All number will be canceled only remaining will be ("unique" ^ "duplicate").
         for (int i = 0; i < numbers.size(); i++) {
@@ -331,18 +335,18 @@ namespace dsa_problems {
         }
 
         // Step 4. Getting "missing", "duplicate" number by checking every number if num matches with "bucket1" mean number is already there in "numbers" mean it's duplicate.
-        int missing = 0;
+        int missing   = 0;
         int duplicate = 0;
 
         for (const int& num : numbers) {
             if (num == bucket1) {
                 duplicate = bucket1;
-                missing = bucket2;
+                missing   = bucket2;
             }
 
             if (num == bucket2) {
                 duplicate = bucket2;
-                missing = bucket1;
+                missing   = bucket1;
             }
         }
 
@@ -354,8 +358,8 @@ namespace dsa_problems {
         if (numbers.empty())
             return;
 
-        size_t size = numbers.size();
-        int xORCalculatedValue = 0;
+        size_t size               = numbers.size();
+        int    xORCalculatedValue = 0;
 
         // Step 1. Performing "XOR" on the numbers so that, at the end we'll get ("unique" ^ "unique").
         for (const int& num : numbers) {
@@ -366,7 +370,7 @@ namespace dsa_problems {
         int rightMostSetBit = xORCalculatedValue & (-xORCalculatedValue);
 
         // Step 3. Grouping both two "uniques" value into two variables.
-        int firstUnique = 0;
+        int firstUnique  = 0;
         int secondUnique = 0;
 
         for (const int& num : numbers) {
@@ -397,8 +401,8 @@ namespace dsa_problems {
     }
 
     vector<vector<int>> findSubsets(vector<int>& nums) {
-        int numsSize = nums.size();
-        vector<vector<int>> subsets = {};
+        int                 numsSize = nums.size();
+        vector<vector<int>> subsets  = {};
 
         // Looping through all subset masks
         for (int mask = 0; mask < (1 << numsSize); mask++) {
@@ -449,7 +453,7 @@ namespace dsa_problems {
     }
 
     int findXORSubarray(vector<int>& nums, int k) {
-        int count = 0;
+        int count     = 0;
         int prefixXOR = 0;
 
         // This map stores:
@@ -481,10 +485,10 @@ namespace dsa_problems {
 
     // Main function
     void main() {
-        vector<int> k = {4, 2, 3, 2};
-        vector<int> xorSubarray = {2, 3, 1, 6, 7};
-        vector<int> n = {1023, 4567, 1023, 8910, 4567};
-        vector<int> sensorIds = {10, 5, 3, 10, 4, 5, 8, 4};
+        vector<int> k             = {4, 2, 3, 2};
+        vector<int> xorSubarray   = {2, 3, 1, 6, 7};
+        vector<int> n             = {1023, 4567, 1023, 8910, 4567};
+        vector<int> sensorIds     = {10, 5, 3, 10, 4, 5, 8, 4};
         vector<int> threeRepeated = {3, 3, 3, 4, 2, 2, 2};
 
         string str = "abdur";
@@ -523,5 +527,6 @@ namespace dsa_problems {
 int main() {
     basic::main();
     dsa_problems::main();
+
     return 0;
 }
