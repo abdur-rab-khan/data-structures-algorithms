@@ -35,6 +35,7 @@
 | 🔶 Get Parent of a child: (n - 1) / 2;                                                                                                                         |
 | 🔶 Get Left Child: (n * 2) + 1;                                                                                                                                |
 | 🔶 Get Right Child: (n * 2) + 2;                                                                                                                               |
+| 🔶 Get Leaves: (n / 2) - 1;                                                                                                                                    |
 |                                                                                                                                                                |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
@@ -53,12 +54,13 @@ namespace Heap {
        public:
         CustomHeap(const vector<int>& d = {}) { heapify(d); }
 
-        // Insert a new value into the heap.
-        // Steps: 1) add val at the end of the array
-        //        2) compare it with its parent
-        //        3) if heap rule is broken (parent > new value), swap and move up
-        //        4) repeat until parent holds, or we reach the root
-        // This is "bubble up" — the new element floats toward the top if it's too small.
+        // 🟡 Insert a new value into the heap.
+        //     🔶 Steps:
+        //         🔸 Add val at the end of the array
+        //         🔸 Compare it with its parent
+        //         🔸 If heap rule is broken (parent > new value), swap and move up
+        //         🔸 Repeat until parent holds, or we reach the root
+        // 🟡 This is "BUBBLE UP" — the new element floats toward the top if it's too small.
         void push(int val) {
             data.push_back(val);
 
@@ -80,12 +82,13 @@ namespace Heap {
             print(data, std::format("Heap after adding {}: ", val));
         }
 
-        // Remove the top element (smallest) from the heap.
-        // Steps: 1) move the last element to the top, shrink the array
-        //        2) compare the new top with its smaller child
-        //        3) if heap rule is broken (parent > smaller child), swap and move down
-        //        4) repeat until rule holds, or we run out of children
-        // This is "bubble down" — the replacement element sinks toward the leaves if too big.
+        // 🟡 Remove the top element (smallest) from the heap.
+        //     🔶 Steps:
+        //        🔸 Move the last element to the top, shrink the array
+        //        🔸 Compare the new top with its smaller child
+        //        🔸 If heap rule is broken (parent > smaller child), swap and move down
+        //        🔸 Repeat until rule holds, or we run out of children
+        // 🟡 This is "BUBBLE DOWN" — the replacement element sinks toward the leaves if too big.
         void pop() {
             if (empty()) {
                 throw std::runtime_error("Failed to pop from the empty heap");
@@ -135,6 +138,9 @@ namespace Heap {
        private:
         vector<int> data;
 
+        // 🟡 Heapify is a process that turns "NORMAL RANDOM ARRAY" into heap data structure.
+        //     🔶 Steps:
+        //          🔸
         void heapify(const vector<int>& d = {}) {
             if (d.empty()) {
                 return;
