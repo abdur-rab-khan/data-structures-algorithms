@@ -6,17 +6,17 @@
 std::mutex mtx;
 
 // 🔶 The same "count" data might also be taken by another thread to update them, which could lead to have wrong behavior.
-// 🔸 Solution "mutex" which controls the access of "critical section of the code".
-// 🔸 Suppose we have global data and we want while some other thread access the data other thread should have to wait until previous thread done.
+//      🔸 Solution "mutex" which controls the access of "critical section of the code".
+//      🔸 Suppose we have global data and we want while some other thread access the data other thread should have to wait until previous thread done.
 
 // 🔷 Suppose multiple threads need to access the same shared data. We can use a mutex to make sure only one thread enters the critical section at a time.
-// 🔹 Other threads trying to enter that same critical section have to wait until the mutex is unlocked.
+//      🔹 Other threads trying to enter that same critical section have to wait until the mutex is unlocked.
 // void counter(int& count) {
 //     count++;
 // }
 
 // 🔶 "Mutex" works perfectly fine, until we got some issues and we never reaches to "mtx.unlock", Now this will create "deadlock" situation for other threads waiting for unlock.
-// 🔸 Solution "std::lock_guard<std::mutex> lock(mtx)", it's using 'RAII' technique in C++ that automatically destroy (unlock) once it goes out of scope probability using "destructure".
+//      🔸 Solution "std::lock_guard<std::mutex> lock(mtx)", it's using 'RAII' technique in C++ that automatically destroy (unlock) once it goes out of scope probability using "destructure".
 // void mutexCounter(int& count) {
 //     mtx.lock();
 //     count++;
