@@ -1,3 +1,7 @@
 {
-  "userWords": ["endl", "cout"]
+  "userWords": [
+    "endl",
+    "cout",
+    "nullptr"
+  ]
 }
