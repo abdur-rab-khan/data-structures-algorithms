@@ -74,8 +74,7 @@ namespace dfs {
             return 0;
         }
 
-        const bool hasChildren = node->left != nullptr || node->right != nullptr;
-        if (!hasChildren) {
+        if (node->left == nullptr || node->right == nullptr) {
             return 1;
         }
 
@@ -87,17 +86,12 @@ namespace dfs {
             return true;
         }
 
-        const bool isValidNode = (p != nullptr && q != nullptr) && (p->data == q->data);
-        if (!isValidNode) {
+        if (p == nullptr || q == nullptr) {
             return false;
         }
 
-        const bool isValidChild = isIdentical(p->left, q->left) && isIdentical(p->right, q->right);
-        if (isValidChild) {
-            return true;
-        }
-
-        return false;
+        return p->data == q->data && isIdentical(p->left, q->left) &&
+               isIdentical(p->right, q->right);
     }
 
     void main() {
@@ -185,5 +179,6 @@ namespace bfs {
 int main() {
     dfs::main();
     bfs::main();
+
     return 0;
 }
