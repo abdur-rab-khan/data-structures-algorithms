@@ -12,6 +12,7 @@ struct TreeNode {
     TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 
+// 🟡 Diameter of Binary Tree mean the longest path between a node, either it can go through the root node or my be not
 class Solution {
    public:
     int diameterOfBinaryTree(TreeNode* root) {
