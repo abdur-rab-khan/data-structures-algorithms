@@ -3,59 +3,50 @@
 |                                                                                     NUMBER SYSTEM                                                                                  |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                                    |
-| 🟡 Numbers in Computer are presented by binary bits using "0" and "1", their are some operator provide by programming language to perform operation efficiently which is called    |
-|     bit manipulation.                                                                                                                                                              |
+| 🟡 Numbers in Computer are presented by bits using "0" and "1", their are operators provided by programming languages called bit manipulation to manipulate bits.                  |
 |                                                                                                                                                                                    |
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                     ABOUT BINARY                                                                                   |
-+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| 🔶 How to Convert Decimal to Binary                                                                                                                                                |
 |                                                                                                                                                                                    |
-| 🔶 HOW TO CONVERT DECIMAL TO BINARY                                                                                                                                                |
+|     🔸 Example for "10":                                                                                                                                                           |
+|                   🔹 10 / 2 = 5, Remainder = 0                                                                                                                                     |
+|                   🔹 5 / 2 = 2, Remainder = 1                                                                                                                                      |
+|                   🔹 2 / 2 = 1, Remainder = 0                                                                                                                                      |
+|                   🔹 1 / 2 = 0, Remainder = 1                                                                                                                                      |
 |                                                                                                                                                                                    |
-|    Example for "10"                                                                                                                                                                |
+|     🔹 After this calculation, we can get remainder in a reversed order (bottom to top) "1010"                                                                                     |
 |                                                                                                                                                                                    |
-|                    10 / 2 = 5, Remainder = 0                                                                                                                                       |
-|                    5 / 2 = 2, Remainder = 1                                                                                                                                        |
-|                    2 / 2 = 1, Remainder = 0                                                                                                                                        |
-|                    1 / 2 = 0, Remainder = 1                                                                                                                                        |
+| 🔶 How to Convert Binary to Decimal                                                                                                                                                |
 |                                                                                                                                                                                    |
-|    🔷 To get the binary we can to get the result from bottom So it will goes like this "1010"                                                                                      |
+|    🔸 Example for "10 (1010)":                                                                                                                                                            |
+|                  🔹  1x2³ + 0x2² + 1x2¹ + 0x2⁰                                                                                                                                     |
+|                  🔹  8   +  0   +  2   +  0                                                                                                                                        |
+|                  🔹 = 10                                                                                                                                                           |
 |                                                                                                                                                                                    |
-|                                                                                                                                                                                    |
-| 🔶 HOW TO CONVERT BINARY TO DECIMAL                                                                                                                                                |
-|                                                                                                                                                                                    |
-|    Example for "10"                                                                                                                                                                |
-|                                                                                                                                                                                    |
-|                    1x2³ + 0x2² + 1x2¹ + 0x2⁰                                                                                                                                       |
-|                     8   +  0   +  2   +  0                                                                                                                                         |
-|                   = 10                                                                                                                                                             |
-|                                                                                                                                                                                    |
-|                                                                                                                                                                                    |
-| 🔷 HOW TO CHOOSE NUMBER OF BITS                                                                                                                                                    |
+| 🔷 How to Choose Number of Bits                                                                                                                                                    |
 |                                                                                                                                                                                    |
 |    🔹 bool      -->  1 byte   -->   false/true (0/1)                                                                                                                               |
-|    🔹 int8_t    -->  1 byte   -->   -128    to    127                                                                                                                              |
-|    🔹 uint8_t   -->  1 byte   -->   0       to    255                                                                                                                              |
-|    🔹 int16_t   -->  2 bytes  -->   -32,768 to    32,768                                                                                                                           |
-|    🔹 int       -->  4 bytes  -->   -2.1B   to    2.1B                                                                                                                             |
+|    🔹 int8_t    -->  1 byte   -->   -128        to     127                                                                                                                         |
+|    🔹 uint8_t   -->  1 byte   -->   0           to     255                                                                                                                         |
+|    🔹 int16_t   -->  2 bytes  -->   -32,768     to     32,768                                                                                                                      |
+|    🔹 int       -->  4 bytes  -->   -2.1B       to     2.1B                                                                                                                        |
 |    🔹 int64_t   -->  8 bytes  -->   Very Large                                                                                                                                     |
 |                                                                                                                                                                                    |
 | 🔶 1 byte = 8 bits                                                                                                                                                                 |
 |                                                                                                                                                                                    |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                                 IMPORTANT CONCEPTS                                                                                 |
+|                                                                                 Important Concepts                                                                                 |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                                    |
-| 💠 "SET BITS": Number of "1" in an binary number are "set bits".                                                                                                                   |
+| 💠 "SET/UNSET BITS": 0 --> Set Bit, 1 --> Unset Bits                                                                                                                               |
 |                                                                                                                                                                                    |
-| 💠 "POWER OF 2": Power of 2 will always have only "1" in the binary.                                                                                                               |
+| 💠 "Power of 2": Power of 2 will always have only "1" in the binary.                                                                                                               |
 |                                                                                                                                                                                    |
 | 💠 "Remove Last Set Bit": To remove last set bit we will use "n & (n - 1)"                                                                                                         |
 |                                                                                                                                                                                    |
 | 💠 "Extract Last Set Bit": To extract last set bit we will use "n & (-n)", -n means two's compliment.                                                                              |
 |                                                                                                                                                                                    |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-|                                                                              BIT MANIPULATION OPERATORS                                                                            |
+|                                                                              Bit Manipulation Operators                                                                            |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                                    |
 | ⭐ "AND (&)":                                                                                                                                                                      |
@@ -93,7 +84,7 @@
 |                                                                                                                                                                                    |
 |              4 = 0100                                                                                                                                                              |
 |          >>  1                                                                                                                                                                     |
-|              8 = 0010     ==> Used to divide by power of 2.     a << n = a / 2^n                                                                                                   |
+|              2 = 0010     ==> Used to divide by power of 2.     a << n = a / 2^n                                                                                                   |
 |                                                                                                                                                                                    |
 +------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                       FORMULAS                                                                                     |

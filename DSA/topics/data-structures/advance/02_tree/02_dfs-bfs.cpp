@@ -17,6 +17,7 @@
 +--------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */
 
+#include <algorithm>
 #include <iostream>
 #include <queue>
 
@@ -60,22 +61,82 @@ namespace dfs {
         std::cout << node->data << " ";
     }
 
+    int height(Node* node) {
+        if (node == nullptr) {
+            return -1;
+        }
+
+        return 1 + max(height(node->left), height(node->right));
+    }
+
+    int countLeaves(Node* node) {
+        if (node == nullptr) {
+            return 0;
+        }
+
+        if (node->left == nullptr || node->right == nullptr) {
+            return 1;
+        }
+
+        return countLeaves(node->left) + countLeaves(node->right);
+    }
+
+    bool isIdentical(Node* p, Node* q) {
+        if (p == nullptr && q == nullptr) {
+            return true;
+        }
+
+        if (p == nullptr || q == nullptr) {
+            return false;
+        }
+
+        return p->data == q->data && isIdentical(p->left, q->left) &&
+               isIdentical(p->right, q->right);
+    }
+
     void main() {
-        Node* root       = new Node(1);
-        root->left       = new Node(2);
-        root->right      = new Node(3);
-        root->left->left = new Node(4);
-        // root->left->right = new Node(6);
+        Node* tree1             = new Node(1);
+        tree1->left             = new Node(2);
+        tree1->right            = new Node(3);
+        tree1->left->left       = new Node(4);
+        tree1->left->right      = new Node(6);
+        tree1->left->left->left = new Node(5);
+        /*
+                     1
+                    / \
+                   2   3
+                  / \
+                 4   6
+                /
+               5
+         */
+
+        Node* tree2  = new Node(1);
+        tree2->left  = new Node(2);
+        tree2->right = new Node(3);
+        /*
+                 1
+                / \
+               2   3
+        */
 
         std::cout << "DFS: " << std::endl;
         std::cout << "In Order: ";
-        inOrder(root);
+        inOrder(tree1);
 
         std::cout << std::endl << "Pre Order: ";
-        preOrder(root);
+        preOrder(tree1);
 
         std::cout << std::endl << "Post Order: ";
-        postOrder(root);
+        postOrder(tree1);
+
+        std::cout << std::endl << "Height of the tree is: " << height(tree1) << std::endl;
+        std::cout << "Total leaves of a tree is: " << countLeaves(tree1) << std::endl;
+        std::cout << "Total leaves of a tree is: " << countLeaves(nullptr) << std::endl;
+        std::cout << "Is Identical: " << (isIdentical(tree1, tree1) ? "true" : "false")
+                  << std::endl;
+        std::cout << "Is Identical: " << (isIdentical(tree1, tree2) ? "true" : "false")
+                  << std::endl;
     }
 };  // namespace dfs
 
@@ -94,10 +155,13 @@ namespace bfs {
 
             std::cout << front->data << " ";
 
-            if (front->left)
+            if (front->left) {
                 q.push(front->left);
-            if (front->right)
+            }
+
+            if (front->right) {
                 q.push(front->right);
+            }
         }
     }
 
@@ -115,5 +179,6 @@ namespace bfs {
 int main() {
     dfs::main();
     bfs::main();
+
     return 0;
 }
