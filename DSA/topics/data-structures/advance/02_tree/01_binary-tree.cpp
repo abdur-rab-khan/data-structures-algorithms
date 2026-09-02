@@ -42,7 +42,6 @@ int countNode(Node* node) {
     if (node == nullptr) {
         return 0;
     }
-
     return 1 + countNode(node->left) + countNode(node->right);
 }
 
