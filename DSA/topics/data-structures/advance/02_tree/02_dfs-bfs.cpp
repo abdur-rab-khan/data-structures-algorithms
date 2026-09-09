@@ -98,6 +98,7 @@ namespace dfs {
         Node* tree1             = new Node(1);
         tree1->left             = new Node(2);
         tree1->right            = new Node(3);
+        tree1->right->right     = new Node(20);
         tree1->left->left       = new Node(4);
         tree1->left->right      = new Node(6);
         tree1->left->left->left = new Node(5);
@@ -105,8 +106,8 @@ namespace dfs {
                      1
                     / \
                    2   3
-                  / \
-                 4   6
+                  / \   \
+                 4   6  20
                 /
                5
          */
