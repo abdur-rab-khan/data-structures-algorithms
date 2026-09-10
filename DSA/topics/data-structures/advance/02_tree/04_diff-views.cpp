@@ -186,9 +186,9 @@ vector<int> topView(TreeNode* root) {
     nodeMap.insert({0, root});
 
     while (!q.empty()) {
-        auto      current     = q.front();
-        int       parentHd    = current.first;
-        TreeNode* currentNode = current.second;
+        std::pair<int, TreeNode*> current     = q.front();
+        int                       parentHd    = current.first;
+        TreeNode*                 currentNode = current.second;
 
         if (currentNode->left) {
             int leftHd = parentHd - 1;
