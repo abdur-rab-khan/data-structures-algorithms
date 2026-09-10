@@ -1,83 +1,88 @@
 #include <array>
+#include <cstdint>
 #include <vector>
 
 #include "../../dsa_utils.h"
 
 using namespace std;
 
+static constexpr uint8_t BOARD_SIZE = 9;
+using BoardT                        = vector<vector<char>>;
+
 class Solution {
    public:
-    void solveSudoku(vector<vector<char>>& board) {
-        initilizeBoard(board);
+    void solveSudoku(BoardT& board) {
+        initializeBoard(board);
         backTracking(board, 0, 0);
     }
 
    private:
-    array<array<bool, 9>, 9> colUsed {};
-    array<array<bool, 9>, 9> rowUsed {};
-    array<array<bool, 9>, 9> boxUsed {};
+    array<array<bool, BOARD_SIZE>, BOARD_SIZE> rowUsed {};
+    array<array<bool, BOARD_SIZE>, BOARD_SIZE> colUsed {};
+    array<array<bool, BOARD_SIZE>, BOARD_SIZE> boxUsed {};
 
-    void initilizeBoard(vector<vector<char>>& board) {
-        for (int row = 0; row < 9; row++) {
-            for (int col = 0; col < 9; col++) {
+    void initializeBoard(const BoardT& board) {
+        for (uint8_t row = 0; row < BOARD_SIZE; ++row) {
+            for (uint8_t col = 0; col < BOARD_SIZE; ++col) {
                 if (board[row][col] != '.') {
-                    int digit = board[row][col] - '0';
-                    placeNumber(digit, row, col);
+                    placeNumber((board[row][col] - '0'), row, col);
                 }
             }
         }
     }
 
-    int getBoxIdx(int row, int col) { return (row / 3) * 3 + (col / 3); }
+    int getBoxIdx(int row, int col) { return (row / 3) * 3 + col / 3; }
 
     bool isSafe(int digit, int row, int col) {
-        return !colUsed[col][digit - 1] && !rowUsed[row][digit - 1] &&
-               !boxUsed[getBoxIdx(row, col)][digit - 1];
+        int digitIdx = digit - 1;
+        return !rowUsed[row][digitIdx] && !colUsed[col][digitIdx] &&
+               !boxUsed[getBoxIdx(row, col)][digitIdx];
     }
 
     void placeNumber(int digit, int row, int col) {
-        colUsed[col][digit - 1]                 = true;
-        rowUsed[row][digit - 1]                 = true;
-        boxUsed[getBoxIdx(row, col)][digit - 1] = true;
+        int digitIdx = digit - 1;
+
+        rowUsed[row][digitIdx]                 = true;
+        colUsed[col][digitIdx]                 = true;
+        boxUsed[getBoxIdx(row, col)][digitIdx] = true;
     }
 
     void removeNumber(int digit, int row, int col) {
-        colUsed[col][digit - 1]                 = false;
-        rowUsed[row][digit - 1]                 = false;
-        boxUsed[getBoxIdx(row, col)][digit - 1] = false;
+        int digitIdx = digit - 1;
+
+        rowUsed[row][digitIdx]                 = false;
+        colUsed[col][digitIdx]                 = false;
+        boxUsed[getBoxIdx(row, col)][digitIdx] = false;
     }
 
-    bool backTracking(vector<vector<char>>& board, int row, int col) {
-        // End further backTracking, if row become greater than 9
-        if (row > 8) {
+    bool backTracking(BoardT& board, int row, int col) {
+        if (row >= BOARD_SIZE) {
             return true;
         }
 
-        // Start for next row, if col become greater than 9
-        if (col > 8) {
+        if (col >= BOARD_SIZE) {
             return backTracking(board, row + 1, 0);
         }
 
-        // Skip, if col already have digit.
         if (board[row][col] != '.') {
             return backTracking(board, row, col + 1);
         }
 
-        for (int digit = 1; digit < 10; digit++) {
+        for (int digit = 1; digit <= BOARD_SIZE; digit++) {
             if (!isSafe(digit, row, col)) {
                 continue;
             }
 
             placeNumber(digit, row, col);
-            board[row][col] = static_cast<char>('0' + digit);
+            board[row][col] = '0' + digit;
 
-            const bool isFound = backTracking(board, row, col + 1);
-            if (!isFound) {
-                removeNumber(digit, row, col);
-                board[row][col] = '.';
-            } else {
+            bool isFound = backTracking(board, row, col + 1);
+            if (isFound) {
                 return true;
             }
+
+            removeNumber(digit, row, col);
+            board[row][col] = '.';
         }
 
         return false;

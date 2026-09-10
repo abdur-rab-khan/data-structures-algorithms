@@ -32,23 +32,23 @@
 
 #include <bits/stdc++.h>
 
-#include "../../dsa_utils.hpp"
+#include "../../../dsa_utils.h"
 
 using namespace std;
 
 // Easy Prefix Sum Problems
 namespace easy {
     auto sumQueryRange(vector<int> nums) {
-        // Let's make prefix sum
-        for (int i = 1; i < nums.size(); i++) {
-            nums[i] = nums[i] + nums[i - 1];
+        // 🟡 Instead of handling on edge case (left == 0 ? right : right - left - 1) for finding sum query,
+        // 🟡 We just creates an empty element [0, 2, 6, 7, 12, 15], Now we can simply handle it without worrying about anything.
+        vector<int> prefixSum(nums.size() + 1, 0);
+
+        for (size_t i = 0; i < nums.size(); ++i) {
+            prefixSum[i + 1] = prefixSum[i] + nums[i];
         }
 
-        return [&nums](int left, int right) {
-            if (left == 0)
-                return nums[right];
-
-            return nums[right] - nums[left - 1];
+        return [prefixSum = std::move(prefixSum)](int left, int right) {
+            return prefixSum[right + 1] - prefixSum[left];
         };
     }
 
@@ -148,7 +148,7 @@ namespace medium {
 namespace hard {}
 
 int main() {
-    // easy::main();
+    easy::main();
     medium::main();
 
     return 0;

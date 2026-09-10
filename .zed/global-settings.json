@@ -1,0 +1,111 @@
+{
+  "languages": {
+    "TypeScript": {
+      "show_edit_predictions": false,
+    },
+  },
+  "status_bar": {
+    "active_encoding_button": "disabled",
+  },
+  "show_edit_predictions": false,
+  "wsl_connections": [
+    {
+      "distro_name": "Ubuntu",
+      "user": null,
+      "projects": [
+        {
+          "paths": ["/home/abdur"],
+        },
+        {
+          "paths": ["/home/abdur/testing"],
+        },
+      ],
+    },
+  ],
+  "diff_view_style": "unified",
+  "cli_default_open_behavior": "existing_window",
+  "outline_panel": {
+    "dock": "left",
+  },
+  "collaboration_panel": {
+    "dock": "left",
+  },
+  "git_panel": {
+    "dock": "right",
+  },
+  "project_panel": {
+    "dock": "left",
+  },
+  "instrumentation": {
+    "performance_profiler": {
+      "enabled": false,
+    },
+  },
+  "agent": {
+    "sandbox_permissions": {
+      "warn_ntfs_grants": false,
+    },
+    "inline_assistant_model": {
+      "provider": "openai-subscribed",
+      "model": "gpt-5.5",
+      "enable_thinking": false,
+    },
+    "default_profile": "write",
+    "default_model": {
+      "provider": "openai-subscribed",
+      "model": "gpt-5.5",
+      "enable_thinking": true,
+      "effort": "medium",
+    },
+    "dock": "right",
+    "sidebar_side": "right",
+    "favorite_models": [],
+    "model_parameters": [],
+  },
+  "minimap": {
+    "show": "always",
+  },
+  "vim_mode": true,
+  "mouse_wheel_zoom": true,
+  "icon_theme": {
+    "mode": "light",
+    "light": "Material Icon Theme",
+    "dark": "Material Icon Theme",
+  },
+  "buffer_font_size": 13.0,
+  "buffer_font_family": "JetBrains Mono",
+  "buffer_line_height": "comfortable",
+  "buffer_font_fallbacks": ["Fira Code", "Consolas", "Courier New"],
+  "ui_font_size": 16,
+  "ui_font_family": "JetBrains Mono",
+  "ui_font_fallbacks": ["Fira Code", "Consolas"],
+  "buffer_font_features": {
+    "liga": true,
+  },
+  "ui_font_features": {
+    "liga": true,
+  },
+  "soft_wrap": "editor_width",
+  "base_keymap": "VSCode",
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "One Dark Pro Glass",
+  },
+  "terminal": {
+    "font_size": 14,
+    "line_height": "comfortable",
+    "blinking": "on",
+    "copy_on_select": true,
+    "cursor_shape": "underline",
+    "font_family": "JetBrains Mono",
+    "working_directory": "current_project_directory",
+    "font_features": {
+      "liga": true,
+    },
+    "shell": {
+      "program": "C:\\Program Files\\Git\\bin\\bash.exe",
+    },
+  },
+  "format_on_save": "on",
+}

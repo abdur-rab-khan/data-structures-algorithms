@@ -28,6 +28,11 @@ void aCounter() {
     for (int i = 0; i < 1000; i++) {
         atomicCount++;
     }
+
+    const int count = atomicCount.load();  // Loads the current value
+    atomicCount.store(70);                 // Safely change the value to 70
+    const int oldCount =
+        atomicCount.fetch_add(50);  // Returns the "older value" and add "current + 50";
 }
 
 int main() {

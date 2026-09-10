@@ -6,10 +6,10 @@ std::mutex mtxA;
 std::mutex mtxB;
 
 // 🟡 "std::lock" used to lock multiple "mutex" at a time, but why not just "scoped_lock".
-// 🔸 It's because of using "std::lock" we can "lock multiple mutex" as well as "unlock one of them at any place".
-// 🔸 Usually we try to use "std::lock + std::unique lockA(mtxA, std::defer_lock)", "std::defer_lock" create "unique_lock" but don't lock the mutex yet.
-// 🔸 Now we need to use "std::lock(lockA, lockB)", std::lock() acquires (locks) the mutexes.
-// 🔸 But it does so in a way designed to avoid deadlock when multiple threads request the same mutexes in different orders.
+//      🔸 It's because of using "std::lock" we can "lock multiple mutex" as well as "unlock one of them at any place".
+//      🔸 Usually we try to use "std::lock + std::unique lockA(mtxA, std::defer_lock)", "std::defer_lock" create "unique_lock" but don't lock the mutex yet.
+//      🔸 Now we need to use "std::lock(lockA, lockB)", std::lock() acquires (locks) the mutexes.
+//      🔸 But it does so in a way designed to avoid deadlock when multiple threads request the same mutexes in different orders.
 void taskA() {
     using namespace std::chrono_literals;
 
