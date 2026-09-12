@@ -100,6 +100,5 @@ namespace lcm {
 int main() {
     gcd::main();
     lcm::main();
-
     return 0;
 }
