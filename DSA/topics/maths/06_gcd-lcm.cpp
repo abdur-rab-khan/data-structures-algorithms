@@ -11,8 +11,7 @@
 | 🔶 Euclidean Algorithm gcd(b, a % b)                                                                                                              |
 |      🔸 It's the algorithm that provides efficient way to find the "gcd"                                                                          |
 |                                                                                                                                                   |
-| 🟡 Euclidean algorithm helps us to find GCD by subtracting from "a - b" or using "a % b", If "a" got fully subtracted or "b" got fully divided    |
-|  without any remainder means that's the point where we say it's GCD.                                                                              |
+| 🟡 Euclidean algorithm finds GCD by repeating a % b until the remainder becomes 0. The last non-zero value of b is the GCD.                       |
 |                                                                                                                                                   |
 +---------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                              LCM (LEAST COMMON MULTIPLE)                                                          |
@@ -88,7 +87,10 @@ namespace lcm {
 
     int optimizedLCM(int a, int b) {
         int gcd = gcd::euclideanAlgorithmRec(a, b);
-        return ((a / gcd) * b);
+        // Formula is a * b = lcm(a, b) / gcd(a, b)
+        // lcm(a, b) = a * b / gcd(a, b);
+        // Or we can also write like this lcm(a, b) = (a / gcd(a, b)) * b;
+        return (a * b) / gcd;
     }
 
     void main() {
