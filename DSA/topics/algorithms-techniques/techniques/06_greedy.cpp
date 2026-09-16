@@ -3,15 +3,15 @@
 |                                                                       GREEDY TECHNIQUE                                                                         |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                |
-| 🟡 Greedy technique is used to find the best answer by picking the best choice at the current step. Unlike backtracking, once a choice is made here, it       |
-|     cannot be undone. So greedy only works when picking the best choice at each step keeps leading to the correct final answer for that problem.              |
+| 🟡 Greedy technique is a rule where we pick the current best optimal choice (that looks best right now) that eventually leads us to have global optimal        |
+|     solution, So greedy only works when picking the best choice at each step keeps leading to the correct final answer for that problem.                       |
 |                                                                                                                                                                |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                |
 | 🔵 Example 1 (Matching type):                                                                                                                                  |
 |             Suppose we have "n" children with a greed value each, and "k" cookies with a size each, and we want to satisfy as many children as possible.       |
-|             The greedy way is to sort children by greed (smallest first) and cookies by size (smallest first), then give the smallest cookie that is big       |
-|             enough to the least greedy child, moving on one by one.                                                                                            |
+|             The greedy way is to sort children by greed (smallest first) and cookies by size (smallest first), via this we can give the smallest cookies to    |
+|             the children with lowest greedy.                                                                                                                   |
 |                                                                                                                                                                |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                |
@@ -60,6 +60,11 @@ namespace problems {
         return contentChildren;
     }
 
+    /*
+     * 👉 For this "LemonadeChange" problem we have greed criteria at with use gives as "$20 bills", here we have to choice to split this.
+     * 👉 Either "$5 * 3 = 15" or "$10 + $5 = 15", but our greed say that use "$10 bill" has much as possible don't waste "$5" because "$5" can use with "$10 and $20" both.
+     *    We can't afford to loose it.
+     */
     bool lemonadeChange(std::vector<int>& bills) {
         int five = 0, ten = 0;
 
@@ -86,6 +91,11 @@ namespace problems {
         return true;
     }
 
+    /*
+     * 👉 For this "Jump Game" problem our greed criteria is that, We don't care about the solution I just want to go furthest jump that I can make.
+     * 👉 Via this you never go back just visit and update the "maxReach" once maxReach goes beyond the array size that's the position we are looking for.
+     * 👉 Unlike backtracking where we would visit to all possible paths and once find dead end we just undo the step but it's not a case with greedy approach.
+     */
     bool canJump(std::vector<int>& nums) {
         if (nums.size() <= 1) {
             return false;
@@ -106,10 +116,12 @@ namespace problems {
 
         int maxReach = 0;
         int size     = static_cast<int>(nums.size()) - 1;
+
         for (int i = 0; i < static_cast<int>(nums.size()) - 1; ++i) {
-            if (nums[i] + i > maxReach) {
-                maxReach = nums[i] + i;
+            if (i > maxReach) {
+                return false;
             }
+            maxReach = std::max(maxReach, i + nums[i]);
             if (maxReach >= size) {
                 return true;
             }
