@@ -130,6 +130,8 @@ namespace problems {
         return false;
     }
 
+    int canCompleteJourney(const std::vector<int>& gas, const std::vector<int>& cost) {}
+
     void main() {
         // Question 1
         {
@@ -165,6 +167,10 @@ namespace problems {
             print(canJump(num1), "Can jump to end: ");
             print(canJump(num2), "Can jump to end: ");
             print(canJump(num3), "Can jump to end: ");
+        }
+
+        // Question 4
+        {
         }
 
         return;

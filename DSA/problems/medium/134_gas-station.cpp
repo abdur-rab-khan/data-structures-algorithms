@@ -16,16 +16,19 @@ class Solution {
 
             while (j <= destination) {
                 int innerIdx = j % gas.size();
+
                 gasInTank += gas[innerIdx];   // add the gas
                 gasInTank -= cost[innerIdx];  // deduct the cost
-                if (gasInTank <= 0) {
+
+                ++j;
+                if (gasInTank < 0) {
                     break;
                 }
             }
 
-            // if (j == i) {
-            //     return i;
-            // }
+            if ((i == j % gas.size()) && gasInTank >= 0) {
+                return i;
+            }
         }
 
         return -1;
