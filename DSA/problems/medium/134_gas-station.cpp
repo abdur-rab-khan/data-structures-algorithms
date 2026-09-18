@@ -1,3 +1,4 @@
+#include <numeric>
 #include <vector>
 
 #include "../../dsa_utils.h"
@@ -6,7 +7,7 @@ using namespace std;
 
 class Solution {
    public:
-    int canCompleteCircuit(const vector<int>& gas, const vector<int>& cost) {
+    int canCompleteCircuitBruteForce(const vector<int>& gas, const vector<int>& cost) {
         int pathSize = static_cast<int>(gas.size()) - 1;
 
         for (int i = 0; i <= pathSize; ++i) {
@@ -32,6 +33,33 @@ class Solution {
         }
 
         return -1;
+    }
+
+    /*
+     * 🟡 Intusion: If total gas is smaller than the cost, mean it's not possible to complete the circuit.
+     *              If gas is there means it's possible, to has path just we need to check each gas station,
+     *              with the cost need to go to next station.
+     */
+    int canCompleteCircuit(const vector<int>& gas, const vector<int>& cost) {
+        // Checking the total gas with total cost, to see whether it's possible to complete the circuit
+        if (std::accumulate(gas.begin(), gas.end(), 0) <
+            std::accumulate(cost.begin(), cost.end(), 0)) {
+            return -1;
+        }
+
+        int startPos = 0;
+        int totalGas = 0;
+        for (int i = 0; i < static_cast<int>(gas.size()); ++i) {
+            totalGas += gas[i] - cost[i];
+
+            // Checking if "totalGas" become negative we need to reset and start freshly again.
+            if (totalGas < 0) {
+                totalGas = 0;
+                startPos = i + 1;
+            }
+        }
+
+        return startPos;
     }
 };
 
