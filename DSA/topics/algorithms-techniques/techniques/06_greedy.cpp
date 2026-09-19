@@ -26,6 +26,7 @@
 
 #include <algorithm>
 #include <cstddef>
+#include <numeric>
 #include <vector>
 
 #include "../../../dsa_utils.h"
@@ -130,7 +131,32 @@ namespace problems {
         return false;
     }
 
-    int canCompleteJourney(const std::vector<int>& gas, const std::vector<int>& cost) {}
+    /*
+     * 🟡 Intuition: If total gas is smaller than the cost, mean it's not possible to complete the circuit.
+     *               If gas is there means it's possible, to has path just we need to check each gas station,
+     *               with the cost need to go to next station.
+     */
+    int canCompleteCircuit(const std::vector<int>& gas, const std::vector<int>& cost) {
+        // Checking the total gas with total cost, to see whether it's possible to complete the circuit
+        if (std::accumulate(gas.begin(), gas.end(), 0) <
+            std::accumulate(cost.begin(), cost.end(), 0)) {
+            return -1;
+        }
+
+        int startPos = 0;
+        int totalGas = 0;
+        for (int i = 0; i < static_cast<int>(gas.size()); ++i) {
+            totalGas += gas[i] - cost[i];
+
+            // Checking if "totalGas" become negative we need to reset and start freshly again.
+            if (totalGas < 0) {
+                totalGas = 0;
+                startPos = i + 1;
+            }
+        }
+
+        return startPos;
+    }
 
     void main() {
         // Question 1
@@ -171,6 +197,8 @@ namespace problems {
 
         // Question 4
         {
+            print(canCompleteCircuit({2, 3, 4}, {3, 4, 3}));
+            print(canCompleteCircuit({1, 2, 3, 4, 5}, {3, 4, 5, 1, 2}));
         }
 
         return;

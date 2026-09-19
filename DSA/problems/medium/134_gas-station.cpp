@@ -36,9 +36,9 @@ class Solution {
     }
 
     /*
-     * 🟡 Intusion: If total gas is smaller than the cost, mean it's not possible to complete the circuit.
-     *              If gas is there means it's possible, to has path just we need to check each gas station,
-     *              with the cost need to go to next station.
+     * 🟡 Intuition: If total gas is smaller than the cost, mean it's not possible to complete the circuit.
+     *               If gas is there means it's possible, to has path just we need to check each gas station,
+     *               with the cost need to go to next station.
      */
     int canCompleteCircuit(const vector<int>& gas, const vector<int>& cost) {
         // Checking the total gas with total cost, to see whether it's possible to complete the circuit
