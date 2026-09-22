@@ -3,14 +3,14 @@
 |                                                                         BACK TRACKING                                                                          |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                |
+| 🟡 Backtracking is a recursive technique used to find a solution by trying one path at a time. If a path leads to a dead-end, it goes back (undo) and tries a  |
+|    different path, instead of checking every single path fully. The undo step is the main idea behind backtracking.                                            |
 |                                                                                                                                                                |
++----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 |                                                                                                                                                                |
-|                                                                                                                                                                |
-|                                                                                                                                                                |
-|                                                                                                                                                                |
-|                                                                                                                                                                |
-|                                                                                                                                                                |
-|                                                                                                                                                                |
+| 🔵 Example:                                                                                                                                                    |
+|            Suppose we have a maze puzzle, and we want to reach the end. We pick a direction and walk that path. If we hit a wall (dead-end), we walk back to   |
+|            the last point where we had a choice, and try a different direction. We repeat this until we reach the end.                                         |
 |                                                                                                                                                                |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------+
 */

@@ -4,15 +4,13 @@
 [
   {
     "label": "Run C++ Program",
-    "command": "g++ -std=c++23 \"$ZED_FILE\" -o \"$ZED_DIRNAME/$ZED_STEM.exe\"; if($?) { & \"$ZED_DIRNAME/$ZED_STEM.exe\" }; if($?) { & Remove-Item -Path \"$ZED_DIRNAME/$ZED_STEM.exe\" }",
+    "command": "g++ -std=c++23 \"$ZED_FILE\" -o \"$ZED_DIRNAME/$ZED_STEM.exe\"; if ($LASTEXITCODE -eq 0) { & \"$ZED_DIRNAME/$ZED_STEM.exe\"; Remove-Item -Path \"$ZED_DIRNAME/$ZED_STEM.exe\" -Force }",
     "use_new_terminal": false,
     "allow_concurrent_runs": false,
     "reveal": "always",
     "reveal_target": "dock",
     "hide": "never",
-    "shell": "system",
     "show_summary": true,
     "show_command": true,
-    "save": "none",
   },
 ]
