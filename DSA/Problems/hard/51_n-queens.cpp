@@ -27,9 +27,6 @@ class Solution {
     vector<int>            queenCol;
     vector<vector<string>> result;
 
-    // So, the idea is I know that there will be "n" queens that will going to place into the board to make checking more easier.
-    // To make checking easier, we'll create an extra array size n, where we only store the queen once we got it means for row 0
-    // I'll push the position of "row 0" queen, by using this we can easily check whether it's safe to place or not.
     bool isSafe(int row, int col) {
         for (int prevRow = 0; prevRow < row; prevRow++) {
             int prevCol = queenCol[prevRow];
@@ -39,7 +36,19 @@ class Solution {
                 return false;
             }
 
-            // check 2: same diagonal
+            // The Idea to check whether something is there on diagonal or not is by checking the difference between "prevRow" and "row".
+            // If something is there on diagonal mean the different between "prevRow" and "row" will be the same of "prevCol" and "col".
+            // Example:
+            //          [
+            //              0, 0, 0, Q
+            //              0, 0, 0, 0
+            //              0, C, 0, 0
+            //              0, 0, 0, 0
+            //          ]
+            // there a queen placed, on row 0 and col 3
+            // and we are trying to place queen at row 2 and col 1, let's check something on diagonal or not.
+            // start from row 0, abs(prevRow - row) = (2 - 0) = 2, and abs(prevCol - col) = (3 - 1) = 2, 2 == 2 mean something is already placed on diagonal.
+            // * NOTE: HOW ITS WORKING, THE DISTANCE BETWEEN CURRENT ROW AND COL IS EQUAL TO abs(prevRow - row) == abs(prevCol - col)
             if (abs(prevRow - row) == abs(prevCol - col)) {
                 return false;
             }

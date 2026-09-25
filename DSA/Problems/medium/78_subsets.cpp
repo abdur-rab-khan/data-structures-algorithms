@@ -28,7 +28,10 @@ class Solution {
 
     void backTracking(const vector<int>& nums, int start) {
         result.push_back(subsets);
-
+        // With each element we are making two choices
+        // 1. Pick the element
+        // 2. Skip the element
+        // And then go for next element after making all the choices.
         for (int i = start; i < static_cast<int>(nums.size()); i++) {
             subsets.push_back(nums[i]);
             backTracking(nums, i + 1);
