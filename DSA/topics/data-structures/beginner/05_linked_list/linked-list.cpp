@@ -2,6 +2,7 @@
 #include <memory>
 #include <stdexcept>
 #include <string>
+#include <utility>
 
 using std::cout;
 using std::endl;
@@ -40,66 +41,65 @@ namespace LinkedListTypes {
        private:
         // Node of singly linked, that will create a memory block where we have ""data"" and ""next node pointer""
         struct Node {
-            int   value;
-            Node* next;
+            int                   value;
+            std::unique_ptr<Node> next;
             explicit Node(const int val) : value(val), next(nullptr) {}
         };
 
-        Node* head_;
-        int   size_;
+        Node*                 tail_;
+        std::unique_ptr<Node> head_;
+        int                   size_;
 
        public:
-        SinglyLinkedList() : head_(nullptr), size_(0) {}
+        SinglyLinkedList() : tail_(nullptr), head_(nullptr), size_(0) {}
 
         SinglyLinkedList(const SinglyLinkedList&)            = delete;
         SinglyLinkedList& operator=(const SinglyLinkedList&) = delete;
 
-        // Removing once linked list goes out of scope
-        ~SinglyLinkedList() {
-            Node* currentNode = head_;
-            while (currentNode != nullptr) {
-                Node* nextNode = currentNode->next;
-                delete currentNode;
-                currentNode = nextNode;
-            }
-        }
+        // 🟡 Manually, removing once linked list goes out of scope, since we are using smart pointer we don't need this.
+        // ~SinglyLinkedList() {
+        //     Node* currentNode = head_;
+        //     while (currentNode != nullptr) {
+        //         Node* nextNode = currentNode->next;
+        //         delete currentNode;
+        //         currentNode = nextNode;
+        //     }
+        // }
 
         bool isEmpty() const noexcept { return head_ == nullptr; }
 
         int size() const noexcept { return size_; }
 
-        // ❌ Did Wrong: "Ignoring the head" by using this condition "current->head != nullptr"
-        bool search(const int target) {
-            Node* currentNode = head_;
-            while (currentNode != nullptr) {
-                if (currentNode->value == target) {
+        bool search(const int target) const {
+            Node* node = head_.get();
+
+            // ❌ Did Wrong: Using "current->head != nullptr", that ignores the head
+            while (node != nullptr) {
+                if (node->value == target) {
                     return true;
                 }
-                currentNode = currentNode->next;
+                node = node->next.get();
             }
+
             return false;
         }
 
-        void append(const int value) {
-            Node* newNode = new Node(value);
-
+        void append(const int val) {
+            auto newNode = std::make_unique<Node>(val);
             if (isEmpty()) {
-                head_ = newNode;
+                head_ = std::move(newNode);
+                tail_ = head_.get();
             } else {
-                Node* currentNode = head_;
-
-                while (currentNode->next != nullptr) {
-                    currentNode = currentNode->next;
-                }
-                currentNode->next = newNode;
+                tail_->next = std::move(newNode);
+                tail_       = tail_->next.get();
             }
+            ++size_;
         }
 
         void insertAtHead(const int value) {
-            Node* newNode = new Node(value);
-            newNode->next = head_;
-            head_         = newNode;
-
+            auto oldHead = std::move(head_);
+            head_        = std::make_unique<Node>(value);
+            head_->next  = std::move(oldHead);
             ++size_;
         }
 
@@ -107,34 +107,31 @@ namespace LinkedListTypes {
             if (isEmpty()) {
                 throw std::runtime_error("deleteAtHead: list is empty");
             }
-
-            Node* oldHead = head_;
-            head_         = head_->next;
-
-            delete oldHead;
+            head_ = std::move(head_->next);
             --size_;
+
+            if (head_ == nullptr) {
+                tail_ = nullptr;
+            }
         }
+
         void deleteAtTail() {
             if (isEmpty()) {
                 throw std::runtime_error("deleteAtTail: list is empty");
             }
 
-            // Single node case
             if (head_->next == nullptr) {
-                delete head_;
                 head_ = nullptr;
                 --size_;
-                return;
+            } else {
+                Node* node = head_.get();
+                while (node->next->next != nullptr) {
+                    node = node->next.get();
+                }
+                node->next = nullptr;
+                tail_      = node;
+                --size_;
             }
-
-            Node* currentNode = head_;
-            while (currentNode->next->next != nullptr) {
-                currentNode = currentNode->next;
-            }
-
-            delete currentNode->next;
-            currentNode->next = nullptr;
-            --size_;
         }
 
         void deleteByValue(const int target) {
@@ -142,32 +139,27 @@ namespace LinkedListTypes {
                 throw std::runtime_error("deleteByValue: list is empty");
             }
 
-            // Head is the target
             if (head_->value == target) {
                 deleteAtHead();
-                return;
-            }
-
-            Node* currentNode = head_;
-            while (currentNode->next != nullptr && currentNode->next->value != target) {
-                currentNode = currentNode->next;
-            }
-
-            if (currentNode->next != nullptr) {
-                Node* targetNode  = currentNode->next;
-                currentNode->next = currentNode->next->next;
-                delete targetNode;
-                --size_;
+            } else {
+                Node* node = head_.get();
+                while (node->next != nullptr && node->next->value != target) {
+                    node = node->next.get();
+                }
+                if (node->next != nullptr) {
+                    node->next = std::move(node->next->next);
+                    --size_;
+                }
             }
         }
 
         std::string toString() const {
             std::string result;
 
-            Node* currentNode = head_;
-            while (currentNode != nullptr) {
-                result += std::to_string(currentNode->value) + " ";
-                currentNode = currentNode->next;
+            Node* node = head_.get();
+            while (node != nullptr) {
+                result += std::to_string(node->value) + " ";
+                node = node->next.get();
             }
 
             return result.empty() ? "(empty)" : result;
