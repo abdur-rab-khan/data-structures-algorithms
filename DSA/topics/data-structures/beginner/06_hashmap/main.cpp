@@ -5,7 +5,7 @@
  * |                                                                                                                                                                   |
  * | 🟡 Hashmap uses array data structure along with hash function to implement it, "hash function" gives unique index but it's not always a case.                     |
  * |                                                                                                                                                                   |
- * | 🟡 Collision, it's happen when hash function gives index which already filled with someother data, on these case we simply used few techniques to handle it.      |
+ * | 🟡 Collision, it's happen when hash function gives index which already filled with some-other data, on these case we simply used few techniques to handle it.      |
  * |                                                                                                                                                                   |
  * |    🔵 "Open Addressing", In this technique hashmap only uses single array, when collision happens then it try to find next empty slot and put into there.         |
  * |    🔵 "Closed Addressing", Still using single array, but this time when collision happens we replace that index with "linkedlist", and insert into the list.      |

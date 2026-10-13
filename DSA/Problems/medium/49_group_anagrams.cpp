@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <ranges>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -70,14 +71,15 @@ std::vector<std::vector<std::string>> findAnagramsGroup(std::vector<std::string>
         sortedAnagramsMap[sortedAnagrams].push_back(anagram);
     }
 
-    std::vector<std::vector<std::string>> groupedAnagrams;
-    for (auto& pair : sortedAnagramsMap) {
-        // Instead of copying the pair, We directly move the ownership of pair
-        // It's memory efficient, because we directly move the ownership where the pair is actually sorted.
-        groupedAnagrams.push_back(std::move(pair.second));
-    }
+    // std::vector<std::vector<std::string>> groupedAnagrams;
+    // for (auto& pair : sortedAnagramsMap) {
+    //     // Instead of copying the pair, We directly move the ownership of pair
+    //     // It's memory efficient, because we directly move the ownership where the pair is actually sorted.
+    //     groupedAnagrams.push_back(std::move(pair.second));
+    // }
 
-    return groupedAnagrams;
+    return sortedAnagramsMap | std::ranges::views::values |
+           std::ranges::to<std::vector<std::vector<std::string>>>();
 }
 
 // More approach

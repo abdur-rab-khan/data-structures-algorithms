@@ -1,7 +1,6 @@
 #include <iostream>
 #include <stack>
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 namespace easy {
@@ -45,7 +44,7 @@ namespace easy {
                 * "aa" -> Again getting duplicate adjacent.
                 * "c"
                 * "ca"
-                * 🟡 So the final answer will be "ca".   
+                * 🟡 So the final answer will be "ca".
     */
     std::string removeAllAdjacent(std::string str) {
         std::string uniqueStr;
