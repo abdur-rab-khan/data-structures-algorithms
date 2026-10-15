@@ -1,4 +1,6 @@
+#include <array>
 #include <cstddef>
+#include <string>
 #include <utility>
 #include <vector>
 
@@ -9,98 +11,56 @@ using namespace std;
 class Solution {
    public:
     bool exist(const vector<vector<char>>& board, const string& word) {
-        foundChars = 0;
-        placedBoard.clear();
-        maxRow = board.size();
-        maxCol = board[0].size();
-        placedBoard.reserve(board.size());
+        size_t row = board.size();
+        size_t col = board[0].size();
 
-        initializePlacedBoard(board.size(), board[0].size());
-        return backTracking(board, word, 0, 0);
-    }
-
-   private:
-    size_t               maxRow;
-    size_t               maxCol;
-    size_t               foundChars;
-    vector<vector<bool>> placedBoard;
-
-    void initializePlacedBoard(size_t row, size_t col) {
-        for (size_t i = 0; i < row; ++i) {
-            for (size_t j = 0; j < col; ++j) {
-                placedBoard[i][j] = false;
-            }
-        }
-    }
-
-    vector<std::pair<std::size_t, std::size_t>> getPossiblePaths(size_t row, size_t col,
-                                                                 const string& word) {
-        vector<std::pair<std::size_t, std::size_t>> possiblePaths;
-
-        // Checking is path is possible to go towards TOP
-        if (row > 0) {
-            if (!placedBoard[row - 1][col] && placedBoard[row - 1][col] == word[foundChars]) {
-                possiblePaths.push_back(std::make_pair(row - 1, col));
-            }
-        }
-
-        // Checking is path is possible to go towards BOTTOM
-        if (row < maxRow - 1) {
-            if (!placedBoard[row + 1][col] && placedBoard[row + 1][col] == word[foundChars]) {
-                possiblePaths.push_back(std::make_pair(row + 1, col));
-            }
-        }
-
-        // Checking is path is possible to go towards LEFT
-        if (col > 0) {
-            if (!placedBoard[row][col - 1] && placedBoard[row][col - 1] == word[foundChars]) {
-                possiblePaths.push_back(std::make_pair(row, col - 1));
-            }
-        }
-
-        // Checking is path is possible to go towards RIGHT
-        if (col < maxCol - 1) {
-            if (!placedBoard[row][col + 1] && placedBoard[row][col + 1] == word[foundChars]) {
-                possiblePaths.push_back(std::make_pair(row, col + 1));
-            }
-        }
-
-        return possiblePaths;
-    }
-
-    bool backTracking(const vector<vector<char>>& board, const string& word, size_t row,
-                      size_t col) {
-        if (foundChars == word.size()) {
-            return true;
-        }
-
-        if (row >= maxRow) {
-            return false;
-        }
-
-        if (col >= maxCol) {
-            return backTracking(board, word, row + 1, 0);
-        }
-
-        for (size_t i = 0; i < maxCol; ++i) {
-            vector<std::pair<std::size_t, std::size_t>> possiblePaths =
-                getPossiblePaths(row, i, word);
-
-            for (const auto& path : possiblePaths) {
-                foundChars += 1;
-                placedBoard[path.first][path.second] = true;
-
-                const bool isFound = backTracking(board, word, path.first, path.second);
-                if (isFound) {
+        vector<vector<bool>> visitedPaths(row, vector<bool>(col, false));
+        for (size_t currRow = 0; currRow < row; ++currRow) {
+            for (size_t currCol = 0; currCol < col; ++currCol) {
+                if (backTracking(board, word, visitedPaths, currRow, currCol, 0)) {
                     return true;
                 }
-
-                foundChars -= 1;
-                placedBoard[path.first][path.second] = false;
             }
         }
 
         return false;
+    }
+
+   private:
+    array<std::pair<int, int>, 4> kDirections {{{0, 1}, {0, -1}, {1, 0}, {-1, 0}}};
+
+    bool isSafe(const vector<vector<char>>& board, const string& targetWord,
+                vector<vector<bool>>& isVisited, size_t row, size_t col, size_t idx) const {
+        const bool isInsideBoard =
+            row >= 0 && col >= 0 && row < board.size() && col < board[0].size();
+        return isInsideBoard && !isVisited[row][col] && board[row][col] == targetWord[idx];
+    }
+
+    bool backTracking(const vector<vector<char>>& board, const string& targetWord,
+                      vector<vector<bool>>& visitedPaths, size_t currRow, size_t currCol,
+                      size_t idx) {
+        if (idx == targetWord.size()) {
+            return true;
+        }
+
+        if (!isSafe(board, targetWord, visitedPaths, currRow, currCol, idx)) {
+            return false;
+        }
+
+        visitedPaths[currRow][currCol] = true;
+
+        bool isFound = false;
+        for (const auto [rowOffset, colOffset] : kDirections) {
+            if (backTracking(board, targetWord, visitedPaths, currRow + rowOffset,
+                             currCol + colOffset, idx + 1)) {
+                isFound = true;
+                break;
+            }
+        }
+
+        visitedPaths[currRow][currCol] = false;
+
+        return isFound;
     }
 };
 

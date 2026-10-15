@@ -192,12 +192,14 @@ vector<int> topView(TreeNode* root) {
 
         if (currentNode->left) {
             int leftHd = parentHd - 1;
+            // 🟡 It won't override the data, If we have the same HD (key) below, it will ignore it.
             nodeMap.insert({leftHd, currentNode->left});
             q.push(make_pair(leftHd, currentNode->left));
         }
 
         if (currentNode->right) {
             int rightHd = parentHd + 1;
+            // 🟡 It won't override the data, If we have the same HD (key) below, it will ignore it.
             nodeMap.insert({rightHd, currentNode->right});
             q.push(make_pair(rightHd, currentNode->right));
         }
@@ -227,12 +229,14 @@ vector<int> bottomView(TreeNode* root) {
 
         if (parentNode->left) {
             int leftHD = parentHD - 1;
+            // 🟡 If you override the data with the same hd (key), so the larger HD will be there on the map.
             nodeMap.insert_or_assign(leftHD, parentNode->left);
             nodeQueue.push(make_pair(leftHD, parentNode->left));
         }
 
         if (parentNode->right) {
             int rightHD = parentHD + 1;
+            // 🟡 If you override the data with the same hd (key), so the larger HD will be there on the map.
             nodeMap.insert_or_assign(rightHD, parentNode->right);
             nodeQueue.push(make_pair(rightHD, parentNode->right));
         }
